@@ -48,6 +48,16 @@ def item_key(value: Any) -> str:
     return text.lstrip("0") or text
 
 
+def ean_key(value: Any) -> str:
+    text = as_text(value)
+    return text.lstrip("0") or text
+
+
+def excluded_article(value: Any) -> bool:
+    description = as_text(value).upper()
+    return description.startswith(("SUB.", "PAL"))
+
+
 def first_non_empty(current: Any, candidate: Any) -> Any:
     if current not in (None, ""):
         return current
@@ -118,6 +128,8 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
         itm8 = as_text(row[cols["itm8"]])
         ean = as_text(row[cols["ean"]])
         if not itm8 and not ean:
+            continue
+        if excluded_article(row[cols["description"]]):
             continue
 
         competitor = as_text(row[cols["competitor"]]).upper()
@@ -279,9 +291,9 @@ def find_previous_week(path: Path, simulation_path: Path) -> Path | None:
     return candidates[0] if candidates else None
 
 
-def load_previous_comments(previous_path: Path | None) -> dict[str, Any]:
+def load_previous_comments(previous_path: Path | None) -> dict[str, dict[str, Any]]:
     if previous_path is None or not previous_path.exists():
-        return {}
+        return {"itm8": {}, "ean": {}}
 
     wb = load_workbook(previous_path, data_only=True, read_only=True)
     ws = wb["Folha1"]
@@ -300,16 +312,30 @@ def load_previous_comments(previous_path: Path | None) -> dict[str, Any]:
         raise ValueError(f"Could not find ITM8/comments headers in {previous_path}")
 
     itm8_col = next(index for index, value in enumerate(headers) if as_text(value).upper() == "ITM8")
+    ean_col = next((index for index, value in enumerate(headers) if as_text(value).upper() == "EAN"), None)
     comments_col = comment_header_index(headers)
 
-    comments: dict[str, Any] = {}
+    comments: dict[str, dict[str, Any]] = {"itm8": {}, "ean": {}}
     for row in ws.iter_rows(min_row=header_row + 1, values_only=True):
+        comment = row[comments_col] if row[comments_col] is not None else ""
         itm8 = item_key(row[itm8_col])
-        if itm8 and itm8 not in comments:
-            comments[itm8] = row[comments_col] if row[comments_col] is not None else ""
+        if itm8 and itm8 not in comments["itm8"]:
+            comments["itm8"][itm8] = comment
+        if ean_col is not None:
+            ean = ean_key(row[ean_col])
+            if ean and ean not in comments["ean"]:
+                comments["ean"][ean] = comment
 
     wb.close()
     return comments
+
+
+def previous_comment_for(record: dict[str, Any], comments: dict[str, dict[str, Any]]) -> Any:
+    by_itm8 = comments.get("itm8", {})
+    by_ean = comments.get("ean", {})
+    itm8 = item_key(record["itm8"])
+    ean = ean_key(record["ean"])
+    return by_itm8.get(itm8, by_ean.get(ean, ""))
 
 
 def copy_cell_style(source, target) -> None:
@@ -509,14 +535,13 @@ def build_workbook(
 
     for offset, record in enumerate(records, start=4):
         ean = as_text(record["ean"])
-        itm8 = item_key(record["itm8"])
         fill_row(
             ws,
             offset,
             record,
             comparavel.get(ean, {}),
             total_meas.get(ean, {}),
-            previous_comments.get(itm8, ""),
+            previous_comment_for(record, previous_comments),
             group_map,
             comments_col,
         )

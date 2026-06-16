@@ -10,6 +10,8 @@
   `TD Psyco` sem filtros a partir da folha `Dados`.
 - A reconstrução exclui `MERCADONA`, porque a `TD Psyco`/ficheiro final só usa
   as colunas Shopping `CONTINENTE`, `LIDL` e `PINGO-DOCE`.
+- Os artigos cuja descrição comece por `SUB.` ou `PAL` devem ser excluídos do
+  ficheiro final.
 
 ## Estatuto
 
@@ -26,9 +28,11 @@
 - Deve existir um ficheiro da semana anterior, que corresponde ao ficheiro final
   construído na semana anterior.
 - Os valores da coluna `Comentarios (face ao suivi)` desse ficheiro anterior
-  devem ser copiados por `ITM8` para a coluna `Comentarios (face ao suivi)` do
-  novo ficheiro. A coluna deve ser identificada pelo cabeçalho, porque a letra
-  pode mudar quando o template tem mais ou menos colunas.
+  devem ser copiados para a coluna `Comentarios (face ao suivi)` do novo
+  ficheiro com lógica equivalente a `PROCX`: procurar primeiro por `ITM8` e,
+  se não existir correspondência, procurar por `EAN`.
+- A coluna deve ser identificada pelo cabeçalho, porque a letra pode mudar
+  quando o template tem mais ou menos colunas.
 
 ## Colunas da Bia
 
