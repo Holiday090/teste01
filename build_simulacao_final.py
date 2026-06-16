@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from collections import OrderedDict
 from copy import copy
 from datetime import datetime
@@ -40,6 +41,11 @@ def as_text(value: Any) -> str:
     if value is None:
         return ""
     return str(value).strip()
+
+
+def item_key(value: Any) -> str:
+    text = as_text(value)
+    return text.lstrip("0") or text
 
 
 def first_non_empty(current: Any, candidate: Any) -> Any:
@@ -206,6 +212,14 @@ def header_index(headers: tuple[Any, ...], name: str) -> int:
     raise ValueError(f"Header not found: {name}")
 
 
+def comment_header_index(headers: tuple[Any, ...]) -> int:
+    for index, value in enumerate(headers):
+        label = as_text(value).upper()
+        if "COMENT" in label and "SUIVI" in label:
+            return index
+    raise ValueError("Header not found: Comentarios (face ao suivi)")
+
+
 def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
     wb = load_workbook(total_meas_path, data_only=True, read_only=True)
     ws = wb["sql_query3"]
@@ -246,8 +260,22 @@ def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
     return by_ean
 
 
-def find_previous_week(path: Path) -> Path | None:
-    candidates = sorted(path.glob("*S23*.xls*"))
+def extract_week_number(filename: str) -> int | None:
+    match = re.search(r"(?i)(?:^|[^A-Z0-9])S(\d{1,2})(?:[^0-9]|$)", filename)
+    return int(match.group(1)) if match else None
+
+
+def find_previous_week(path: Path, simulation_path: Path) -> Path | None:
+    current_week = extract_week_number(simulation_path.name)
+    if current_week is None or current_week <= 1:
+        return None
+
+    previous_week_label = f"S{current_week - 1}"
+    candidates = sorted(
+        candidate
+        for candidate in path.glob(f"*{previous_week_label}*.xls*")
+        if candidate.resolve() != simulation_path.resolve()
+    )
     return candidates[0] if candidates else None
 
 
@@ -272,15 +300,11 @@ def load_previous_comments(previous_path: Path | None) -> dict[str, Any]:
         raise ValueError(f"Could not find ITM8/comments headers in {previous_path}")
 
     itm8_col = next(index for index, value in enumerate(headers) if as_text(value).upper() == "ITM8")
-    comments_col = next(
-        index
-        for index, value in enumerate(headers)
-        if "COMENT" in as_text(value).upper() and "SUIVI" in as_text(value).upper()
-    )
+    comments_col = comment_header_index(headers)
 
     comments: dict[str, Any] = {}
     for row in ws.iter_rows(min_row=header_row + 1, values_only=True):
-        itm8 = as_text(row[itm8_col])
+        itm8 = item_key(row[itm8_col])
         if itm8 and itm8 not in comments:
             comments[itm8] = row[comments_col] if row[comments_col] is not None else ""
 
@@ -381,8 +405,9 @@ def fill_row(
     record: dict[str, Any],
     promos: dict[str, Any],
     meas: dict[str, Any],
-    history: Any,
+    previous_comment: Any,
     group_map: dict[str, Any],
+    comments_col: int,
 ) -> None:
     base_values = {
         1: record["amont"],
@@ -416,7 +441,7 @@ def fill_row(
     if campaign_date_cell.value not in (None, ""):
         campaign_date_cell.number_format = "dd-mm-yyyy"
     ws.cell(row_number, 30).value = meas.get("pvp", "")
-    ws.cell(row_number, 34).value = history if history is not None else ""
+    ws.cell(row_number, comments_col).value = previous_comment if previous_comment is not None else ""
 
     amont = as_text(record["amont"])
     aval = as_text(record["aval"])
@@ -474,6 +499,8 @@ def build_workbook(
     }
     clear_data_area(ws, len(records) + 3)
     apply_row_styles(ws, len(records))
+    headers = tuple(ws.cell(3, col).value for col in range(1, ws.max_column + 1))
+    comments_col = comment_header_index(headers) + 1
 
     date_label = format_slash_date(shopping_date)
     if date_label:
@@ -482,7 +509,7 @@ def build_workbook(
 
     for offset, record in enumerate(records, start=4):
         ean = as_text(record["ean"])
-        itm8 = as_text(record["itm8"])
+        itm8 = item_key(record["itm8"])
         fill_row(
             ws,
             offset,
@@ -491,6 +518,7 @@ def build_workbook(
             total_meas.get(ean, {}),
             previous_comments.get(itm8, ""),
             group_map,
+            comments_col,
         )
 
     first_extra_row = len(records) + 4
@@ -509,7 +537,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--simulation", default=DEFAULT_SIMULATION)
     parser.add_argument("--comparavel", default=DEFAULT_COMPARAVEL)
     parser.add_argument("--total-meas", default=DEFAULT_TOTAL_MEAS)
-    parser.add_argument("--previous-week", default=None, help="Ficheiro S23/Semana anterior para preencher HISTORICO.")
+    parser.add_argument("--previous-week", default=None, help="Ficheiro da semana anterior para copiar Comentarios (face ao suivi).")
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
     return parser.parse_args()
 
@@ -517,10 +545,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     root = Path.cwd()
-    previous_week = Path(args.previous_week) if args.previous_week else find_previous_week(root)
+    simulation_path = root / args.simulation
+    previous_week = Path(args.previous_week) if args.previous_week else find_previous_week(root, simulation_path)
     build_workbook(
         root / args.template,
-        root / args.simulation,
+        simulation_path,
         root / args.comparavel,
         root / args.total_meas,
         previous_week,
@@ -528,7 +557,7 @@ def main() -> None:
     )
     print(f"Ficheiro criado: {args.output}")
     if previous_week is None:
-        print("Aviso: ficheiro S23 não encontrado; coluna HISTORICO ficou vazia.")
+        print("Aviso: ficheiro da semana anterior não encontrado; comentários face ao suivi ficaram vazios.")
 
 
 if __name__ == "__main__":
