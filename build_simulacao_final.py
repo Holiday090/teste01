@@ -15,13 +15,25 @@ DEFAULT_TEMPLATE = "ficheiro template 2.xlsx"
 DEFAULT_SIMULATION = "S24 - Simulação PVP S24-2026.xlsm"
 DEFAULT_COMPARAVEL = "20260609-Relatorio comparavel_.xlsx"
 DEFAULT_TOTAL_MEAS = "TOTAL - meas a 09-06-2026.XLSX"
-DEFAULT_OUTPUT = "simulação final.xlsx"
+DEFAULT_OUTPUT = "simulacao-final.xlsx"
 
 COMPETITOR_TO_FINAL_COLUMN = {
     "CONTINENTE": 19,  # S
     "LIDL": 20,  # T
     "PINGO-DOCE": 21,  # U
 }
+DADOS_HEADER_ROW = 2
+
+
+def build_header_map(row: tuple[Any, ...]) -> dict[str, int]:
+    return {as_text(value).upper(): index for index, value in enumerate(row) if as_text(value)}
+
+
+def required_column(headers: dict[str, int], name: str) -> int:
+    key = name.strip().upper()
+    if key not in headers:
+        raise ValueError(f"Header not found: {name}")
+    return headers[key]
 
 
 def as_text(value: Any) -> str:
@@ -70,6 +82,25 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     wb = load_workbook(simulation_path, data_only=True, read_only=True, keep_vba=True)
     dados_ws = wb["Dados"]
     shopping_date = parse_date(dados_ws["G1"].value) or parse_date(dados_ws["H1"].value)
+    headers = build_header_map(next(dados_ws.iter_rows(min_row=DADOS_HEADER_ROW, max_row=DADOS_HEADER_ROW, values_only=True)))
+    cols = {
+        "itm8": required_column(headers, "ITM8"),
+        "ean": required_column(headers, "EAN"),
+        "description": required_column(headers, "Descrição"),
+        "brand": required_column(headers, "Marca"),
+        "pvp_competitor": required_column(headers, "PVP Concorrente"),
+        "pvp_current": required_column(headers, "PVP Cadencier Actual"),
+        "pvp_future": required_column(headers, "PVP Cadencier Futuro"),
+        "competitor": required_column(headers, "Insignia Concorrente"),
+        "psycho": required_column(headers, "Psyco"),
+        "tipo": required_column(headers, "Tipo Produto"),
+        "argus": required_column(headers, "Argus"),
+        "aval": required_column(headers, "Aval"),
+        "amont": required_column(headers, "Amont"),
+        "st": required_column(headers, "Estatuto"),
+        "promo_perm": required_column(headers, "Promo Permanente"),
+        "edlp": required_column(headers, "EDLP"),
+    }
 
     # Rebuild the TD Psyco pivot without the visual filters saved in Excel.
     # The actual cached TD Psyco sheet can be filtered down to ~1400 rows; the
@@ -77,51 +108,51 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     # not expose it in the final Shopping columns.
     records: OrderedDict[tuple[Any, ...], dict[str, Any]] = OrderedDict()
     price_totals: dict[tuple[Any, ...], dict[str, list[float]]] = {}
-    for row in dados_ws.iter_rows(min_row=3, values_only=True):
-        itm8 = as_text(row[1])
-        ean = as_text(row[2])
+    for row in dados_ws.iter_rows(min_row=DADOS_HEADER_ROW + 1, values_only=True):
+        itm8 = as_text(row[cols["itm8"]])
+        ean = as_text(row[cols["ean"]])
         if not itm8 and not ean:
             continue
 
-        competitor = as_text(row[11]).upper()
+        competitor = as_text(row[cols["competitor"]]).upper()
         if competitor not in COMPETITOR_TO_FINAL_COLUMN:
             continue
 
         key = (
-            row[19],  # Nomenclatura Amont
-            row[18],  # Nomenclatura Aval
+            row[cols["amont"]],
+            row[cols["aval"]],
             itm8,
             ean,
-            row[3],  # Descrição
-            row[4],  # Marca
-            row[15],  # Tipo Produto
-            row[14],  # Psyco
-            row[16],  # Argus
-            row[33],  # Promo Permanente
-            row[34],  # EDLP
-            row[7],  # PVP Cadencier Actual
-            row[8],  # PVP Cadencier Futuro
+            row[cols["description"]],
+            row[cols["brand"]],
+            row[cols["tipo"]],
+            row[cols["psycho"]],
+            row[cols["argus"]],
+            row[cols["promo_perm"]],
+            row[cols["edlp"]],
+            row[cols["pvp_current"]],
+            row[cols["pvp_future"]],
         )
         if key not in records:
             records[key] = {
-                "amont": row[19],
-                "aval": row[18],
+                "amont": row[cols["amont"]],
+                "aval": row[cols["aval"]],
                 "itm8": itm8,
-                "description": row[3],
-                "brand": row[4],
+                "description": row[cols["description"]],
+                "brand": row[cols["brand"]],
                 "ean": ean,
-                "tipo": row[15],
-                "psycho": row[14],
-                "promo_perm": row[33],
-                "edlp": row[34],
-                "argus": row[16],
-                "st": row[21],  # Estatuto always comes from Dados.
-                "pvp_cadencier": row[7],
+                "tipo": row[cols["tipo"]],
+                "psycho": row[cols["psycho"]],
+                "promo_perm": row[cols["promo_perm"]],
+                "edlp": row[cols["edlp"]],
+                "argus": row[cols["argus"]],
+                "st": row[cols["st"]],  # Estatuto always comes from Dados.
+                "pvp_cadencier": row[cols["pvp_current"]],
                 "prices": {},
             }
             price_totals[key] = {}
 
-        price = as_number(row[6])
+        price = as_number(row[cols["pvp_competitor"]])
         if price is not None:
             price_totals[key].setdefault(competitor, []).append(price)
 
