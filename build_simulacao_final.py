@@ -230,7 +230,7 @@ def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
         if current is None or date < current["sort_date"]:
             by_uvc_ean[key] = {
                 "sort_date": date,
-                "date": format_dash_date(row[in_mea_col]),
+                "date": date,
                 "pvp": row[pvp_col] if row[pvp_col] is not None else "",
             }
 
@@ -411,7 +411,10 @@ def fill_row(
     ws.cell(row_number, 23).value = promos.get("LIDL", "")
     ws.cell(row_number, 24).value = promos.get("PINGO-DOCE", "")
 
-    ws.cell(row_number, 29).value = meas.get("date", "")
+    campaign_date_cell = ws.cell(row_number, 29)
+    campaign_date_cell.value = meas.get("date", "")
+    if campaign_date_cell.value not in (None, ""):
+        campaign_date_cell.number_format = "dd-mm-yyyy"
     ws.cell(row_number, 30).value = meas.get("pvp", "")
     ws.cell(row_number, 34).value = history if history is not None else ""
 
