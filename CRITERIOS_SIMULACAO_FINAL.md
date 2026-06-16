@@ -10,10 +10,29 @@
   `TD Psyco` sem filtros a partir da folha `Dados`.
 - A reconstrução exclui `MERCADONA`, porque a `TD Psyco`/ficheiro final só usa
   as colunas Shopping `CONTINENTE`, `LIDL` e `PINGO-DOCE`.
+- Os artigos cuja descrição comece por `SUB.` ou `PAL` devem ser excluídos do
+  ficheiro final.
 
 ## Estatuto
 
 - A coluna `ST` do ficheiro final vem sempre da folha `Dados`.
+
+## Semana anterior e comentários
+
+- A indicação `S23`, `S24`, etc. no nome do ficheiro representa o número da
+  semana.
+- Cada incremento de 1 unidade no `S` representa o avanço de uma semana. Por
+  exemplo, `S24` é a semana seguinte a `S23`.
+- O ficheiro final gerado é referente à semana indicada no ficheiro
+  `Simulação PVP`.
+- Deve existir um ficheiro da semana anterior, que corresponde ao ficheiro final
+  construído na semana anterior.
+- Os valores da coluna `Comentarios (face ao suivi)` desse ficheiro anterior
+  devem ser copiados para a coluna `Comentarios (face ao suivi)` do novo
+  ficheiro com lógica equivalente a `PROCX`: procurar primeiro por `ITM8` e,
+  se não existir correspondência, procurar por `EAN`.
+- A coluna deve ser identificada pelo cabeçalho, porque a letra pode mudar
+  quando o template tem mais ou menos colunas.
 
 ## Colunas da Bia
 

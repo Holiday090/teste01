@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from collections import OrderedDict
 from copy import copy
 from datetime import datetime
@@ -15,19 +16,46 @@ DEFAULT_TEMPLATE = "ficheiro template 2.xlsx"
 DEFAULT_SIMULATION = "S24 - Simulação PVP S24-2026.xlsm"
 DEFAULT_COMPARAVEL = "20260609-Relatorio comparavel_.xlsx"
 DEFAULT_TOTAL_MEAS = "TOTAL - meas a 09-06-2026.XLSX"
-DEFAULT_OUTPUT = "simulação final.xlsx"
+DEFAULT_OUTPUT = "simulacao-final.xlsx"
 
 COMPETITOR_TO_FINAL_COLUMN = {
     "CONTINENTE": 19,  # S
     "LIDL": 20,  # T
     "PINGO-DOCE": 21,  # U
 }
+DADOS_HEADER_ROW = 2
+
+
+def build_header_map(row: tuple[Any, ...]) -> dict[str, int]:
+    return {as_text(value).upper(): index for index, value in enumerate(row) if as_text(value)}
+
+
+def required_column(headers: dict[str, int], name: str) -> int:
+    key = name.strip().upper()
+    if key not in headers:
+        raise ValueError(f"Header not found: {name}")
+    return headers[key]
 
 
 def as_text(value: Any) -> str:
     if value is None:
         return ""
     return str(value).strip()
+
+
+def item_key(value: Any) -> str:
+    text = as_text(value)
+    return text.lstrip("0") or text
+
+
+def ean_key(value: Any) -> str:
+    text = as_text(value)
+    return text.lstrip("0") or text
+
+
+def excluded_article(value: Any) -> bool:
+    description = as_text(value).upper()
+    return description.startswith(("SUB.", "PAL"))
 
 
 def first_non_empty(current: Any, candidate: Any) -> Any:
@@ -70,6 +98,25 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     wb = load_workbook(simulation_path, data_only=True, read_only=True, keep_vba=True)
     dados_ws = wb["Dados"]
     shopping_date = parse_date(dados_ws["G1"].value) or parse_date(dados_ws["H1"].value)
+    headers = build_header_map(next(dados_ws.iter_rows(min_row=DADOS_HEADER_ROW, max_row=DADOS_HEADER_ROW, values_only=True)))
+    cols = {
+        "itm8": required_column(headers, "ITM8"),
+        "ean": required_column(headers, "EAN"),
+        "description": required_column(headers, "Descrição"),
+        "brand": required_column(headers, "Marca"),
+        "pvp_competitor": required_column(headers, "PVP Concorrente"),
+        "pvp_current": required_column(headers, "PVP Cadencier Actual"),
+        "pvp_future": required_column(headers, "PVP Cadencier Futuro"),
+        "competitor": required_column(headers, "Insignia Concorrente"),
+        "psycho": required_column(headers, "Psyco"),
+        "tipo": required_column(headers, "Tipo Produto"),
+        "argus": required_column(headers, "Argus"),
+        "aval": required_column(headers, "Aval"),
+        "amont": required_column(headers, "Amont"),
+        "st": required_column(headers, "Estatuto"),
+        "promo_perm": required_column(headers, "Promo Permanente"),
+        "edlp": required_column(headers, "EDLP"),
+    }
 
     # Rebuild the TD Psyco pivot without the visual filters saved in Excel.
     # The actual cached TD Psyco sheet can be filtered down to ~1400 rows; the
@@ -77,51 +124,53 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     # not expose it in the final Shopping columns.
     records: OrderedDict[tuple[Any, ...], dict[str, Any]] = OrderedDict()
     price_totals: dict[tuple[Any, ...], dict[str, list[float]]] = {}
-    for row in dados_ws.iter_rows(min_row=3, values_only=True):
-        itm8 = as_text(row[1])
-        ean = as_text(row[2])
+    for row in dados_ws.iter_rows(min_row=DADOS_HEADER_ROW + 1, values_only=True):
+        itm8 = as_text(row[cols["itm8"]])
+        ean = as_text(row[cols["ean"]])
         if not itm8 and not ean:
             continue
+        if excluded_article(row[cols["description"]]):
+            continue
 
-        competitor = as_text(row[11]).upper()
+        competitor = as_text(row[cols["competitor"]]).upper()
         if competitor not in COMPETITOR_TO_FINAL_COLUMN:
             continue
 
         key = (
-            row[19],  # Nomenclatura Amont
-            row[18],  # Nomenclatura Aval
+            row[cols["amont"]],
+            row[cols["aval"]],
             itm8,
             ean,
-            row[3],  # Descrição
-            row[4],  # Marca
-            row[15],  # Tipo Produto
-            row[14],  # Psyco
-            row[16],  # Argus
-            row[33],  # Promo Permanente
-            row[34],  # EDLP
-            row[7],  # PVP Cadencier Actual
-            row[8],  # PVP Cadencier Futuro
+            row[cols["description"]],
+            row[cols["brand"]],
+            row[cols["tipo"]],
+            row[cols["psycho"]],
+            row[cols["argus"]],
+            row[cols["promo_perm"]],
+            row[cols["edlp"]],
+            row[cols["pvp_current"]],
+            row[cols["pvp_future"]],
         )
         if key not in records:
             records[key] = {
-                "amont": row[19],
-                "aval": row[18],
+                "amont": row[cols["amont"]],
+                "aval": row[cols["aval"]],
                 "itm8": itm8,
-                "description": row[3],
-                "brand": row[4],
+                "description": row[cols["description"]],
+                "brand": row[cols["brand"]],
                 "ean": ean,
-                "tipo": row[15],
-                "psycho": row[14],
-                "promo_perm": row[33],
-                "edlp": row[34],
-                "argus": row[16],
-                "st": row[21],  # Estatuto always comes from Dados.
-                "pvp_cadencier": row[7],
+                "tipo": row[cols["tipo"]],
+                "psycho": row[cols["psycho"]],
+                "promo_perm": row[cols["promo_perm"]],
+                "edlp": row[cols["edlp"]],
+                "argus": row[cols["argus"]],
+                "st": row[cols["st"]],  # Estatuto always comes from Dados.
+                "pvp_cadencier": row[cols["pvp_current"]],
                 "prices": {},
             }
             price_totals[key] = {}
 
-        price = as_number(row[6])
+        price = as_number(row[cols["pvp_competitor"]])
         if price is not None:
             price_totals[key].setdefault(competitor, []).append(price)
 
@@ -175,6 +224,14 @@ def header_index(headers: tuple[Any, ...], name: str) -> int:
     raise ValueError(f"Header not found: {name}")
 
 
+def comment_header_index(headers: tuple[Any, ...]) -> int:
+    for index, value in enumerate(headers):
+        label = as_text(value).upper()
+        if "COMENT" in label and "SUIVI" in label:
+            return index
+    raise ValueError("Header not found: Comentarios (face ao suivi)")
+
+
 def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
     wb = load_workbook(total_meas_path, data_only=True, read_only=True)
     ws = wb["sql_query3"]
@@ -199,7 +256,7 @@ def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
         if current is None or date < current["sort_date"]:
             by_uvc_ean[key] = {
                 "sort_date": date,
-                "date": format_dash_date(row[in_mea_col]),
+                "date": date,
                 "pvp": row[pvp_col] if row[pvp_col] is not None else "",
             }
 
@@ -215,14 +272,28 @@ def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
     return by_ean
 
 
-def find_previous_week(path: Path) -> Path | None:
-    candidates = sorted(path.glob("*S23*.xls*"))
+def extract_week_number(filename: str) -> int | None:
+    match = re.search(r"(?i)(?:^|[^A-Z0-9])S(\d{1,2})(?:[^0-9]|$)", filename)
+    return int(match.group(1)) if match else None
+
+
+def find_previous_week(path: Path, simulation_path: Path) -> Path | None:
+    current_week = extract_week_number(simulation_path.name)
+    if current_week is None or current_week <= 1:
+        return None
+
+    previous_week_label = f"S{current_week - 1}"
+    candidates = sorted(
+        candidate
+        for candidate in path.glob(f"*{previous_week_label}*.xls*")
+        if candidate.resolve() != simulation_path.resolve()
+    )
     return candidates[0] if candidates else None
 
 
-def load_previous_comments(previous_path: Path | None) -> dict[str, Any]:
+def load_previous_comments(previous_path: Path | None) -> dict[str, dict[str, Any]]:
     if previous_path is None or not previous_path.exists():
-        return {}
+        return {"itm8": {}, "ean": {}}
 
     wb = load_workbook(previous_path, data_only=True, read_only=True)
     ws = wb["Folha1"]
@@ -241,20 +312,30 @@ def load_previous_comments(previous_path: Path | None) -> dict[str, Any]:
         raise ValueError(f"Could not find ITM8/comments headers in {previous_path}")
 
     itm8_col = next(index for index, value in enumerate(headers) if as_text(value).upper() == "ITM8")
-    comments_col = next(
-        index
-        for index, value in enumerate(headers)
-        if "COMENT" in as_text(value).upper() and "SUIVI" in as_text(value).upper()
-    )
+    ean_col = next((index for index, value in enumerate(headers) if as_text(value).upper() == "EAN"), None)
+    comments_col = comment_header_index(headers)
 
-    comments: dict[str, Any] = {}
+    comments: dict[str, dict[str, Any]] = {"itm8": {}, "ean": {}}
     for row in ws.iter_rows(min_row=header_row + 1, values_only=True):
-        itm8 = as_text(row[itm8_col])
-        if itm8 and itm8 not in comments:
-            comments[itm8] = row[comments_col] if row[comments_col] is not None else ""
+        comment = row[comments_col] if row[comments_col] is not None else ""
+        itm8 = item_key(row[itm8_col])
+        if itm8 and itm8 not in comments["itm8"]:
+            comments["itm8"][itm8] = comment
+        if ean_col is not None:
+            ean = ean_key(row[ean_col])
+            if ean and ean not in comments["ean"]:
+                comments["ean"][ean] = comment
 
     wb.close()
     return comments
+
+
+def previous_comment_for(record: dict[str, Any], comments: dict[str, dict[str, Any]]) -> Any:
+    by_itm8 = comments.get("itm8", {})
+    by_ean = comments.get("ean", {})
+    itm8 = item_key(record["itm8"])
+    ean = ean_key(record["ean"])
+    return by_itm8.get(itm8, by_ean.get(ean, ""))
 
 
 def copy_cell_style(source, target) -> None:
@@ -350,8 +431,9 @@ def fill_row(
     record: dict[str, Any],
     promos: dict[str, Any],
     meas: dict[str, Any],
-    history: Any,
+    previous_comment: Any,
     group_map: dict[str, Any],
+    comments_col: int,
 ) -> None:
     base_values = {
         1: record["amont"],
@@ -380,9 +462,12 @@ def fill_row(
     ws.cell(row_number, 23).value = promos.get("LIDL", "")
     ws.cell(row_number, 24).value = promos.get("PINGO-DOCE", "")
 
-    ws.cell(row_number, 29).value = meas.get("date", "")
+    campaign_date_cell = ws.cell(row_number, 29)
+    campaign_date_cell.value = meas.get("date", "")
+    if campaign_date_cell.value not in (None, ""):
+        campaign_date_cell.number_format = "dd-mm-yyyy"
     ws.cell(row_number, 30).value = meas.get("pvp", "")
-    ws.cell(row_number, 34).value = history if history is not None else ""
+    ws.cell(row_number, comments_col).value = previous_comment if previous_comment is not None else ""
 
     amont = as_text(record["amont"])
     aval = as_text(record["aval"])
@@ -440,6 +525,8 @@ def build_workbook(
     }
     clear_data_area(ws, len(records) + 3)
     apply_row_styles(ws, len(records))
+    headers = tuple(ws.cell(3, col).value for col in range(1, ws.max_column + 1))
+    comments_col = comment_header_index(headers) + 1
 
     date_label = format_slash_date(shopping_date)
     if date_label:
@@ -448,15 +535,15 @@ def build_workbook(
 
     for offset, record in enumerate(records, start=4):
         ean = as_text(record["ean"])
-        itm8 = as_text(record["itm8"])
         fill_row(
             ws,
             offset,
             record,
             comparavel.get(ean, {}),
             total_meas.get(ean, {}),
-            previous_comments.get(itm8, ""),
+            previous_comment_for(record, previous_comments),
             group_map,
+            comments_col,
         )
 
     first_extra_row = len(records) + 4
@@ -475,7 +562,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--simulation", default=DEFAULT_SIMULATION)
     parser.add_argument("--comparavel", default=DEFAULT_COMPARAVEL)
     parser.add_argument("--total-meas", default=DEFAULT_TOTAL_MEAS)
-    parser.add_argument("--previous-week", default=None, help="Ficheiro S23/Semana anterior para preencher HISTORICO.")
+    parser.add_argument("--previous-week", default=None, help="Ficheiro da semana anterior para copiar Comentarios (face ao suivi).")
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
     return parser.parse_args()
 
@@ -483,10 +570,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     root = Path.cwd()
-    previous_week = Path(args.previous_week) if args.previous_week else find_previous_week(root)
+    simulation_path = root / args.simulation
+    previous_week = Path(args.previous_week) if args.previous_week else find_previous_week(root, simulation_path)
     build_workbook(
         root / args.template,
-        root / args.simulation,
+        simulation_path,
         root / args.comparavel,
         root / args.total_meas,
         previous_week,
@@ -494,7 +582,7 @@ def main() -> None:
     )
     print(f"Ficheiro criado: {args.output}")
     if previous_week is None:
-        print("Aviso: ficheiro S23 não encontrado; coluna HISTORICO ficou vazia.")
+        print("Aviso: ficheiro da semana anterior não encontrado; comentários face ao suivi ficaram vazios.")
 
 
 if __name__ == "__main__":
