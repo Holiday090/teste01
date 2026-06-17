@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import unicodedata
 from collections import OrderedDict
 from copy import copy
 from datetime import datetime
@@ -17,6 +18,7 @@ DEFAULT_SIMULATION = "S24 - Simulação PVP S24-2026.xlsm"
 DEFAULT_COMPARAVEL = "20260609-Relatorio comparavel_.xlsx"
 DEFAULT_TOTAL_MEAS = "TOTAL - meas a 09-06-2026.XLSX"
 DEFAULT_OUTPUT = "simulacao-final.xlsx"
+EXCEL_EXTENSIONS = {".xls", ".xlsx", ".xlsm"}
 
 COMPETITOR_TO_FINAL_COLUMN = {
     "CONTINENTE": 19,  # S
@@ -35,6 +37,47 @@ def required_column(headers: dict[str, int], name: str) -> int:
     if key not in headers:
         raise ValueError(f"Header not found: {name}")
     return headers[key]
+
+
+def normalize_filename(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value.casefold())
+    return "".join(char for char in normalized if not unicodedata.combining(char))
+
+
+def is_excel_file(path: Path) -> bool:
+    return path.is_file() and path.suffix.lower() in EXCEL_EXTENSIONS
+
+
+def latest_matching_file(path: Path, required_terms: tuple[str, ...], label: str) -> Path:
+    normalized_terms = tuple(normalize_filename(term) for term in required_terms)
+    candidates = [
+        candidate
+        for candidate in path.iterdir()
+        if is_excel_file(candidate)
+        and all(term in normalize_filename(candidate.name) for term in normalized_terms)
+    ]
+    if not candidates:
+        raise FileNotFoundError(f"Ficheiro não encontrado: {label}")
+    return max(candidates, key=lambda candidate: (candidate.stat().st_mtime_ns, candidate.name))
+
+
+def find_latest_comparavel(path: Path) -> Path:
+    return latest_matching_file(path, ("relatorio", "comparavel"), "relatório comparável")
+
+
+def find_latest_total_meas(path: Path) -> Path:
+    return latest_matching_file(path, ("total", "meas"), "TOTAL MEAS")
+
+
+def resolve_input_path(root: Path, value: str | None, latest_file) -> Path:
+    if value is None:
+        return latest_file(root)
+    path = Path(value)
+    if not path.is_absolute():
+        path = root / path
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return path
 
 
 def as_text(value: Any) -> str:
@@ -564,8 +607,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Gera a simulação final a partir do template e ficheiros de origem.")
     parser.add_argument("--template", default=DEFAULT_TEMPLATE)
     parser.add_argument("--simulation", default=DEFAULT_SIMULATION)
-    parser.add_argument("--comparavel", default=DEFAULT_COMPARAVEL)
-    parser.add_argument("--total-meas", default=DEFAULT_TOTAL_MEAS)
+    parser.add_argument("--comparavel", default=None, help="Opcional: por defeito usa o relatório comparável mais recente.")
+    parser.add_argument("--total-meas", default=None, help="Opcional: por defeito usa o TOTAL MEAS mais recente.")
     parser.add_argument("--previous-week", default=None, help="Ficheiro da semana anterior para copiar Comentarios (face ao suivi).")
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
     return parser.parse_args()
@@ -575,12 +618,14 @@ def main() -> None:
     args = parse_args()
     root = Path.cwd()
     simulation_path = root / args.simulation
+    comparavel_path = resolve_input_path(root, args.comparavel, find_latest_comparavel)
+    total_meas_path = resolve_input_path(root, args.total_meas, find_latest_total_meas)
     previous_week = Path(args.previous_week) if args.previous_week else find_previous_week(root, simulation_path)
     build_workbook(
         root / args.template,
         simulation_path,
-        root / args.comparavel,
-        root / args.total_meas,
+        comparavel_path,
+        total_meas_path,
         previous_week,
         root / args.output,
     )

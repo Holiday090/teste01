@@ -17,6 +17,12 @@
 
 - A coluna `ST` do ficheiro final vem sempre da folha `Dados`.
 
+## Ficheiros auxiliares
+
+- Quando não forem indicados explicitamente no comando, o `Relatorio comparavel`
+  e o `TOTAL MEAS` devem ser escolhidos automaticamente pelo ficheiro Excel mais
+  recente na pasta de trabalho que corresponda a esses nomes.
+
 ## Semana anterior e comentários
 
 - A indicação `S23`, `S24`, etc. no nome do ficheiro representa o número da
