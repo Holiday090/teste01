@@ -246,14 +246,18 @@ def load_comparavel(comparavel_path: Path) -> dict[str, dict[str, Any]]:
 
     promos: dict[str, dict[str, Any]] = {}
     for row in ws.iter_rows(min_row=3, values_only=True):
-        ean = as_text(row[0])
+        ean = ean_key(row[0])
         if not ean:
             continue
-        promos[ean] = {
+        values = {
             "CONTINENTE": row[17] if row[17] is not None else "",
             "LIDL": row[25] if row[25] is not None else "",
             "PINGO-DOCE": row[21] if row[21] is not None else "",
         }
+        current = promos.setdefault(ean, {"CONTINENTE": "", "LIDL": "", "PINGO-DOCE": ""})
+        for competitor, value in values.items():
+            if value not in (None, ""):
+                current[competitor] = value
 
     wb.close()
     return promos
@@ -581,7 +585,7 @@ def build_workbook(
         ws["V2"] = f"PROMO {date_label}"
 
     for offset, record in enumerate(records, start=4):
-        ean = as_text(record["ean"])
+        ean = ean_key(record["ean"])
         fill_row(
             ws,
             offset,
