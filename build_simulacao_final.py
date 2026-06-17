@@ -232,6 +232,10 @@ def comment_header_index(headers: tuple[Any, ...]) -> int:
     raise ValueError("Header not found: Comentarios (face ao suivi)")
 
 
+def history_header_index(headers: tuple[Any, ...]) -> int:
+    return header_index(headers, "HISTORICO")
+
+
 def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
     wb = load_workbook(total_meas_path, data_only=True, read_only=True)
     ws = wb["sql_query3"]
@@ -433,7 +437,7 @@ def fill_row(
     meas: dict[str, Any],
     previous_comment: Any,
     group_map: dict[str, Any],
-    comments_col: int,
+    history_col: int,
 ) -> None:
     base_values = {
         1: record["amont"],
@@ -467,7 +471,7 @@ def fill_row(
     if campaign_date_cell.value not in (None, ""):
         campaign_date_cell.number_format = "dd-mm-yyyy"
     ws.cell(row_number, 30).value = meas.get("pvp", "")
-    ws.cell(row_number, comments_col).value = previous_comment if previous_comment is not None else ""
+    ws.cell(row_number, history_col).value = previous_comment if previous_comment is not None else ""
 
     amont = as_text(record["amont"])
     aval = as_text(record["aval"])
@@ -526,7 +530,7 @@ def build_workbook(
     clear_data_area(ws, len(records) + 3)
     apply_row_styles(ws, len(records))
     headers = tuple(ws.cell(3, col).value for col in range(1, ws.max_column + 1))
-    comments_col = comment_header_index(headers) + 1
+    history_col = history_header_index(headers) + 1
 
     date_label = format_slash_date(shopping_date)
     if date_label:
@@ -543,7 +547,7 @@ def build_workbook(
             total_meas.get(ean, {}),
             previous_comment_for(record, previous_comments),
             group_map,
-            comments_col,
+            history_col,
         )
 
     first_extra_row = len(records) + 4

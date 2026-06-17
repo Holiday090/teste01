@@ -28,10 +28,10 @@
 - Deve existir um ficheiro da semana anterior, que corresponde ao ficheiro final
   construído na semana anterior.
 - Os valores da coluna `Comentarios (face ao suivi)` desse ficheiro anterior
-  devem ser copiados para a coluna `Comentarios (face ao suivi)` do novo
-  ficheiro com lógica equivalente a `PROCX`: procurar primeiro por `ITM8` e,
-  se não existir correspondência, procurar por `EAN`.
-- A coluna deve ser identificada pelo cabeçalho, porque a letra pode mudar
+  devem ser copiados para a coluna `HISTORICO` do novo ficheiro com lógica
+  equivalente a `PROCX`: procurar primeiro por `ITM8` e, se não existir
+  correspondência, procurar por `EAN`.
+- As colunas devem ser identificadas pelo cabeçalho, porque a letra pode mudar
   quando o template tem mais ou menos colunas.
 
 ## Colunas da Bia

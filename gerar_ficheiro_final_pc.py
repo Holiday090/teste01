@@ -36,7 +36,8 @@ def parse_args() -> argparse.Namespace:
         description="Cria o ficheiro Excel final a partir do template e ficheiros de origem.",
         epilog=(
             "Exemplo: python gerar_ficheiro_final_pc.py\n"
-            "Antes de correr, instala dependencias com: python -m pip install -r requirements.txt"
+            "Antes de correr, instala dependencias com: python -m pip install -r requirements.txt\n"
+            "Os comentarios da semana anterior sao copiados para a coluna HISTORICO."
         ),
     )
     parser.add_argument("--folder", default=".", help="Pasta onde estao os ficheiros Excel e scripts.")
