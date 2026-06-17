@@ -48,6 +48,8 @@
 
 - As colunas `PVP PROMO?` e `MODA?` não fazem parte do template e não devem ser
   adicionadas ao ficheiro final.
+- As colunas `Y`, `Z`, `AA` e `AB` devem manter as fórmulas do template,
+  ajustadas à linha correspondente.
 - A coluna `pvp folheto bloqueado` deve permanecer na coluna AE, com a fórmula:
 
 ```excel

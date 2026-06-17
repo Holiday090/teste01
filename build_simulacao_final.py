@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from openpyxl import load_workbook
+from openpyxl.formula.translate import Translator
 from openpyxl.utils import get_column_letter
 
 
@@ -19,6 +20,8 @@ DEFAULT_COMPARAVEL = "20260609-Relatorio comparavel_.xlsx"
 DEFAULT_TOTAL_MEAS = "TOTAL - meas a 09-06-2026.XLSX"
 DEFAULT_OUTPUT = "simulacao-final.xlsx"
 EXCEL_EXTENSIONS = {".xls", ".xlsx", ".xlsm"}
+FORMULA_TEMPLATE_ROW = 4
+FORMULA_COLUMNS = (25, 26, 27, 28)  # Y, Z, AA, AB
 
 COMPETITOR_TO_FINAL_COLUMN = {
     "CONTINENTE": 19,  # S
@@ -415,6 +418,18 @@ def prepare_template(template_path: Path):
     return wb, ws
 
 
+def capture_formula_templates(ws, columns: tuple[int, ...]) -> dict[int, Any]:
+    return {col: ws.cell(FORMULA_TEMPLATE_ROW, col).value for col in columns}
+
+
+def translated_formula(formula: Any, col: int, row_number: int) -> Any:
+    if not isinstance(formula, str) or not formula.startswith("="):
+        return formula
+    origin = f"{get_column_letter(col)}{FORMULA_TEMPLATE_ROW}"
+    target = f"{get_column_letter(col)}{row_number}"
+    return Translator(formula, origin=origin).translate_formula(target)
+
+
 def clear_data_area(ws, max_rows: int) -> None:
     last_row = max(ws.max_row, max_rows)
     for row in ws.iter_rows(min_row=4, max_row=last_row, max_col=35):
@@ -485,6 +500,7 @@ def fill_row(
     previous_comment: Any,
     group_map: dict[str, Any],
     history_col: int,
+    formula_templates: dict[int, Any],
 ) -> None:
     base_values = {
         1: record["amont"],
@@ -529,21 +545,8 @@ def fill_row(
     ws.cell(row_number, 6).value = aval[4:6] if len(aval) >= 6 else ""
     ws.cell(row_number, 7).value = aval[7:9] if len(aval) >= 9 else ""
 
-    shopping_values = [ws.cell(row_number, col).value for col in range(19, 22)]
-    promo_values = [ws.cell(row_number, col).value for col in range(22, 25)]
-    condition_price = calculate_condition_price(record, shopping_values, promo_values)
-    pvp_cadencier = ws.cell(row_number, 18).value
-    pvp_number = as_number(pvp_cadencier)
-
-    ws.cell(row_number, 25).value = condition_price
-    if condition_price not in (None, "") and pvp_number is not None:
-        ws.cell(row_number, 26).value = pvp_number / condition_price - 1 if condition_price else None
-        ws.cell(row_number, 27).value = pvp_number - condition_price
-        ws.cell(row_number, 28).value = numbers_equal(pvp_number, condition_price)
-    else:
-        ws.cell(row_number, 26).value = None
-        ws.cell(row_number, 27).value = None
-        ws.cell(row_number, 28).value = None
+    for col in FORMULA_COLUMNS:
+        ws.cell(row_number, col).value = translated_formula(formula_templates.get(col), col, row_number)
 
     ws.cell(row_number, 31).value = f'=IF(AC{row_number}="","",IF(AC{row_number}>=(TODAY()+15),"não","sim"))'
 
@@ -569,6 +572,7 @@ def build_workbook(
     previous_comments = load_previous_comments(previous_week_path)
 
     wb, ws = prepare_template(template_path)
+    formula_templates = capture_formula_templates(ws, FORMULA_COLUMNS)
     group_map = {
         as_text(row[0]): row[1]
         for row in wb["Folha2"].iter_rows(min_row=2, values_only=True)
@@ -595,6 +599,7 @@ def build_workbook(
             previous_comment_for(record, previous_comments),
             group_map,
             history_col,
+            formula_templates,
         )
 
     first_extra_row = len(records) + 4
