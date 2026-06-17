@@ -162,9 +162,9 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     }
 
     # Rebuild the TD Psyco pivot without the visual filters saved in Excel.
-    # The actual cached TD Psyco sheet can be filtered down to ~1400 rows; the
-    # source data has the full set. Mercadona is excluded because TD Psyco does
-    # not expose it in the final Shopping columns.
+    # Final R must match TD Psyco L (PVP Cadencier Actual), and final S:T:U
+    # must match TD Psyco N:O:P (CONTINENTE, LIDL, PINGO-DOCE). Mercadona is
+    # excluded because TD Psyco does not expose it in the final Shopping columns.
     records: OrderedDict[tuple[Any, ...], dict[str, Any]] = OrderedDict()
     price_totals: dict[tuple[Any, ...], dict[str, list[float]]] = {}
     for row in dados_ws.iter_rows(min_row=DADOS_HEADER_ROW + 1, values_only=True):

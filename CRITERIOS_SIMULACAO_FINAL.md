@@ -8,6 +8,10 @@
   ser considerados todos os dados, como se os filtros da pivot fossem removidos.
 - Como a pivot pode estar guardada com cache filtrada, o gerador reconstrói a
   `TD Psyco` sem filtros a partir da folha `Dados`.
+- A coluna `R` do ficheiro final deve ser igual à coluna `L` da `TD Psyco`
+  (`PVP Cadencier Actual`).
+- As colunas Shopping `S:T:U` do ficheiro final devem ser iguais às colunas
+  `N:O:P` da `TD Psyco`, respetivamente `CONTINENTE`, `LIDL` e `PINGO-DOCE`.
 - A reconstrução exclui `MERCADONA`, porque a `TD Psyco`/ficheiro final só usa
   as colunas Shopping `CONTINENTE`, `LIDL` e `PINGO-DOCE`.
 - Os artigos cuja descrição comece por `SUB.` ou `PAL` devem ser excluídos do
