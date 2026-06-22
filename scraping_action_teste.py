@@ -137,6 +137,53 @@ def extract_json_ld_product(page: Page) -> dict:
     )
 
 
+def extract_json_ld_breadcrumb(page: Page) -> dict:
+    """Extrai o bloco BreadcrumbList do JSON-LD da página."""
+    return page.evaluate(
+        """() => {
+            const scripts = [...document.querySelectorAll('script[type="application/ld+json"]')];
+            for (const script of scripts) {
+                try {
+                    const data = JSON.parse(script.textContent);
+                    if (data && data['@type'] === 'BreadcrumbList') {
+                        return data;
+                    }
+                } catch (error) {
+                    continue;
+                }
+            }
+            return {};
+        }"""
+    )
+
+
+def extract_subcategory(page: Page, category_name: str) -> str:
+    """Obtém a sub-categoria a partir do breadcrumb (2.º nível após a categoria principal)."""
+    breadcrumb_ld = extract_json_ld_breadcrumb(page)
+    items = breadcrumb_ld.get("itemListElement", [])
+
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+
+        position = item.get("position")
+        entry = item.get("item", {})
+        if position == 2 and isinstance(entry, dict):
+            subcategory = str(entry.get("name", "")).strip()
+            if subcategory:
+                return subcategory
+
+    breadcrumb_links = page.locator('nav[aria-label="Breadcrumbs"] a')
+    link_count = breadcrumb_links.count()
+    if link_count >= 2:
+        first_link = breadcrumb_links.nth(0).inner_text().strip()
+        second_link = breadcrumb_links.nth(1).inner_text().strip()
+        if first_link.lower() == category_name.lower() and second_link:
+            return second_link
+
+    return ""
+
+
 def extract_brand(product_ld: dict, product_name: str) -> str:
     """Obtém a marca a partir do JSON-LD ou, em alternativa, do nome do produto."""
     brand = product_ld.get("brand")
@@ -203,9 +250,11 @@ def extract_product_data(page: Page, product_url: str) -> dict[str, str]:
 
     product_ld = extract_json_ld_product(page)
     brand = extract_brand(product_ld, product_name)
+    subcategory = extract_subcategory(page, CATEGORY_NAME)
 
     return {
         "Categoria Principal": CATEGORY_NAME,
+        "Sub-categoria": subcategory,
         "Marca": brand,
         "Descrição / Nome do artigo": description,
         "Preço Regular": regular_price,
@@ -218,6 +267,7 @@ def export_to_excel(records: list[dict[str, str]], output_file: str) -> None:
     """Exporta os registos recolhidos para Excel."""
     columns = [
         "Categoria Principal",
+        "Sub-categoria",
         "Marca",
         "Descrição / Nome do artigo",
         "Preço Regular",
