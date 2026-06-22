@@ -25,6 +25,11 @@ OUTPUT_FILE = "Scraping_Action_Teste.xlsx"
 PRODUCT_LINK_PATTERN = re.compile(r"/pt-pt/p/\d+/")
 
 
+def log(message: str) -> None:
+    """Imprime mensagens de progresso no terminal em tempo real."""
+    print(message, flush=True)
+
+
 def human_delay(min_seconds: float = 2.0, max_seconds: float = 5.0) -> None:
     """Pausa aleatória para simular comportamento humano."""
     time.sleep(random.uniform(min_seconds, max_seconds))
@@ -42,13 +47,13 @@ def accept_cookies_if_visible(page: Page) -> None:
         if button.count() and button.is_visible():
             button.click()
             page.wait_for_timeout(800)
-            print("Cookies aceites.")
+            print("Cookies aceites.", flush=True)
             return
 
 
 def open_casa_listing_page(page: Page) -> None:
     """Navega até à listagem 'Tudo de Casa' através do menu principal."""
-    print(f"A aceder a {BASE_URL}")
+    log(f"A aceder a {BASE_URL}")
     page.goto(BASE_URL, wait_until="domcontentloaded", timeout=90_000)
     human_delay(2, 4)
 
@@ -60,7 +65,7 @@ def open_casa_listing_page(page: Page) -> None:
 
     produtos_button.click()
     page.wait_for_timeout(1000)
-    print('Menu "Produtos" aberto.')
+    log(f'[Categoria: {CATEGORY_NAME}] Menu "Produtos" aberto.')
 
     casa_link = page.get_by_role("link", name=re.compile(r"^Casa$", re.I)).first
     if not casa_link.count():
@@ -68,7 +73,7 @@ def open_casa_listing_page(page: Page) -> None:
 
     casa_link.hover()
     page.wait_for_timeout(1200)
-    print('Hover sobre a categoria "Casa".')
+    log(f'[Categoria: {CATEGORY_NAME}] Hover sobre a categoria principal.')
 
     tudo_de_casa = page.get_by_role("link", name=re.compile(r"Tudo de Casa", re.I)).first
     if not tudo_de_casa.count():
@@ -77,7 +82,7 @@ def open_casa_listing_page(page: Page) -> None:
     tudo_de_casa.click()
     page.wait_for_load_state("domcontentloaded", timeout=90_000)
     page.wait_for_timeout(1500)
-    print(f'Listagem aberta: {page.url}')
+    log(f'[Categoria: {CATEGORY_NAME}] Listagem aberta: {page.url}')
 
 
 def collect_product_urls_from_page_1(page: Page) -> list[str]:
@@ -295,33 +300,42 @@ def main() -> None:
         page = context.new_page()
 
         try:
+            log(f"\n[Categoria: {CATEGORY_NAME}] A iniciar recolha de URLs (apenas Página 1).")
             open_casa_listing_page(page)
             product_urls = collect_product_urls_from_page_1(page)
 
-            print(f"\nProdutos encontrados na Página 1: {len(product_urls)}")
+            log(
+                f"[Categoria: {CATEGORY_NAME}] Página 1 concluída — "
+                f"{len(product_urls)} produtos encontrados."
+            )
             if not product_urls:
-                print("Nenhum produto encontrado. O ficheiro Excel não será gerado.")
+                log("Nenhum produto encontrado. O ficheiro Excel não será gerado.")
                 return
 
+            log(f"\n[Categoria: {CATEGORY_NAME}] A iniciar processamento individual dos produtos.")
             for index, product_url in enumerate(product_urls, start=1):
-                print(f"\n[{index}/{len(product_urls)}] A processar: {product_url}")
+                log(f"[Categoria: {CATEGORY_NAME}] A processar produto {index}/{len(product_urls)}...")
                 try:
                     product_data = extract_product_data(page, product_url)
                     records.append(product_data)
-                    print(
-                        "  -> "
-                        f"{product_data['Descrição / Nome do artigo'][:70]} | "
-                        f"Regular: {product_data['Preço Regular']} | "
-                        f"Promo: {product_data['Preço Promocional'] or '—'}"
+                    log(
+                        f"[Categoria: {CATEGORY_NAME}] Produto {index}/{len(product_urls)} concluído "
+                        f"| Sub-categoria: {product_data['Sub-categoria'] or '—'} "
+                        f"| {product_data['Descrição / Nome do artigo'][:60]} "
+                        f"| Regular: {product_data['Preço Regular']} "
+                        f"| Promo: {product_data['Preço Promocional'] or '—'}"
                     )
                 except Exception as error:
-                    print(f"  !! Erro ao processar produto: {error}")
+                    log(f"[Categoria: {CATEGORY_NAME}] Erro no produto {index}/{len(product_urls)}: {error}")
 
                 if index < len(product_urls):
                     human_delay(2, 5)
 
             export_to_excel(records, OUTPUT_FILE)
-            print(f"\nConcluído. {len(records)} produtos exportados para '{OUTPUT_FILE}'.")
+            log(
+                f"\n[Categoria: {CATEGORY_NAME}] Concluído. "
+                f"{len(records)} produtos exportados para '{OUTPUT_FILE}'."
+            )
 
         finally:
             context.close()

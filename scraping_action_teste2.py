@@ -32,6 +32,7 @@ from scraping_action_teste import (
     export_to_excel,
     extract_product_data,
     human_delay,
+    log,
     open_casa_listing_page,
 )
 
@@ -111,17 +112,19 @@ def collect_urls_from_listing_page(page: Page) -> list[str]:
 
 def collect_all_casa_product_urls(page: Page) -> list[str]:
     """Percorre todas as páginas da categoria Casa e devolve URLs únicas."""
+    log(f"\n[Categoria: {CATEGORY_NAME}] Fase 1 — Recolha de URLs de todas as páginas.")
     open_casa_listing_page(page)
     total_results, last_page = get_listing_metadata(page)
 
-    print(f"Total de resultados na categoria Casa: {total_results}")
-    print(f"Páginas a percorrer: {last_page}")
+    log(f"[Categoria: {CATEGORY_NAME}] Total de resultados: {total_results}")
+    log(f"[Categoria: {CATEGORY_NAME}] Páginas a percorrer: {last_page}")
 
     all_product_urls: list[str] = []
     seen_urls: set[str] = set()
 
     for page_number in range(1, last_page + 1):
         if page_number > 1:
+            log(f"[Categoria: {CATEGORY_NAME}] A abrir página {page_number}/{last_page}...")
             page.goto(
                 listing_url_for_page(page_number),
                 wait_until="domcontentloaded",
@@ -135,14 +138,15 @@ def collect_all_casa_product_urls(page: Page) -> list[str]:
         seen_urls.update(new_urls)
         all_product_urls.extend(new_urls)
 
-        print(
-            f"Página {page_number}/{last_page}: "
-            f"{len(page_urls)} URLs encontradas | "
-            f"{len(new_urls)} novas | "
-            f"Total acumulado: {len(all_product_urls)}"
+        log(
+            f"[Categoria: {CATEGORY_NAME}] Página {page_number}/{last_page} concluída "
+            f"— {len(new_urls)} URLs novas | Total acumulado: {len(all_product_urls)}/{total_results}"
         )
 
-    print(f"\nURLs únicas recolhidas no total: {len(all_product_urls)}")
+    log(
+        f"\n[Categoria: {CATEGORY_NAME}] Fase 1 concluída — "
+        f"{len(all_product_urls)} URLs únicas recolhidas."
+    )
     return all_product_urls
 
 
@@ -188,39 +192,46 @@ def main() -> None:
         try:
             if progress.get("product_urls"):
                 product_urls = list(progress["product_urls"])
-                print(f"Retomando execução com {len(product_urls)} URLs já recolhidas.")
+                log(
+                    f"[Categoria: {CATEGORY_NAME}] Retomando execução com "
+                    f"{len(product_urls)} URLs já recolhidas."
+                )
             else:
                 product_urls = collect_all_casa_product_urls(page)
                 save_progress(product_urls, records, sorted(processed_urls))
 
-            print(f"\nProdutos a processar: {len(product_urls)}")
+            log(f"\n[Categoria: {CATEGORY_NAME}] Fase 2 — Processamento individual dos produtos.")
+            log(f"[Categoria: {CATEGORY_NAME}] Produtos a processar: {len(product_urls)}")
             if not product_urls:
-                print("Nenhum produto encontrado. O ficheiro Excel não será gerado.")
+                log("Nenhum produto encontrado. O ficheiro Excel não será gerado.")
                 return
 
             pending_urls = [url for url in product_urls if url not in processed_urls]
-            print(f"Produtos pendentes: {len(pending_urls)}")
+            log(f"[Categoria: {CATEGORY_NAME}] Produtos pendentes: {len(pending_urls)}")
 
             for index, product_url in enumerate(pending_urls, start=1):
                 overall_index = len(processed_urls) + 1
-                print(
-                    f"\n[{overall_index}/{len(product_urls)}] "
-                    f"(pendente {index}/{len(pending_urls)}) "
-                    f"A processar: {product_url}"
+                log(
+                    f"[Categoria: {CATEGORY_NAME}] A processar produto "
+                    f"{overall_index}/{len(product_urls)}..."
                 )
 
                 try:
                     product_data = extract_product_data(page, product_url)
                     records.append(product_data)
                     processed_urls.add(product_url)
-                    print(
-                        "  -> "
-                        f"{product_data['Descrição / Nome do artigo'][:70]} | "
-                        f"Regular: {product_data['Preço Regular']} | "
-                        f"Promo: {product_data['Preço Promocional'] or '—'}"
+                    log(
+                        f"[Categoria: {CATEGORY_NAME}] Produto {overall_index}/{len(product_urls)} concluído "
+                        f"| Sub-categoria: {product_data['Sub-categoria'] or '—'} "
+                        f"| {product_data['Descrição / Nome do artigo'][:60]} "
+                        f"| Regular: {product_data['Preço Regular']} "
+                        f"| Promo: {product_data['Preço Promocional'] or '—'}"
                     )
                 except Exception as error:
-                    print(f"  !! Erro ao processar produto: {error}")
+                    log(
+                        f"[Categoria: {CATEGORY_NAME}] Erro no produto "
+                        f"{overall_index}/{len(product_urls)}: {error}"
+                    )
 
                 if overall_index < len(product_urls):
                     human_delay(2, 5)
@@ -228,12 +239,16 @@ def main() -> None:
                 if overall_index % CHECKPOINT_EVERY == 0 or overall_index == len(product_urls):
                     export_to_excel(records, OUTPUT_FILE)
                     save_progress(product_urls, records, sorted(processed_urls))
-                    print(f"  [checkpoint] {len(records)} registos guardados em '{OUTPUT_FILE}'.")
+                    log(
+                        f"[Categoria: {CATEGORY_NAME}] Checkpoint — "
+                        f"{len(records)} registos guardados em '{OUTPUT_FILE}'."
+                    )
 
             export_to_excel(records, OUTPUT_FILE)
             save_progress(product_urls, records, sorted(processed_urls))
-            print(
-                f"\nConcluído. {len(records)} produtos exportados para '{OUTPUT_FILE}'."
+            log(
+                f"\n[Categoria: {CATEGORY_NAME}] Concluído. "
+                f"{len(records)} produtos exportados para '{OUTPUT_FILE}'."
             )
 
         finally:
