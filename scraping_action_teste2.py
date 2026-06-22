@@ -6,7 +6,7 @@ SETUP (executar no terminal antes da primeira utilização):
     python3 -m playwright install
 
 EXECUÇÃO:
-    python3 scraping_action_teste2.py
+    PYTHONUNBUFFERED=1 python3 scraping_action_teste2.py
 
 NOTAS:
     - Recolhe URLs de todas as páginas da listagem Casa (~758 artigos).
@@ -18,136 +18,23 @@ NOTAS:
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
-from urllib.parse import urljoin
 
-from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import sync_playwright
 
 from scraping_action_teste import (
-    BASE_URL,
     CATEGORY_NAME,
-    PRODUCT_LINK_PATTERN,
-    accept_cookies_if_visible,
+    collect_all_category_product_urls,
     export_to_excel,
     extract_product_data,
     human_delay,
     log,
-    open_casa_listing_page,
 )
 
 CASA_LISTING_URL = "https://www.action.com/pt-pt/c/casa/"
 OUTPUT_FILE = "Scraping_Action_Teste2.xlsx"
 PROGRESS_FILE = "scraping_action_teste2_progress.json"
 CHECKPOINT_EVERY = 25
-
-
-def listing_url_for_page(page_number: int) -> str:
-    """Constrói o URL da listagem Casa para uma página específica."""
-    if page_number <= 1:
-        return CASA_LISTING_URL
-    return f"{CASA_LISTING_URL}?page={page_number}#product-grid"
-
-
-def get_listing_metadata(page: Page) -> tuple[int, int]:
-    """Obtém o total de resultados e o número da última página."""
-    page.wait_for_timeout(1000)
-
-    metadata = page.evaluate(
-        """() => {
-            const textNodes = [...document.querySelectorAll('h1, h2, p, span, div')]
-                .map((element) => element.innerText.trim())
-                .filter(Boolean);
-
-            let totalResults = 0;
-            for (const text of textNodes) {
-                const match = text.match(/(\\d+)\\s+resultados?/i);
-                if (match) {
-                    totalResults = Number(match[1]);
-                    break;
-                }
-            }
-
-            const pageNumbers = [...document.querySelectorAll('a[href*="page="]')]
-                .map((anchor) => {
-                    const match = anchor.getAttribute('href')?.match(/page=(\\d+)/);
-                    return match ? Number(match[1]) : 0;
-                })
-                .filter((value) => value > 0);
-
-            const lastPage = pageNumbers.length ? Math.max(...pageNumbers) : 1;
-            return { totalResults, lastPage };
-        }"""
-    )
-
-    total_results = int(metadata.get("totalResults", 0))
-    last_page = int(metadata.get("lastPage", 1))
-    return total_results, last_page
-
-
-def collect_urls_from_listing_page(page: Page) -> list[str]:
-    """Recolhe URLs únicas dos produtos visíveis na página de listagem atual."""
-    page.wait_for_selector('a[href*="/pt-pt/p/"]', timeout=30_000)
-
-    raw_hrefs = page.locator('a[href*="/pt-pt/p/"]').evaluate_all(
-        "elements => elements.map(el => el.getAttribute('href')).filter(Boolean)"
-    )
-
-    product_urls: list[str] = []
-    seen: set[str] = set()
-
-    for href in raw_hrefs:
-        if not PRODUCT_LINK_PATTERN.search(href):
-            continue
-
-        absolute_url = urljoin(BASE_URL, href)
-        if absolute_url in seen:
-            continue
-
-        seen.add(absolute_url)
-        product_urls.append(absolute_url)
-
-    return product_urls
-
-
-def collect_all_casa_product_urls(page: Page) -> list[str]:
-    """Percorre todas as páginas da categoria Casa e devolve URLs únicas."""
-    log(f"\n[Categoria: {CATEGORY_NAME}] Fase 1 — Recolha de URLs de todas as páginas.")
-    open_casa_listing_page(page)
-    total_results, last_page = get_listing_metadata(page)
-
-    log(f"[Categoria: {CATEGORY_NAME}] Total de resultados: {total_results}")
-    log(f"[Categoria: {CATEGORY_NAME}] Páginas a percorrer: {last_page}")
-
-    all_product_urls: list[str] = []
-    seen_urls: set[str] = set()
-
-    for page_number in range(1, last_page + 1):
-        if page_number > 1:
-            log(f"[Categoria: {CATEGORY_NAME}] A abrir página {page_number}/{last_page}...")
-            page.goto(
-                listing_url_for_page(page_number),
-                wait_until="domcontentloaded",
-                timeout=90_000,
-            )
-            page.wait_for_timeout(1200)
-            human_delay(1.5, 3.0)
-
-        page_urls = collect_urls_from_listing_page(page)
-        new_urls = [url for url in page_urls if url not in seen_urls]
-        seen_urls.update(new_urls)
-        all_product_urls.extend(new_urls)
-
-        log(
-            f"[Categoria: {CATEGORY_NAME}] Página {page_number}/{last_page} concluída "
-            f"— {len(new_urls)} URLs novas | Total acumulado: {len(all_product_urls)}/{total_results}"
-        )
-
-    log(
-        f"\n[Categoria: {CATEGORY_NAME}] Fase 1 concluída — "
-        f"{len(all_product_urls)} URLs únicas recolhidas."
-    )
-    return all_product_urls
 
 
 def load_progress() -> dict:
@@ -197,7 +84,12 @@ def main() -> None:
                     f"{len(product_urls)} URLs já recolhidas."
                 )
             else:
-                product_urls = collect_all_casa_product_urls(page)
+                product_urls = collect_all_category_product_urls(
+                    page,
+                    CATEGORY_NAME,
+                    CASA_LISTING_URL,
+                    navigate_via_menu=True,
+                )
                 save_progress(product_urls, records, sorted(processed_urls))
 
             log(f"\n[Categoria: {CATEGORY_NAME}] Fase 2 — Processamento individual dos produtos.")
@@ -217,7 +109,7 @@ def main() -> None:
                 )
 
                 try:
-                    product_data = extract_product_data(page, product_url)
+                    product_data = extract_product_data(page, product_url, CATEGORY_NAME)
                     records.append(product_data)
                     processed_urls.add(product_url)
                     log(
