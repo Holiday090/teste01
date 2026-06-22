@@ -78,7 +78,7 @@ def ensure_categories(page, progress: dict) -> list[dict[str, str]]:
         return list(progress["categories"])
 
     log("A descobrir categorias principais no menu Produtos...")
-    page.goto(BASE_URL, wait_until="domcontentloaded", timeout=90_000)
+    page.goto(BASE_URL, wait_until="networkidle", timeout=90_000)
     accept_cookies_if_visible(page)
     categories = discover_main_categories(page)
     progress["categories"] = categories

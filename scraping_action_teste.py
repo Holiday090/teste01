@@ -59,11 +59,13 @@ def open_produtos_menu(page: Page) -> None:
 
     produtos_button.click()
     page.wait_for_timeout(1000)
+    page.wait_for_selector('nav[aria-label="Produtos"]', timeout=15_000)
 
 
 def discover_main_categories(page: Page) -> list[dict[str, str]]:
     """Descobre todas as categorias principais disponíveis no menu Produtos."""
     open_produtos_menu(page)
+    page.wait_for_selector('nav[aria-label="Produtos"] a[href*="/c/"]', timeout=30_000)
 
     categories = page.evaluate(
         """() => {
@@ -104,7 +106,7 @@ def discover_main_categories(page: Page) -> list[dict[str, str]]:
 def open_category_listing_page(page: Page, category_name: str) -> str:
     """Navega até à listagem 'Tudo de [Categoria]' através do menu principal."""
     log(f"A aceder a {BASE_URL}")
-    page.goto(BASE_URL, wait_until="domcontentloaded", timeout=90_000)
+    page.goto(BASE_URL, wait_until="networkidle", timeout=90_000)
     human_delay(2, 4)
 
     accept_cookies_if_visible(page)
