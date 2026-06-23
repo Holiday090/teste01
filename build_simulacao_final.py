@@ -302,11 +302,6 @@ def find_header_column(headers: tuple[Any, ...], *keywords: str, exclude: tuple[
     return None
 
 
-def uvc_key(value: Any) -> str:
-    text = as_text(value)
-    return text.lstrip("0") or text
-
-
 def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
     wb = load_workbook(total_meas_path, data_only=True, read_only=True)
     ws = wb["sql_query3"]
@@ -354,16 +349,39 @@ def sort_meas_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def build_meas_processed_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     sorted_rows = sort_meas_rows(rows)
-    best_by_uvc: dict[str, dict[str, Any]] = {}
+    best_by_ean: dict[str, dict[str, Any]] = {}
     for row in sorted_rows:
-        key = uvc_key(row["uvc"]) or as_text(row["uvc"])
+        key = ean_key(row["ean"]) or as_text(row["ean"])
         if not key:
             continue
-        current = best_by_uvc.get(key)
+        current = best_by_ean.get(key)
         if current is None or row["in_mea"] > current["in_mea"]:
-            best_by_uvc[key] = row
+            best_by_ean[key] = row
 
-    return sort_meas_rows(list(best_by_uvc.values()))
+    return sort_meas_rows(list(best_by_ean.values()))
+
+
+def build_meas_lookup(processed_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    lookup: dict[str, dict[str, Any]] = {}
+    for row in processed_rows:
+        entry = {
+            "sort_date": row["in_mea"],
+            "date": row["in_mea"],
+            "pvp": row["pvp"],
+            "uvc": row["uvc"],
+            "ean": row["ean"],
+        }
+        for key in (as_text(row["ean"]), ean_key(row["ean"])):
+            if key:
+                lookup[key] = entry
+    return lookup
+
+
+def meas_lookup_for_record(lookup: dict[str, dict[str, Any]], record: dict[str, Any]) -> dict[str, Any]:
+    for key in (as_text(record["ean"]), ean_key(record["ean"])):
+        if key in lookup:
+            return lookup[key]
+    return {}
 
 
 def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str, Any]], processed_rows: list[dict[str, Any]]) -> Path:
@@ -398,29 +416,6 @@ def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str,
     return output_path
 
 
-def build_meas_lookup(processed_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    lookup: dict[str, dict[str, Any]] = {}
-    for row in processed_rows:
-        entry = {
-            "sort_date": row["in_mea"],
-            "date": row["in_mea"],
-            "pvp": row["pvp"],
-            "uvc": row["uvc"],
-            "ean": row["ean"],
-        }
-        for key in (as_text(row["uvc"]), uvc_key(row["uvc"])):
-            if key:
-                lookup[key] = entry
-    return lookup
-
-
-def meas_lookup_for_record(lookup: dict[str, dict[str, Any]], record: dict[str, Any]) -> dict[str, Any]:
-    for key in (as_text(record["itm8"]), item_key(record["itm8"]), uvc_key(record["itm8"])):
-        if key in lookup:
-            return lookup[key]
-    return {}
-
-
 def count_meas_matches(records: list[dict[str, Any]], lookup: dict[str, dict[str, Any]]) -> int:
     return sum(1 for record in records if meas_lookup_for_record(lookup, record))
 
@@ -438,7 +433,7 @@ def load_total_meas(
     stats = {
         "raw_rows": len(raw_rows),
         "pivot_rows": len(pivot_rows),
-        "processed_uvc": len(processed_rows),
+        "processed_ean": len(processed_rows),
     }
 
     if save_processed:
@@ -754,7 +749,7 @@ def main() -> None:
     if "processed_path" in meas_stats:
         print(f"Total meas processado: {meas_stats['processed_path'].name}")
     print(
-        "Campanha/PVP preenchidos (UVC=ITM8): "
+        "Campanha/PVP preenchidos (EAN): "
         f"{meas_stats['matched_rows']}/{meas_stats['total_rows']} "
         f"({100 * meas_stats['matched_rows'] / meas_stats['total_rows']:.1f}%)"
     )
