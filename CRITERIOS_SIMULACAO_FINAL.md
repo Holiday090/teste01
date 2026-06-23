@@ -3,7 +3,7 @@
 ## Ficheiro base e saída
 
 - **Template:** `ficheiro template 2.xlsx`
-- **Saída:** `SXX - Análise preços SUIVI.xlsx`, em que `XX` é o número da semana da simulação
+- **Saída:** `SXX_analise_precos_SUIVI.xlsx`, em que `XX` é o número da semana da simulação
   mais recente.
 
 ## Deteção automática de ficheiros
@@ -106,6 +106,9 @@ folheto, pelo que é normal existirem linhas sem campanha/PVP preenchidos.
 |---|---|
 | Comentários (face ao suivi) | HISTORICO (face ao suivi) — AI |
 | Comentários comercial | HISTÓRICO (comentários comercial) — AL |
+
+Se a coluna de comentários da semana anterior estiver vazia, usa-se a coluna
+`HISTORICO` / `HISTORICO (face ao suivi)` do ficheiro anterior para manter a cadeia.
 
 As colunas **COMENTÁRIOS (face ao suivi)** (AH) e **FEEDBACK COMERCIAL** (AJ) ficam sempre
 vazias no ficheiro gerado.
