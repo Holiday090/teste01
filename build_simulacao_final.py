@@ -442,6 +442,26 @@ def load_total_meas(
     return lookup, stats
 
 
+def find_historico_suivi_column(headers: tuple[Any, ...]) -> int | None:
+    for index, value in enumerate(headers):
+        label = as_text(value).upper()
+        if "HIST" in label and "SUIVI" in label:
+            return index
+    for index, value in enumerate(headers):
+        label = as_text(value).upper()
+        if label == "HISTORICO":
+            return index
+    return None
+
+
+def find_historico_comercial_column(headers: tuple[Any, ...]) -> int | None:
+    for index, value in enumerate(headers):
+        label = as_text(value).upper()
+        if "HIST" in label and "COMERCIAL" in label:
+            return index
+    return None
+
+
 def load_analise_historico(analise_path: Path | None) -> dict[str, dict[str, dict[str, Any]]]:
     empty: dict[str, dict[str, Any]] = {"itm8": {}, "ean": {}}
     if analise_path is None or not analise_path.exists():
@@ -465,26 +485,37 @@ def load_analise_historico(analise_path: Path | None) -> dict[str, dict[str, dic
 
     itm8_col = next(index for index, value in enumerate(headers) if as_text(value).upper() == "ITM8")
     ean_col = next((index for index, value in enumerate(headers) if as_text(value).upper() == "EAN"), None)
-    suivi_col = find_header_column(headers, "COMENT", "SUIVI", exclude=("HIST",))
-    comercial_col = find_header_column(headers, "COMENT", "COMERCIAL", exclude=("HIST", "FEEDBACK"))
+    suivi_comments_col = find_header_column(headers, "COMENT", "SUIVI", exclude=("HIST",))
+    historico_suivi_col = find_historico_suivi_column(headers)
+    comercial_comments_col = find_header_column(headers, "COMENT", "COMERCIAL", exclude=("HIST", "FEEDBACK"))
+    historico_comercial_col = find_historico_comercial_column(headers)
 
     result = {"suivi": dict(empty), "comercial": dict(empty)}
-    column_map = {
-        "suivi": suivi_col,
-        "comercial": comercial_col,
-    }
 
     for row in ws.iter_rows(min_row=header_row + 1, values_only=True):
         itm8 = item_key(row[itm8_col])
         ean = ean_key(row[ean_col]) if ean_col is not None else ""
-        for key, col_index in column_map.items():
-            if col_index is None:
-                continue
-            value = row[col_index] if row[col_index] is not None else ""
-            if itm8 and itm8 not in result[key]["itm8"]:
-                result[key]["itm8"][itm8] = value
-            if ean and ean not in result[key]["ean"]:
-                result[key]["ean"][ean] = value
+
+        suivi_value = ""
+        if suivi_comments_col is not None and row[suivi_comments_col] not in (None, ""):
+            suivi_value = row[suivi_comments_col]
+        elif historico_suivi_col is not None and row[historico_suivi_col] not in (None, ""):
+            suivi_value = row[historico_suivi_col]
+
+        comercial_value = ""
+        if comercial_comments_col is not None and row[comercial_comments_col] not in (None, ""):
+            comercial_value = row[comercial_comments_col]
+        elif historico_comercial_col is not None and row[historico_comercial_col] not in (None, ""):
+            comercial_value = row[historico_comercial_col]
+
+        if itm8 and itm8 not in result["suivi"]["itm8"]:
+            result["suivi"]["itm8"][itm8] = suivi_value
+        if ean and ean not in result["suivi"]["ean"]:
+            result["suivi"]["ean"][ean] = suivi_value
+        if itm8 and itm8 not in result["comercial"]["itm8"]:
+            result["comercial"]["itm8"][itm8] = comercial_value
+        if ean and ean not in result["comercial"]["ean"]:
+            result["comercial"]["ean"][ean] = comercial_value
 
     wb.close()
     return result
@@ -578,19 +609,21 @@ def promo_lookup(promos: dict[str, dict[str, Any]], ean: str) -> dict[str, Any]:
 
 def apply_row_formulas(ws, row_number: int) -> None:
     row = row_number
-    ws.cell(row, 3).value = f"=MID(A{row},2,2)"
-    ws.cell(row, 4).value = f"=XLOOKUP(C{row},Folha2!A:A,Folha2!B:B)"
-    ws.cell(row, 5).value = f"=MID(A{row},5,3)"
-    ws.cell(row, 6).value = f"=MID(B{row},5,2)"
-    ws.cell(row, 7).value = f"=MID(B{row},8,2)"
+    ws.cell(row, 3).value = f"=SEG.TEXTO(A{row};2;2)"
+    ws.cell(row, 4).value = f"=PROCX(C{row};Folha2!A:A;Folha2!B:B)"
+    ws.cell(row, 5).value = f"=SEG.TEXTO(A{row};5;3)"
+    ws.cell(row, 6).value = f"=SEG.TEXTO(B{row};5;2)"
+    ws.cell(row, 7).value = f"=SEG.TEXTO(B{row};8;2)"
     ws.cell(row, 25).value = (
-        f'=IF(OR(N{row}="O",O{row}="O"),IF(COUNT(V{row}:X{row})>0,MIN(V{row}:X{row}),MIN(S{row}:U{row})),'
-        f'IF(M{row}="O",MIN(S{row}:U{row}),IF(L{row}="E",IFERROR(MODE(S{row}:U{row}),MIN(S{row}:U{row})),AVERAGE(S{row}:U{row}))))'
+        f'=SE(OU(N{row}="O";O{row}="O");SE(CONTAR(V{row}:X{row})>0;MÍNIMO(V{row}:X{row});MÍNIMO(S{row}:U{row}));'
+        f'SE(M{row}="O";MÍNIMO(S{row}:U{row});SE(L{row}="E";SE.ERRO(MODA(S{row}:U{row});MÍNIMO(S{row}:U{row}));MÉDIA(S{row}:U{row}))))'
     )
     ws.cell(row, 26).value = f"=R{row}/Y{row}-1"
     ws.cell(row, 27).value = f"=R{row}-Y{row}"
-    ws.cell(row, 28).value = f'=IF(R{row}=Y{row},"VERDADEIRO","FALSO")'
-    ws.cell(row, 31).value = f'=IF(AC{row}="","",DATE(YEAR(AC{row}),MONTH(AC{row}),DAY(AC{row})))'
+    ws.cell(row, 28).value = f'=SE(R{row}=Y{row};"VERDADEIRO";"FALSO")'
+    ws.cell(row, 31).value = (
+        f'=SE(AC{row}="";"";SE(OU(AC{row}>=(HOJE()+15);AC{row}<(HOJE()+7));"não";"sim"))'
+    )
 
 
 def fill_row(

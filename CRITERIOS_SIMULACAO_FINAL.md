@@ -77,7 +77,7 @@ Se não houver valor, a célula fica vazia.
 | DESVIO % (Z) | `=R/Y-1` |
 | DESVIO € (AA) | `=R-Y` |
 | CHECK (AB) | `=SE(R=Y;"VERDADEIRO";"FALSO")` |
-| PVP FOLHETO BLQ (AE) | `=SE(AC="";"";DATA(ANO(AC);MÊS(AC);DIA(AC)))` |
+| PVP FOLHETO BLQ (AE) | `=SE(AC="";"";SE(OU(AC>=(HOJE()+15);AC<(HOJE()+7));"não";"sim"))` |
 
 - Colunas **S:Y** com formato **Moeda €**.
 
@@ -106,6 +106,9 @@ folheto, pelo que é normal existirem linhas sem campanha/PVP preenchidos.
 |---|---|
 | Comentários (face ao suivi) | HISTORICO (face ao suivi) — AI |
 | Comentários comercial | HISTÓRICO (comentários comercial) — AL |
+
+Se a coluna de comentários da semana anterior estiver vazia, usa-se a coluna
+`HISTORICO` / `HISTORICO (face ao suivi)` do ficheiro anterior para manter a cadeia.
 
 As colunas **COMENTÁRIOS (face ao suivi)** (AH) e **FEEDBACK COMERCIAL** (AJ) ficam sempre
 vazias no ficheiro gerado.
