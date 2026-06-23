@@ -19,13 +19,6 @@ DEFAULT_OUTPUT = "simulacao-final.xlsx"
 COMPETITOR_COLUMNS = ("CONTINENTE", "LIDL", "PINGO-DOCE")
 DADOS_HEADER_ROW = 2
 EURO_FORMAT = '#,##0.00 "€"'
-COL_PVP_FOLHETO_BLQ = 31  # AE
-
-
-def pvp_folheto_blq_formula(row_number: int) -> str:
-    return (
-        f'=SE(AC{row_number}="";"";SE(OU(AC{row_number}>=(HOJE()+15);AC{row_number}<(HOJE()+7));"não";"sim"))'
-    )
 
 PROPOSTA_OPTIONS = ("Subir", "Descer", "OK")
 FEEDBACK_OPTIONS = (
@@ -620,24 +613,19 @@ def promo_lookup(promos: dict[str, dict[str, Any]], ean: str) -> dict[str, Any]:
 
 def apply_row_formulas(ws, row_number: int) -> None:
     row = row_number
-    ws.cell(row, 3).value = f"=SEG.TEXTO(A{row};2;2)"
-    ws.cell(row, 4).value = f"=PROCX(C{row};Folha2!A:A;Folha2!B:B)"
-    ws.cell(row, 5).value = f"=SEG.TEXTO(A{row};5;3)"
-    ws.cell(row, 6).value = f"=SEG.TEXTO(B{row};5;2)"
-    ws.cell(row, 7).value = f"=SEG.TEXTO(B{row};8;2)"
+    ws.cell(row, 3).value = f"=MID(A{row},2,2)"
+    ws.cell(row, 4).value = f"=XLOOKUP(C{row},Folha2!A:A,Folha2!B:B)"
+    ws.cell(row, 5).value = f"=MID(A{row},5,3)"
+    ws.cell(row, 6).value = f"=MID(B{row},5,2)"
+    ws.cell(row, 7).value = f"=MID(B{row},8,2)"
     ws.cell(row, 25).value = (
-        f'=SE(OU(N{row}="O";O{row}="O");SE(CONTAR(V{row}:X{row})>0;MÍNIMO(V{row}:X{row});MÍNIMO(S{row}:U{row}));'
-        f'SE(M{row}="O";MÍNIMO(S{row}:U{row});SE(L{row}="E";SE.ERRO(MODA(S{row}:U{row});MÍNIMO(S{row}:U{row}));MÉDIA(S{row}:U{row}))))'
+        f'=IF(OR(N{row}="O",O{row}="O"),IF(COUNT(V{row}:X{row})>0,MIN(V{row}:X{row}),MIN(S{row}:U{row})),'
+        f'IF(M{row}="O",MIN(S{row}:U{row}),IF(L{row}="E",IFERROR(MODE(S{row}:U{row}),MIN(S{row}:U{row})),AVERAGE(S{row}:U{row}))))'
     )
     ws.cell(row, 26).value = f"=R{row}/Y{row}-1"
     ws.cell(row, 27).value = f"=R{row}-Y{row}"
-    ws.cell(row, 28).value = f'=SE(R{row}=Y{row};"VERDADEIRO";"FALSO")'
-
-
-def set_pvp_folheto_blq_cell(ws, row_number: int) -> None:
-    cell = ws.cell(row_number, COL_PVP_FOLHETO_BLQ)
-    cell.value = pvp_folheto_blq_formula(row_number)
-    cell.number_format = "General"
+    ws.cell(row, 28).value = f'=IF(R{row}=Y{row},"VERDADEIRO","FALSO")'
+    ws.cell(row, 31).value = f'=IF(AC{row}="","",DATE(YEAR(AC{row}),MONTH(AC{row}),DAY(AC{row})))'
 
 
 def fill_row(
@@ -691,7 +679,6 @@ def fill_row(
         ws.cell(row_number, col).number_format = EURO_FORMAT
 
     apply_row_formulas(ws, row_number)
-    set_pvp_folheto_blq_cell(ws, row_number)
 
     ws.cell(row_number, 35).value = historico_suivi if historico_suivi is not None else ""
     ws.cell(row_number, 38).value = historico_comercial if historico_comercial is not None else ""
@@ -720,6 +707,7 @@ def build_workbook(
 
     wb, ws = prepare_template(template_path)
     clear_data_area(ws, len(records) + 3)
+    apply_row_styles(ws, len(records))
 
     date_label = format_slash_date(shopping_date)
     if date_label:
@@ -736,10 +724,6 @@ def build_workbook(
             historic_value(historico["suivi"], record),
             historic_value(historico["comercial"], record),
         )
-
-    apply_row_styles(ws, len(records))
-    for row_number in range(4, len(records) + 4):
-        set_pvp_folheto_blq_cell(ws, row_number)
 
     first_extra_row = len(records) + 4
     if ws.max_row >= first_extra_row:
