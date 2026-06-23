@@ -19,6 +19,13 @@ DEFAULT_OUTPUT = "simulacao-final.xlsx"
 COMPETITOR_COLUMNS = ("CONTINENTE", "LIDL", "PINGO-DOCE")
 DADOS_HEADER_ROW = 2
 EURO_FORMAT = '#,##0.00 "€"'
+COL_PVP_FOLHETO_BLQ = 31  # AE
+
+
+def pvp_folheto_blq_formula(row_number: int) -> str:
+    return (
+        f'=SE(AC{row_number}="";"";SE(OU(AC{row_number}>=(HOJE()+15);AC{row_number}<(HOJE()+7));"não";"sim"))'
+    )
 
 PROPOSTA_OPTIONS = ("Subir", "Descer", "OK")
 FEEDBACK_OPTIONS = (
@@ -625,9 +632,12 @@ def apply_row_formulas(ws, row_number: int) -> None:
     ws.cell(row, 26).value = f"=R{row}/Y{row}-1"
     ws.cell(row, 27).value = f"=R{row}-Y{row}"
     ws.cell(row, 28).value = f'=SE(R{row}=Y{row};"VERDADEIRO";"FALSO")'
-    ws.cell(row, 31).value = (
-        f'=SE(AC{row}="";"";SE(OU(AC{row}>=(HOJE()+15);AC{row}<(HOJE()+7));"não";"sim"))'
-    )
+
+
+def set_pvp_folheto_blq_cell(ws, row_number: int) -> None:
+    cell = ws.cell(row_number, COL_PVP_FOLHETO_BLQ)
+    cell.value = pvp_folheto_blq_formula(row_number)
+    cell.number_format = "General"
 
 
 def fill_row(
@@ -681,6 +691,7 @@ def fill_row(
         ws.cell(row_number, col).number_format = EURO_FORMAT
 
     apply_row_formulas(ws, row_number)
+    set_pvp_folheto_blq_cell(ws, row_number)
 
     ws.cell(row_number, 35).value = historico_suivi if historico_suivi is not None else ""
     ws.cell(row_number, 38).value = historico_comercial if historico_comercial is not None else ""
@@ -709,7 +720,6 @@ def build_workbook(
 
     wb, ws = prepare_template(template_path)
     clear_data_area(ws, len(records) + 3)
-    apply_row_styles(ws, len(records))
 
     date_label = format_slash_date(shopping_date)
     if date_label:
@@ -726,6 +736,10 @@ def build_workbook(
             historic_value(historico["suivi"], record),
             historic_value(historico["comercial"], record),
         )
+
+    apply_row_styles(ws, len(records))
+    for row_number in range(4, len(records) + 4):
+        set_pvp_folheto_blq_cell(ws, row_number)
 
     first_extra_row = len(records) + 4
     if ws.max_row >= first_extra_row:
