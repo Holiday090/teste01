@@ -77,7 +77,7 @@ Se não houver valor, a célula fica vazia.
 | DESVIO % (Z) | `=R/Y-1` |
 | DESVIO € (AA) | `=R-Y` |
 | CHECK (AB) | `=SE(R=Y;"VERDADEIRO";"FALSO")` |
-| PVP FOLHETO BLQ (AE) | `=SE(AC="";"";DATA(ANO(AC);MÊS(AC);DIA(AC)))` |
+| PVP FOLHETO BLQ (AE) | `=SE(AC="";"";SE(OU(AC>=(HOJE()+15);AC<(HOJE()+7));"não";"sim"))` — formato **Geral** |
 
 - Colunas **S:Y** com formato **Moeda €**.
 
