@@ -49,17 +49,20 @@
 
 ## Fórmulas derivadas (A/B → C–G)
 
+O gerador escreve fórmulas em **inglês** (como no template), para evitar erros de
+compatibilidade no Excel.
+
 | Coluna | Fórmula |
 |---|---|
-| GRP | `=SEG.TEXTO(A;2;2)` |
-| GRUPO | `=PROCX(C;Folha2!A:A;Folha2!B:B)` |
-| FIL | `=SEG.TEXTO(A;5;3)` |
-| FAM | `=SEG.TEXTO(B;5;2)` |
-| SFA | `=SEG.TEXTO(B;8;2)` |
+| GRP | `=MID(A,2,2)` |
+| GRUPO | `=XLOOKUP(C,Folha2!A:A,Folha2!B:B)` |
+| FIL | `=MID(A,5,3)` |
+| FAM | `=MID(B,5,2)` |
+| SFA | `=MID(B,8,2)` |
 
 ## Promo SoySuper (Relatório comparável)
 
-PROCX por EAN (coluna K do template ↔ coluna A do comparável):
+Ligação por EAN (coluna K do template ↔ coluna A do comparável):
 
 | Template | Origem no comparável |
 |---|---|
@@ -73,13 +76,15 @@ Se não houver valor, a célula fica vazia.
 
 | Coluna | Fórmula |
 |---|---|
-| CONDIÇÃO PVP (Y) | `=SE(OU(N="O";O="O");SE(CONTAR(V:X)>0;MÍNIMO(V:X);MÍNIMO(S:U));SE(M="O";MÍNIMO(S:U);SE(L="E";SE.ERRO(MODA(S:U);MÍNIMO(S:U));MÉDIA(S:U))))` |
+| CONDIÇÃO PVP (Y) | `=IF(OR(N="O",O="O"),IF(COUNT(V:X)>0,MIN(V:X),MIN(S:U)),IF(M="O",MIN(S:U),IF(L="E",IFERROR(MODE(S:U),MIN(S:U)),AVERAGE(S:U))))` |
 | DESVIO % (Z) | `=R/Y-1` |
 | DESVIO € (AA) | `=R-Y` |
-| CHECK (AB) | `=SE(R=Y;"VERDADEIRO";"FALSO")` |
-| PVP FOLHETO BLQ (AE) | `=SE(AC="";"";SE(OU(AC>=(HOJE()+15);AC<(HOJE()+7));"não";"sim"))` — formato **Geral** |
+| CHECK (AB) | `=IF(R=Y,"VERDADEIRO","FALSO")` |
+| PVP FOLHETO BLQ (AE) | `=IF(AC="","",DATE(YEAR(AC),MONTH(AC),DAY(AC)))` — formato **Geral** |
 
 - Colunas **S:Y** com formato **Moeda €**.
+- **AC** (CAMPANHA PROMO FUTURA) e **AD** (PVP CAMPANHA) são preenchidas com
+  **valores** do Total Meas (data e preço), não com fórmulas do template.
 
 ## Total Meas
 
