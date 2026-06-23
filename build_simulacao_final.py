@@ -613,19 +613,21 @@ def promo_lookup(promos: dict[str, dict[str, Any]], ean: str) -> dict[str, Any]:
 
 def apply_row_formulas(ws, row_number: int) -> None:
     row = row_number
-    ws.cell(row, 3).value = f"=MID(A{row},2,2)"
-    ws.cell(row, 4).value = f"=XLOOKUP(C{row},Folha2!A:A,Folha2!B:B)"
-    ws.cell(row, 5).value = f"=MID(A{row},5,3)"
-    ws.cell(row, 6).value = f"=MID(B{row},5,2)"
-    ws.cell(row, 7).value = f"=MID(B{row},8,2)"
+    ws.cell(row, 3).value = f"=SEG.TEXTO(A{row};2;2)"
+    ws.cell(row, 4).value = f"=PROCX(C{row};Folha2!A:A;Folha2!B:B)"
+    ws.cell(row, 5).value = f"=SEG.TEXTO(A{row};5;3)"
+    ws.cell(row, 6).value = f"=SEG.TEXTO(B{row};5;2)"
+    ws.cell(row, 7).value = f"=SEG.TEXTO(B{row};8;2)"
     ws.cell(row, 25).value = (
-        f'=IF(OR(N{row}="O",O{row}="O"),IF(COUNT(V{row}:X{row})>0,MIN(V{row}:X{row}),MIN(S{row}:U{row})),'
-        f'IF(M{row}="O",MIN(S{row}:U{row}),IF(L{row}="E",IFERROR(MODE(S{row}:U{row}),MIN(S{row}:U{row})),AVERAGE(S{row}:U{row}))))'
+        f'=SE(OU(N{row}="O";O{row}="O");SE(CONTAR(V{row}:X{row})>0;MÍNIMO(V{row}:X{row});MÍNIMO(S{row}:U{row}));'
+        f'SE(M{row}="O";MÍNIMO(S{row}:U{row});SE(L{row}="E";SE.ERRO(MODA(S{row}:U{row});MÍNIMO(S{row}:U{row}));MÉDIA(S{row}:U{row}))))'
     )
     ws.cell(row, 26).value = f"=R{row}/Y{row}-1"
     ws.cell(row, 27).value = f"=R{row}-Y{row}"
-    ws.cell(row, 28).value = f'=IF(R{row}=Y{row},"VERDADEIRO","FALSO")'
-    ws.cell(row, 31).value = f'=IF(AC{row}="","",DATE(YEAR(AC{row}),MONTH(AC{row}),DAY(AC{row})))'
+    ws.cell(row, 28).value = f'=SE(R{row}=Y{row};"VERDADEIRO";"FALSO")'
+    ws.cell(row, 31).value = (
+        f'=SE(AC{row}="";"";SE(OU(AC{row}>=(HOJE()+15);AC{row}<(HOJE()+7));"não";"sim"))'
+    )
 
 
 def fill_row(
