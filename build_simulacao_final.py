@@ -302,33 +302,149 @@ def find_header_column(headers: tuple[Any, ...], *keywords: str, exclude: tuple[
     return None
 
 
-def load_total_meas(total_meas_path: Path) -> dict[str, dict[str, Any]]:
+def uvc_key(value: Any) -> str:
+    text = as_text(value)
+    return text.lstrip("0") or text
+
+
+def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
     wb = load_workbook(total_meas_path, data_only=True, read_only=True)
     ws = wb["sql_query3"]
+    headers = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
+    cols = {
+        "grupo": header_index(headers, "GRUPO_INTERNO"),
+        "uvc": header_index(headers, "UVC"),
+        "ean": header_index(headers, "EAN"),
+        "descricao": header_index(headers, "DESCRIÇÃO"),
+        "in_mea": header_index(headers, "IN_MEA"),
+        "pvp": header_index(headers, "PVP"),
+    }
 
-    rows = ws.iter_rows(min_row=1, values_only=True)
-    headers = next(rows)
-    itm8_col = header_index(headers, "ITM8")
-    in_mea_col = header_index(headers, "IN_MEA")
-    pvp_col = header_index(headers, "PVP")
-
-    by_itm8: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        itm8 = item_key(row[itm8_col])
-        date = parse_date(row[in_mea_col])
-        if not itm8 or date is None:
+    rows: list[dict[str, Any]] = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        date = parse_date(row[cols["in_mea"]])
+        if date is None:
             continue
-
-        current = by_itm8.get(itm8)
-        if current is None or date > current["sort_date"]:
-            by_itm8[itm8] = {
-                "sort_date": date,
-                "date": date,
-                "pvp": row[pvp_col] if row[pvp_col] is not None else "",
+        rows.append(
+            {
+                "grupo": row[cols["grupo"]],
+                "uvc": as_text(row[cols["uvc"]]),
+                "ean": as_text(row[cols["ean"]]),
+                "descricao": row[cols["descricao"]],
+                "in_mea": date,
+                "pvp": row[cols["pvp"]] if row[cols["pvp"]] is not None else "",
             }
-
+        )
     wb.close()
-    return by_itm8
+    return rows
+
+
+def sort_meas_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return sorted(
+        rows,
+        key=lambda row: (
+            as_text(row["grupo"]),
+            as_text(row["uvc"]).zfill(10),
+            ean_key(row["ean"]),
+            as_text(row["descricao"]),
+            -row["in_mea"].timestamp(),
+        ),
+    )
+
+
+def build_meas_processed_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    sorted_rows = sort_meas_rows(rows)
+    best_by_uvc: dict[str, dict[str, Any]] = {}
+    for row in sorted_rows:
+        key = uvc_key(row["uvc"]) or as_text(row["uvc"])
+        if not key:
+            continue
+        current = best_by_uvc.get(key)
+        if current is None or row["in_mea"] > current["in_mea"]:
+            best_by_uvc[key] = row
+
+    return sort_meas_rows(list(best_by_uvc.values()))
+
+
+def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str, Any]], processed_rows: list[dict[str, Any]]) -> Path:
+    output_path = total_meas_path.with_name(f"{total_meas_path.stem} - processado.xlsx")
+    wb = load_workbook(total_meas_path)
+    if "TD Meas" in wb.sheetnames:
+        del wb["TD Meas"]
+    if "Meas Processado" in wb.sheetnames:
+        del wb["Meas Processado"]
+
+    pivot_ws = wb.create_sheet("TD Meas")
+    processed_ws = wb.create_sheet("Meas Processado")
+    headers = ("GRUPO_INTERNO", "UVC", "EAN", "DESCRIÇÃO", "IN_MEA", "PVP")
+
+    for ws in (pivot_ws, processed_ws):
+        for col, header in enumerate(headers, start=1):
+            ws.cell(1, col).value = header
+
+    for target_ws, source_rows in ((pivot_ws, pivot_rows), (processed_ws, processed_rows)):
+        for row_number, row in enumerate(source_rows, start=2):
+            target_ws.cell(row_number, 1).value = row["grupo"]
+            target_ws.cell(row_number, 2).value = row["uvc"]
+            target_ws.cell(row_number, 3).value = row["ean"]
+            target_ws.cell(row_number, 4).value = row["descricao"]
+            date_cell = target_ws.cell(row_number, 5)
+            date_cell.value = row["in_mea"]
+            date_cell.number_format = "dd-mm-yyyy"
+            target_ws.cell(row_number, 6).value = row["pvp"]
+
+    wb.save(output_path)
+    wb.close()
+    return output_path
+
+
+def build_meas_lookup(processed_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    lookup: dict[str, dict[str, Any]] = {}
+    for row in processed_rows:
+        entry = {
+            "sort_date": row["in_mea"],
+            "date": row["in_mea"],
+            "pvp": row["pvp"],
+            "uvc": row["uvc"],
+            "ean": row["ean"],
+        }
+        for key in (as_text(row["uvc"]), uvc_key(row["uvc"])):
+            if key:
+                lookup[key] = entry
+    return lookup
+
+
+def meas_lookup_for_record(lookup: dict[str, dict[str, Any]], record: dict[str, Any]) -> dict[str, Any]:
+    for key in (as_text(record["itm8"]), item_key(record["itm8"]), uvc_key(record["itm8"])):
+        if key in lookup:
+            return lookup[key]
+    return {}
+
+
+def count_meas_matches(records: list[dict[str, Any]], lookup: dict[str, dict[str, Any]]) -> int:
+    return sum(1 for record in records if meas_lookup_for_record(lookup, record))
+
+
+def load_total_meas(
+    total_meas_path: Path,
+    *,
+    save_processed: bool = True,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    raw_rows = read_total_meas_rows(total_meas_path)
+    pivot_rows = sort_meas_rows(raw_rows)
+    processed_rows = build_meas_processed_rows(raw_rows)
+    lookup = build_meas_lookup(processed_rows)
+
+    stats = {
+        "raw_rows": len(raw_rows),
+        "pivot_rows": len(pivot_rows),
+        "processed_uvc": len(processed_rows),
+    }
+
+    if save_processed:
+        stats["processed_path"] = write_total_meas_processed(total_meas_path, pivot_rows, processed_rows)
+
+    return lookup, stats
 
 
 def load_analise_historico(analise_path: Path | None) -> dict[str, dict[str, dict[str, Any]]]:
@@ -522,7 +638,7 @@ def fill_row(
     ws.cell(row_number, 23).value = promo_values.get("LIDL", "")
     ws.cell(row_number, 24).value = promo_values.get("PINGO-DOCE", "")
 
-    meas_values = meas.get(item_key(record["itm8"]), {})
+    meas_values = meas_lookup_for_record(meas, record)
     campaign_date_cell = ws.cell(row_number, 29)
     campaign_date_cell.value = meas_values.get("date", "")
     if campaign_date_cell.value not in (None, ""):
@@ -553,10 +669,10 @@ def build_workbook(
     total_meas_path: Path,
     analise_path: Path | None,
     output_path: Path,
-) -> None:
+) -> dict[str, Any]:
     records, shopping_date = load_simulation(simulation_path)
     comparavel = load_comparavel(comparavel_path)
-    total_meas = load_total_meas(total_meas_path)
+    total_meas, meas_stats = load_total_meas(total_meas_path)
     historico = load_analise_historico(analise_path)
 
     wb, ws = prepare_template(template_path)
@@ -588,6 +704,10 @@ def build_workbook(
     wb.calculation.forceFullCalc = True
     wb.save(output_path)
 
+    meas_stats["matched_rows"] = count_meas_matches(records, total_meas)
+    meas_stats["total_rows"] = len(records)
+    return meas_stats
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Gera o ficheiro Análise preços SUIVI a partir do template e ficheiros de origem.")
@@ -618,7 +738,7 @@ def main() -> None:
     )
     output_path = Path(args.output) if args.output else root / output_filename_for_week(week)
 
-    build_workbook(
+    meas_stats = build_workbook(
         root / args.template,
         simulation_path,
         comparavel_path,
@@ -631,6 +751,13 @@ def main() -> None:
     print(f"Simulação: {simulation_path.name}")
     print(f"Comparável: {comparavel_path.name}")
     print(f"Total meas: {total_meas_path.name}")
+    if "processed_path" in meas_stats:
+        print(f"Total meas processado: {meas_stats['processed_path'].name}")
+    print(
+        "Campanha/PVP preenchidos (UVC=ITM8): "
+        f"{meas_stats['matched_rows']}/{meas_stats['total_rows']} "
+        f"({100 * meas_stats['matched_rows'] / meas_stats['total_rows']:.1f}%)"
+    )
     if analise_path is None:
         print("Aviso: ficheiro de análise preços da semana anterior não encontrado; históricos ficaram vazios.")
     else:

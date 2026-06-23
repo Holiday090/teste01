@@ -83,8 +83,16 @@ Se não houver valor, a célula fica vazia.
 
 ## Total Meas
 
-Por artigo, usar o registo com **IN_MEA mais recente**, com prioridade de matching por **ITM8**
-(podem existir vários EAN para o mesmo ITM8):
+O ficheiro Total Meas é primeiro processado em duas folhas auxiliares:
+
+1. **TD Meas** — tabela dinâmica em formato tabular com `GRUPO_INTERNO`, `UVC`,
+   `EAN`, `DESCRIÇÃO`, `IN_MEA`, `PVP`, ordenada por Grupo / UVC / EAN /
+   Descrição / data mais recente.
+2. **Meas Processado** — uma linha por `UVC` com a `IN_MEA` mais recente.
+
+O ficheiro processado é guardado como `TOTAL - meas a DD-MM-YYYY - processado.xlsx`.
+
+A ligação ao template é feita por **UVC = ITM8** da simulação.
 
 | Origem | Destino |
 |---|---|
