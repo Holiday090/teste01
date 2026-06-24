@@ -292,11 +292,16 @@ def load_comparavel(comparavel_path: Path) -> dict[str, dict[str, Any]]:
         ean = as_text(row[0])
         if not ean:
             continue
-        promos[ean] = {
-            "CONTINENTE": row[17] if row[17] is not None else "",
-            "LIDL": row[25] if row[25] is not None else "",
-            "PINGO-DOCE": row[21] if row[21] is not None else "",
-        }
+        if ean not in promos:
+            promos[ean] = {"CONTINENTE": "", "LIDL": "", "PINGO-DOCE": ""}
+        for retailer, index in (
+            ("CONTINENTE", 17),
+            ("PINGO-DOCE", 21),
+            ("LIDL", 25),
+        ):
+            value = row[index] if index < len(row) else None
+            if isinstance(value, (int, float)):
+                promos[ean][retailer] = value
         normalized = ean_key(ean)
         if normalized and normalized not in promos:
             promos[normalized] = promos[ean]
