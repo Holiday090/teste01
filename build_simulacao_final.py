@@ -736,7 +736,7 @@ def build_workbook(
 ) -> dict[str, Any]:
     records, shopping_date = load_simulation(simulation_path)
     comparavel = load_comparavel(comparavel_path)
-    total_meas, meas_stats = load_total_meas(total_meas_path, reference_date=shopping_date)
+    total_meas, meas_stats = load_total_meas(total_meas_path)
     historico = load_analise_historico(analise_path)
 
     wb, ws = prepare_template(template_path)
