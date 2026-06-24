@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from copy import copy
 from datetime import datetime
 from pathlib import Path
@@ -377,23 +377,16 @@ def normalize_meas_reference(value: datetime) -> datetime:
     return value.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
-def meas_distance_days(meas_date: datetime, reference: datetime) -> int:
-    return abs((normalize_meas_reference(meas_date) - normalize_meas_reference(reference)).days)
-
-
-def prefer_meas_row(candidate: dict[str, Any], current: dict[str, Any], reference: datetime) -> bool:
-    candidate_distance = meas_distance_days(candidate["in_mea"], reference)
-    current_distance = meas_distance_days(current["in_mea"], reference)
-    if candidate_distance != current_distance:
-        return candidate_distance < current_distance
+def select_meas_row_for_ean(rows: list[dict[str, Any]], reference: datetime) -> dict[str, Any] | None:
+    if not rows:
+        return None
 
     reference_day = normalize_meas_reference(reference)
-    candidate_future = normalize_meas_reference(candidate["in_mea"]) >= reference_day
-    current_future = normalize_meas_reference(current["in_mea"]) >= reference_day
-    if candidate_future != current_future:
-        return candidate_future
-
-    return candidate["in_mea"] < current["in_mea"]
+    sorted_rows = sorted(rows, key=lambda row: row["in_mea"])
+    for row in sorted_rows:
+        if normalize_meas_reference(row["in_mea"]) >= reference_day:
+            return row
+    return sorted_rows[-1]
 
 
 def build_meas_processed_rows(
@@ -401,16 +394,19 @@ def build_meas_processed_rows(
     reference_date: datetime | None = None,
 ) -> list[dict[str, Any]]:
     reference = reference_date or datetime.now()
-    best_by_ean: dict[str, dict[str, Any]] = {}
+    rows_by_ean: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         key = ean_key(row["ean"]) or as_text(row["ean"])
-        if not key:
-            continue
-        current = best_by_ean.get(key)
-        if current is None or prefer_meas_row(row, current, reference):
-            best_by_ean[key] = row
+        if key:
+            rows_by_ean[key].append(row)
 
-    return sort_meas_rows(list(best_by_ean.values()))
+    processed_rows: list[dict[str, Any]] = []
+    for ean_rows in rows_by_ean.values():
+        selected = select_meas_row_for_ean(ean_rows, reference)
+        if selected is not None:
+            processed_rows.append(selected)
+
+    return sort_meas_rows(processed_rows)
 
 
 def build_meas_lookup(processed_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:

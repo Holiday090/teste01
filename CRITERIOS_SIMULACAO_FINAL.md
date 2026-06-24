@@ -94,9 +94,11 @@ O ficheiro Total Meas (indicativo de folheto) é primeiro processado em duas fol
 1. **TD Meas** — tabela dinâmica em formato tabular com `GRUPO_INTERNO`, `UVC`,
    `EAN`, `DESCRIÇÃO`, `IN_MEA`, `PVP`, ordenada por Grupo / UVC / EAN /
    Descrição / data mais recente.
-2. **Meas Processado** — uma linha por `EAN` com a `IN_MEA` **mais próxima da data em que
-   o script é executado** (dia de criação do ficheiro). Ex.: com execução a 24-06 e datas
-   25-06 e 01-08, escolhe-se 25-06.
+2. **Meas Processado** — uma linha por `EAN` com a `IN_MEA` da **próxima campanha**:
+   ordenam-se as datas por ordem crescente e escolhe-se a **menor data igual ou
+   posterior ao dia em que o script é executado**. Ex.: com execução a 24-06 e
+   campanhas 25-06, 09-07 e 30-07, escolhe-se **25-06**. Se só existirem datas
+   passadas, usa-se a mais recente.
 
 O ficheiro processado é guardado como `TOTAL - meas a DD-MM-YYYY - processado.xlsx`.
 
