@@ -62,7 +62,9 @@ def ean_key(value: Any) -> str:
 
 def excluded_article(value: Any) -> bool:
     description = as_text(value).upper()
-    return description.startswith(("SUB", "XXX"))
+    if description.startswith("SUB"):
+        return True
+    return description.startswith("XX") and not description.startswith("XXL")
 
 
 def parse_date(value: Any) -> datetime | None:
