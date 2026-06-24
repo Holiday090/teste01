@@ -373,15 +373,41 @@ def sort_meas_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     )
 
 
-def build_meas_processed_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    sorted_rows = sort_meas_rows(rows)
+def normalize_meas_reference(value: datetime) -> datetime:
+    return value.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def meas_distance_days(meas_date: datetime, reference: datetime) -> int:
+    return abs((normalize_meas_reference(meas_date) - normalize_meas_reference(reference)).days)
+
+
+def prefer_meas_row(candidate: dict[str, Any], current: dict[str, Any], reference: datetime) -> bool:
+    candidate_distance = meas_distance_days(candidate["in_mea"], reference)
+    current_distance = meas_distance_days(current["in_mea"], reference)
+    if candidate_distance != current_distance:
+        return candidate_distance < current_distance
+
+    reference_day = normalize_meas_reference(reference)
+    candidate_future = normalize_meas_reference(candidate["in_mea"]) >= reference_day
+    current_future = normalize_meas_reference(current["in_mea"]) >= reference_day
+    if candidate_future != current_future:
+        return candidate_future
+
+    return candidate["in_mea"] < current["in_mea"]
+
+
+def build_meas_processed_rows(
+    rows: list[dict[str, Any]],
+    reference_date: datetime | None = None,
+) -> list[dict[str, Any]]:
+    reference = reference_date or datetime.now()
     best_by_ean: dict[str, dict[str, Any]] = {}
-    for row in sorted_rows:
+    for row in rows:
         key = ean_key(row["ean"]) or as_text(row["ean"])
         if not key:
             continue
         current = best_by_ean.get(key)
-        if current is None or row["in_mea"] > current["in_mea"]:
+        if current is None or prefer_meas_row(row, current, reference):
             best_by_ean[key] = row
 
     return sort_meas_rows(list(best_by_ean.values()))
@@ -449,11 +475,12 @@ def count_meas_matches(records: list[dict[str, Any]], lookup: dict[str, dict[str
 def load_total_meas(
     total_meas_path: Path,
     *,
+    reference_date: datetime | None = None,
     save_processed: bool = True,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     raw_rows = read_total_meas_rows(total_meas_path)
     pivot_rows = sort_meas_rows(raw_rows)
-    processed_rows = build_meas_processed_rows(raw_rows)
+    processed_rows = build_meas_processed_rows(raw_rows, reference_date)
     lookup = build_meas_lookup(processed_rows)
 
     stats = {
@@ -709,7 +736,7 @@ def build_workbook(
 ) -> dict[str, Any]:
     records, shopping_date = load_simulation(simulation_path)
     comparavel = load_comparavel(comparavel_path)
-    total_meas, meas_stats = load_total_meas(total_meas_path)
+    total_meas, meas_stats = load_total_meas(total_meas_path, reference_date=shopping_date)
     historico = load_analise_historico(analise_path)
 
     wb, ws = prepare_template(template_path)
