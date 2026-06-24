@@ -11,6 +11,9 @@ EXECUÇÃO:
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py --only frescos --max-pages 2
 
 NOTAS:
+    - Hierarquia de categorias interpretada como:
+      Categoria -> Sub Categoria -> Família -> Sub Família
+      Exemplo: Alimentação -> Congelados -> Peixe -> Bacalhau
     - Navega pelo menu principal e extrai produtos das categorias definidas.
     - Percorre todas as páginas de cada subcategoria (botão "Ver mais produtos" ou paginação por URL).
     - Visita cada produto para obter breadcrumb completo, EAN e preços detalhados.
@@ -22,7 +25,6 @@ from __future__ import annotations
 import argparse
 import random
 import re
-import sys
 import time
 from dataclasses import dataclass
 from urllib.parse import urljoin, urlparse, urlunparse
@@ -39,8 +41,16 @@ QUANTITY_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+CATEGORY_LEVELS: tuple[str, ...] = (
+    "Categoria",
+    "Sub Categoria",
+    "Família",
+    "Sub Família",
+)
+
 EXCEL_COLUMNS = [
-    "Categorias (Breadcrumb)",
+    *CATEGORY_LEVELS,
+    "Caminho Categorias",
     "Descrição do Produto",
     "EAN / Referência",
     "Preço Regular",
@@ -103,12 +113,28 @@ def log(message: str) -> None:
     print(message, flush=True)
 
 
-def update_progress(category: str, current: int, total: int, suffix: str = "") -> None:
-    """Atualiza a linha de progresso no terminal."""
-    extra = f" {suffix}" if suffix else ""
-    line = f"Categoria atual: {category} | A processar produto {current}/{total}...{extra}"
-    sys.stdout.write("\r" + line.ljust(100))
-    sys.stdout.flush()
+def log_product_progress(
+    category: str,
+    current: int,
+    total: int,
+    *,
+    status: str = "processing",
+    product_name: str = "",
+    details: str = "",
+) -> None:
+    """Regista o progresso produto a produto no terminal (uma linha por evento)."""
+    if status == "processing":
+        preview = f" | {product_name[:70]}" if product_name else ""
+        log(f"Categoria atual: {category} | A processar produto {current}/{total}...{preview}")
+        return
+
+    if status == "done":
+        extra = f" | {details}" if details else ""
+        log(f"Categoria atual: {category} | Produto {current}/{total} concluído{extra}")
+        return
+
+    if status == "error":
+        log(f"Categoria atual: {category} | Erro no produto {current}/{total} | {details}")
 
 
 def human_delay(min_seconds: float = 1.0, max_seconds: float = 2.5) -> None:
@@ -474,8 +500,33 @@ def extract_json_ld(page: Page) -> tuple[dict, dict]:
     return data.get("product", {}), data.get("breadcrumb", {})
 
 
-def breadcrumb_from_json_ld(breadcrumb_ld: dict) -> str:
-    """Constrói o breadcrumb completo a partir do JSON-LD."""
+def normalize_label(value: str) -> str:
+    """Normaliza texto para comparação (sem acentos/case/espços extra)."""
+    normalized = value.strip().lower()
+    replacements = {
+        "á": "a", "à": "a", "â": "a", "ã": "a",
+        "é": "e", "ê": "e",
+        "í": "i",
+        "ó": "o", "ô": "o", "õ": "o",
+        "ú": "u", "ç": "c",
+    }
+    for source, target in replacements.items():
+        normalized = normalized.replace(source, target)
+    normalized = re.sub(r"\s+", " ", normalized)
+    return normalized
+
+
+def labels_match(left: str, right: str) -> bool:
+    """Verifica se dois rótulos representam o mesmo produto/categoria."""
+    left_norm = normalize_label(left)
+    right_norm = normalize_label(right)
+    if not left_norm or not right_norm:
+        return False
+    return left_norm == right_norm or left_norm in right_norm or right_norm in left_norm
+
+
+def breadcrumb_names_from_json_ld(breadcrumb_ld: dict) -> list[str]:
+    """Extrai a lista ordenada de nomes do breadcrumb."""
     items = breadcrumb_ld.get("itemListElement", [])
     names: list[str] = []
     for item in items:
@@ -488,7 +539,52 @@ def breadcrumb_from_json_ld(breadcrumb_ld: dict) -> str:
             name = str(item.get("name", "")).strip()
         if name:
             names.append(name)
-    return " -> ".join(names)
+    return names
+
+
+def breadcrumb_from_json_ld(breadcrumb_ld: dict) -> str:
+    """Constrói o breadcrumb completo a partir do JSON-LD."""
+    return " -> ".join(breadcrumb_names_from_json_ld(breadcrumb_ld))
+
+
+def parse_category_hierarchy(breadcrumb_names: list[str], product_name: str) -> dict[str, str]:
+    """
+    Interpreta o breadcrumb do Auchan na taxonomia de 4 níveis:
+    Categoria -> Sub Categoria -> Família -> Sub Família.
+
+    O último elemento do breadcrumb é ignorado quando corresponde ao nome
+    do produto (página atual), pois não faz parte da hierarquia comercial.
+    """
+    levels = [name.strip() for name in breadcrumb_names if name.strip()]
+
+    if levels and product_name and labels_match(levels[-1], product_name):
+        levels = levels[:-1]
+
+    hierarchy = {
+        level_name: na(levels[index] if index < len(levels) else None)
+        for index, level_name in enumerate(CATEGORY_LEVELS)
+    }
+    hierarchy["Caminho Categorias"] = " -> ".join(levels) if levels else "N/A"
+    return hierarchy
+
+
+def empty_product_record(product: dict[str, str], category_name: str) -> dict[str, str]:
+    """Registo mínimo quando a extração detalhada falha."""
+    record = {level_name: "N/A" for level_name in CATEGORY_LEVELS}
+    record.update(
+        {
+            "Caminho Categorias": "N/A",
+            "Descrição do Produto": na(product.get("name")),
+            "EAN / Referência": na(product.get("pid")),
+            "Preço Regular": na(product.get("sales_price") or product.get("list_price")),
+            "Preço Promocional": "N/A",
+            "Preço ao Quilo/Litro": na(product.get("unit_price")),
+            "Quantidade da Embalagem": "N/A",
+            "URL": product.get("url", "N/A"),
+            "Categoria Alvo": category_name,
+        }
+    )
+    return record
 
 
 def extract_quantity(name: str, page_text: str) -> str:
@@ -531,15 +627,20 @@ def extract_product_details(
     if not description:
         description = str(product_ld.get("name", "")).strip()
 
-    breadcrumb = breadcrumb_from_json_ld(breadcrumb_ld)
-    if not breadcrumb:
+    breadcrumb_names = breadcrumb_names_from_json_ld(breadcrumb_ld)
+    if not breadcrumb_names:
         try:
-            breadcrumb_links = page.locator(
-                '.breadcrumb a, .auc-breadcrumb a, [class*="breadcrumb"] a'
-            ).all_inner_texts()
-            breadcrumb = " -> ".join(text.strip() for text in breadcrumb_links if text.strip())
+            breadcrumb_names = [
+                text.strip()
+                for text in page.locator(
+                    '.breadcrumb a, .auc-breadcrumb a, [class*="breadcrumb"] a'
+                ).all_inner_texts()
+                if text.strip()
+            ]
         except Exception:
-            breadcrumb = ""
+            breadcrumb_names = []
+
+    category_hierarchy = parse_category_hierarchy(breadcrumb_names, description)
 
     ean = str(product_ld.get("gtin13") or product_ld.get("gtin") or "").strip()
     if not ean:
@@ -615,7 +716,7 @@ def extract_product_details(
         quantity = extract_quantity(description, "")
 
     return {
-        "Categorias (Breadcrumb)": na(breadcrumb),
+        **category_hierarchy,
         "Descrição do Produto": na(description),
         "EAN / Referência": na(reference),
         "Preço Regular": na(regular_price),
@@ -634,15 +735,19 @@ def export_to_excel(records: list[dict[str, str]], output_file: str) -> None:
         dataframe.to_excel(writer, index=False, sheet_name="Produtos")
         worksheet = writer.sheets["Produtos"]
         column_widths = {
-            "A": 55,
-            "B": 45,
-            "C": 18,
-            "D": 14,
-            "E": 16,
-            "F": 18,
-            "G": 22,
-            "H": 60,
-            "I": 18,
+            "A": 22,
+            "B": 22,
+            "C": 28,
+            "D": 28,
+            "E": 55,
+            "F": 45,
+            "G": 18,
+            "H": 14,
+            "I": 16,
+            "J": 18,
+            "K": 22,
+            "L": 60,
+            "M": 18,
         }
         for column, width in column_widths.items():
             worksheet.column_dimensions[column].width = width
@@ -672,31 +777,45 @@ def process_category(
     total = len(products)
 
     for index, product in enumerate(products, start=1):
-        update_progress(category.display_name, index, total)
+        product_name = str(product.get("name", "")).strip()
+        log_product_progress(
+            category.display_name,
+            index,
+            total,
+            status="processing",
+            product_name=product_name,
+        )
         try:
             product_data = extract_product_details(page, product, category.display_name)
             records.append(product_data)
-        except Exception as error:
-            log(f"\n[Categoria: {category.display_name}] Erro no produto {index}/{total}: {error}")
-            records.append(
-                {
-                    "Categorias (Breadcrumb)": "N/A",
-                    "Descrição do Produto": na(product.get("name")),
-                    "EAN / Referência": na(product.get("pid")),
-                    "Preço Regular": na(product.get("sales_price") or product.get("list_price")),
-                    "Preço Promocional": "N/A",
-                    "Preço ao Quilo/Litro": na(product.get("unit_price")),
-                    "Quantidade da Embalagem": "N/A",
-                    "URL": product.get("url", "N/A"),
-                    "Categoria Alvo": category.display_name,
-                }
+            price_info = product_data["Preço Regular"]
+            if product_data.get("Preço Promocional") not in ("N/A", ""):
+                price_info = f"{product_data['Preço Regular']} (promo: {product_data['Preço Promocional']})"
+            log_product_progress(
+                category.display_name,
+                index,
+                total,
+                status="done",
+                product_name=product_data["Descrição do Produto"],
+                details=(
+                    f"{product_data['Caminho Categorias']} "
+                    f"| EAN: {product_data['EAN / Referência']} "
+                    f"| Preço: {price_info}"
+                ),
             )
+        except Exception as error:
+            log_product_progress(
+                category.display_name,
+                index,
+                total,
+                status="error",
+                details=str(error),
+            )
+            records.append(empty_product_record(product, category.display_name))
 
         if index < total:
             human_delay(0.8, 1.8)
 
-    sys.stdout.write("\n")
-    sys.stdout.flush()
     log(f"[Categoria: {category.display_name}] Concluída — {total} produtos processados.")
 
 
