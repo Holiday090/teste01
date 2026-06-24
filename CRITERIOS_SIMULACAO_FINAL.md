@@ -3,7 +3,7 @@
 ## Ficheiro base e saída
 
 - **Template:** `ficheiro template 2.xlsx`
-- **Saída:** `SXX_analise_precos_SUIVI.xlsx`, em que `XX` é o número da semana da simulação
+- **Saída:** `SXX - Análise preços SUIVI.xlsx`, em que `XX` é o número da semana da simulação
   mais recente.
 
 ## Deteção automática de ficheiros

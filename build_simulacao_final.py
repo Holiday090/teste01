@@ -162,7 +162,7 @@ def find_latest_total_meas(path: Path) -> Path:
 
 
 def output_filename_for_week(week: int) -> str:
-    return f"S{week}_analise_precos_SUIVI.xlsx"
+    return f"S{week} - Análise preços SUIVI.xlsx"
 
 
 def find_historico_suivi_column(headers: tuple[Any, ...]) -> int | None:
