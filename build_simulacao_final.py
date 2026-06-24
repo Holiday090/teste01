@@ -334,9 +334,11 @@ def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
     headers = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
     cols = {
         "grupo": header_index(headers, "GRUPO_INTERNO"),
+        "itm8": header_index(headers, "ITM8"),
         "uvc": header_index(headers, "UVC"),
         "ean": header_index(headers, "EAN"),
         "descricao": header_index(headers, "DESCRIÇÃO"),
+        "marca": header_index(headers, "MARCA"),
         "in_mea": header_index(headers, "IN_MEA"),
         "pvp": header_index(headers, "PVP"),
     }
@@ -349,9 +351,11 @@ def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
         rows.append(
             {
                 "grupo": row[cols["grupo"]],
+                "itm8": as_text(row[cols["itm8"]]),
                 "uvc": as_text(row[cols["uvc"]]),
                 "ean": as_text(row[cols["ean"]]),
                 "descricao": row[cols["descricao"]],
+                "marca": row[cols["marca"]],
                 "in_mea": date,
                 "pvp": row[cols["pvp"]] if row[cols["pvp"]] is not None else "",
             }
@@ -366,9 +370,10 @@ def sort_meas_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         key=lambda row: (
             as_text(row["grupo"]),
             as_text(row["uvc"]).zfill(10),
-            ean_key(row["ean"]),
+            as_text(row["itm8"]).zfill(8),
+            as_text(row["marca"]),
             as_text(row["descricao"]),
-            -row["in_mea"].timestamp(),
+            row["in_mea"].timestamp(),
         ),
     )
 
@@ -442,7 +447,7 @@ def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str,
 
     pivot_ws = wb.create_sheet("TD Meas")
     processed_ws = wb.create_sheet("Meas Processado")
-    headers = ("GRUPO_INTERNO", "UVC", "EAN", "DESCRIÇÃO", "IN_MEA", "PVP")
+    headers = ("GRUPO_INTERNO", "UVC", "ITM8", "MARCA", "DESCRIÇÃO", "IN_MEA", "PVP")
 
     for ws in (pivot_ws, processed_ws):
         for col, header in enumerate(headers, start=1):
@@ -452,12 +457,13 @@ def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str,
         for row_number, row in enumerate(source_rows, start=2):
             target_ws.cell(row_number, 1).value = row["grupo"]
             target_ws.cell(row_number, 2).value = row["uvc"]
-            target_ws.cell(row_number, 3).value = row["ean"]
-            target_ws.cell(row_number, 4).value = row["descricao"]
-            date_cell = target_ws.cell(row_number, 5)
+            target_ws.cell(row_number, 3).value = row["itm8"]
+            target_ws.cell(row_number, 4).value = row["marca"]
+            target_ws.cell(row_number, 5).value = row["descricao"]
+            date_cell = target_ws.cell(row_number, 6)
             date_cell.value = row["in_mea"]
             date_cell.number_format = "dd-mm-yyyy"
-            target_ws.cell(row_number, 6).value = row["pvp"]
+            target_ws.cell(row_number, 7).value = row["pvp"]
 
     wb.save(output_path)
     wb.close()
