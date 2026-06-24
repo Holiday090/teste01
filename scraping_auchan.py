@@ -9,6 +9,20 @@ EXECUÇÃO:
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py --test   # amostra reduzida para validação
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py --only frescos --max-pages 2
+    PYTHONUNBUFFERED=1 python3 scraping_auchan.py --only frescos --max-pages 2 --max-products 10 --random
+
+PROGRESSO NO TERMINAL:
+    O script imprime o estado da extração em tempo real (use PYTHONUNBUFFERED=1).
+    Durante a execução verá mensagens como:
+
+        [Categoria: Charcutaria] Fase 1 — Recolha de produtos (máx. 2 páginas).
+        [Categoria: Charcutaria] Página 1/2 (offset 0) — 48 produtos únicos recolhidos.
+        [Categoria: Charcutaria] Fase 2 — Extração detalhada de produtos.
+        Categoria atual: Charcutaria | A processar produto 8/20... | Bacon Extra Cubos Auchan 2x75g
+        Categoria atual: Charcutaria | Produto 8/20 concluído | Produtos Frescos -> ... | EAN: ... | Preço: ...
+
+    Em caso de erro num produto específico, a linha correspondente é mostrada e o script
+    continua para o produto seguinte.
 
 NOTAS:
     - Hierarquia de categorias interpretada como:
@@ -370,6 +384,7 @@ def collect_all_category_products(
     navigate_via_menu_flag: bool = True,
     max_products: int | None = None,
     max_pages: int | None = None,
+    random_sample: bool = False,
 ) -> list[dict[str, str]]:
     """Percorre todas as páginas de uma categoria e devolve produtos únicos."""
     pages_label = f" (máx. {max_pages} páginas)" if max_pages else ""
@@ -464,8 +479,13 @@ def collect_all_category_products(
             break
 
     products = list(collected.values())
+    if random_sample:
+        random.shuffle(products)
+        log(f"[Categoria: {category.display_name}] Amostra aleatória aplicada sobre {len(products)} produtos.")
     if max_products:
         products = products[:max_products]
+        if random_sample:
+            log(f"[Categoria: {category.display_name}] Selecionados {len(products)} produtos aleatórios.")
 
     log(
         f"[Categoria: {category.display_name}] Fase 1 concluída — "
@@ -760,6 +780,7 @@ def process_category(
     *,
     max_products: int | None = None,
     max_pages: int | None = None,
+    random_sample: bool = False,
 ) -> None:
     """Processa uma categoria completa: listagem + detalhe de cada produto."""
     products = collect_all_category_products(
@@ -768,6 +789,7 @@ def process_category(
         navigate_via_menu_flag=True,
         max_products=max_products,
         max_pages=max_pages,
+        random_sample=random_sample,
     )
     if not products:
         log(f"[Categoria: {category.display_name}] Nenhum produto encontrado.")
@@ -859,6 +881,16 @@ def parse_args() -> argparse.Namespace:
         help="Limita o número de páginas de listagem a recolher por categoria.",
     )
     parser.add_argument(
+        "--max-products",
+        type=int,
+        help="Limita o número de produtos a processar por categoria.",
+    )
+    parser.add_argument(
+        "--random",
+        action="store_true",
+        help="Seleciona aleatoriamente os produtos quando --max-products está definido.",
+    )
+    parser.add_argument(
         "--output",
         default=OUTPUT_FILE,
         help=f"Ficheiro Excel de saída (predefinido: {OUTPUT_FILE}).",
@@ -868,13 +900,18 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    max_products = 2 if args.test else None
+    max_products = args.max_products if args.max_products else (2 if args.test else None)
     max_pages = args.max_pages
+    random_sample = args.random
     categories = resolve_categories(args.only)
     records: list[dict[str, str]] = []
 
-    if args.test:
+    if args.test and not args.max_products:
         log("Modo teste ativo — apenas 2 produtos por categoria serão processados.")
+    if max_products:
+        log(f"Limite de produtos: {max_products} por categoria.")
+    if random_sample:
+        log("Amostragem aleatória ativa.")
     if max_pages:
         log(f"Limite de paginação: {max_pages} página(s) por categoria.")
     if args.only:
@@ -905,6 +942,7 @@ def main() -> None:
                     records,
                     max_products=max_products,
                     max_pages=max_pages,
+                    random_sample=random_sample,
                 )
 
                 if not args.test and not max_pages:
