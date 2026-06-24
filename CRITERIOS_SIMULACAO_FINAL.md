@@ -24,7 +24,8 @@
   `TD Psyco` sem filtros a partir da folha `Dados`.
 - A reconstrução exclui `MERCADONA`, porque o ficheiro final só usa as colunas
   Shopping `CONTINENTE`, `LIDL` e `PINGO-DOCE`.
-- Excluir artigos cuja descrição comece por `SUB` ou `XXX`. Artigos `PAL` mantêm-se.
+- Excluir artigos cuja descrição comece por `SUB` ou `XX` (exceto `XXL`).
+  Artigos `PAL` mantêm-se.
 
 ## Colunas copiadas da Simulação
 
