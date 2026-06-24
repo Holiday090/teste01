@@ -283,57 +283,9 @@ def load_simulation(simulation_path: Path) -> tuple[list[dict[str, Any]], dateti
     return sorted_records, shopping_date
 
 
-COMPARAVEL_RETAILERS = (
-    ("CONTINENTE", ("CONTINENTE",)),
-    ("LIDL", ("LIDL",)),
-    ("PINGO-DOCE", ("PINGO", "DOCE")),
-)
-
-
-def find_comparavel_promo_columns(headers_row1: tuple[Any, ...], headers_row2: tuple[Any, ...]) -> dict[str, int]:
-    retailer_starts: dict[str, int] = {}
-    for index, value in enumerate(headers_row1):
-        label = as_text(value).upper()
-        for key, keywords in COMPARAVEL_RETAILERS:
-            if key in retailer_starts:
-                continue
-            if key == "PINGO-DOCE":
-                if "PINGO" in label and "DOCE" in label:
-                    retailer_starts[key] = index
-            elif keywords[0] in label:
-                retailer_starts[key] = index
-
-    missing = [key for key, _ in COMPARAVEL_RETAILERS if key not in retailer_starts]
-    if missing:
-        raise ValueError(f"Não foi possível identificar colunas de promo no comparável: {', '.join(missing)}")
-
-    ordered = sorted(retailer_starts.items(), key=lambda item: item[1])
-    promo_columns: dict[str, int] = {}
-    for position, (key, start) in enumerate(ordered):
-        end = ordered[position + 1][1] if position + 1 < len(ordered) else len(headers_row2)
-        promo_index = None
-        for index in range(start, end):
-            header = as_text(headers_row2[index]).upper()
-            if "PREÇO COM PROMOÇÃO" in header or "PRECO COM PROMOCAO" in header:
-                promo_index = index
-                break
-        if promo_index is None:
-            for index in range(start, end):
-                header = as_text(headers_row2[index])
-                if header.startswith("Preço") or header.startswith("Preco"):
-                    promo_index = index
-                    break
-        if promo_index is None:
-            raise ValueError(f"Não foi possível encontrar coluna de preço para {key} no comparável.")
-        promo_columns[key] = promo_index
-    return promo_columns
-
-
 def load_comparavel(comparavel_path: Path) -> dict[str, dict[str, Any]]:
     wb = load_workbook(comparavel_path, data_only=True, read_only=True)
     ws = wb["Produtos"]
-    rows = ws.iter_rows(min_row=1, max_row=2, values_only=True)
-    promo_columns = find_comparavel_promo_columns(next(rows), next(rows))
 
     promos: dict[str, dict[str, Any]] = {}
     for row in ws.iter_rows(min_row=3, values_only=True):
@@ -341,8 +293,9 @@ def load_comparavel(comparavel_path: Path) -> dict[str, dict[str, Any]]:
         if not ean:
             continue
         promos[ean] = {
-            key: row[index] if index < len(row) and row[index] is not None else ""
-            for key, index in promo_columns.items()
+            "CONTINENTE": row[17] if row[17] is not None else "",
+            "LIDL": row[25] if row[25] is not None else "",
+            "PINGO-DOCE": row[21] if row[21] is not None else "",
         }
         normalized = ean_key(ean)
         if normalized and normalized not in promos:
