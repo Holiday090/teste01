@@ -8,6 +8,7 @@ SETUP (executar no terminal antes da primeira utilização):
 EXECUÇÃO:
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py
     PYTHONUNBUFFERED=1 python3 scraping_auchan.py --test   # amostra reduzida para validação
+    PYTHONUNBUFFERED=1 python3 scraping_auchan.py --only frescos --max-pages 2
 
 NOTAS:
     - Navega pelo menu principal e extrai produtos das categorias definidas.
@@ -342,9 +343,11 @@ def collect_all_category_products(
     *,
     navigate_via_menu_flag: bool = True,
     max_products: int | None = None,
+    max_pages: int | None = None,
 ) -> list[dict[str, str]]:
     """Percorre todas as páginas de uma categoria e devolve produtos únicos."""
-    log(f"\n[Categoria: {category.display_name}] Fase 1 — Recolha de produtos em todas as páginas.")
+    pages_label = f" (máx. {max_pages} páginas)" if max_pages else ""
+    log(f"\n[Categoria: {category.display_name}] Fase 1 — Recolha de produtos{pages_label}.")
 
     if navigate_via_menu_flag:
         navigate_via_menu(page, category)
@@ -363,6 +366,7 @@ def collect_all_category_products(
     collected: dict[str, dict[str, str]] = {}
     start_offset = 0
     stagnant_rounds = 0
+    pages_processed = 0
 
     while True:
         if start_offset > 0 or "start=" in page.url:
@@ -404,12 +408,16 @@ def collect_all_category_products(
                 "url": product_url,
             }
 
+        pages_processed += 1
         log(
-            f"[Categoria: {category.display_name}] Offset {start_offset} — "
+            f"[Categoria: {category.display_name}] Página {pages_processed}"
+            f"{f'/{max_pages}' if max_pages else ''} (offset {start_offset}) — "
             f"{len(collected)} produtos únicos recolhidos."
         )
 
         if max_products and len(collected) >= max_products:
+            break
+        if max_pages and pages_processed >= max_pages:
             break
 
         if len(collected) == previous_count:
@@ -646,6 +654,7 @@ def process_category(
     records: list[dict[str, str]],
     *,
     max_products: int | None = None,
+    max_pages: int | None = None,
 ) -> None:
     """Processa uma categoria completa: listagem + detalhe de cada produto."""
     products = collect_all_category_products(
@@ -653,6 +662,7 @@ def process_category(
         category,
         navigate_via_menu_flag=True,
         max_products=max_products,
+        max_pages=max_pages,
     )
     if not products:
         log(f"[Categoria: {category.display_name}] Nenhum produto encontrado.")
@@ -690,6 +700,28 @@ def process_category(
     log(f"[Categoria: {category.display_name}] Concluída — {total} produtos processados.")
 
 
+FRESCOS_CATEGORIES = frozenset({"Charcutaria", "Queijaria"})
+
+
+def resolve_categories(only: str | None) -> tuple[CategoryTarget, ...]:
+    """Filtra as categorias a processar."""
+    if not only:
+        return CATEGORY_TARGETS
+
+    normalized = only.strip().lower()
+    if normalized == "frescos":
+        return tuple(category for category in CATEGORY_TARGETS if category.display_name in FRESCOS_CATEGORIES)
+
+    selected = {name.strip().lower() for name in only.split(",") if name.strip()}
+    filtered = tuple(
+        category for category in CATEGORY_TARGETS if category.display_name.lower() in selected
+    )
+    if not filtered:
+        available = ", ".join(category.display_name for category in CATEGORY_TARGETS)
+        raise SystemExit(f"Categorias inválidas em --only. Opções: frescos, {available}")
+    return filtered
+
+
 def parse_args() -> argparse.Namespace:
     """Interpreta argumentos de linha de comandos."""
     parser = argparse.ArgumentParser(description="Scraping de produtos Auchan Portugal.")
@@ -697,6 +729,15 @@ def parse_args() -> argparse.Namespace:
         "--test",
         action="store_true",
         help="Executa apenas uma amostra reduzida (2 produtos por categoria) para validação.",
+    )
+    parser.add_argument(
+        "--only",
+        help='Processa apenas categorias específicas (ex.: "frescos" ou "Charcutaria,Queijaria").',
+    )
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        help="Limita o número de páginas de listagem a recolher por categoria.",
     )
     parser.add_argument(
         "--output",
@@ -709,10 +750,19 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     max_products = 2 if args.test else None
+    max_pages = args.max_pages
+    categories = resolve_categories(args.only)
     records: list[dict[str, str]] = []
 
     if args.test:
         log("Modo teste ativo — apenas 2 produtos por categoria serão processados.")
+    if max_pages:
+        log(f"Limite de paginação: {max_pages} página(s) por categoria.")
+    if args.only:
+        log(
+            "Categorias selecionadas: "
+            + ", ".join(category.display_name for category in categories)
+        )
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -728,11 +778,17 @@ def main() -> None:
         page = context.new_page()
 
         try:
-            for category in CATEGORY_TARGETS:
+            for category in categories:
                 log(f"\n{'=' * 70}\n[Categoria: {category.display_name}] A iniciar extração.\n{'=' * 70}")
-                process_category(page, category, records, max_products=max_products)
+                process_category(
+                    page,
+                    category,
+                    records,
+                    max_products=max_products,
+                    max_pages=max_pages,
+                )
 
-                if not args.test:
+                if not args.test and not max_pages:
                     human_delay(1.5, 3.0)
 
             if not records:
