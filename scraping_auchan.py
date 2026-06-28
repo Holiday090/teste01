@@ -32,15 +32,20 @@ NOTAS:
     - Percorre todas as páginas de cada subcategoria (botão "Ver mais produtos" ou paginação por URL).
     - Visita cada produto para obter breadcrumb completo, EAN e preços detalhados.
     - Exporta o resultado para Scraping_Auchan.xlsx
+    - Grava checkpoint Excel a cada 100 produtos e retoma automaticamente após interrupção.
+    - Repete pedidos com falha durante até 3 minutos antes de desistir.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import random
 import re
 import time
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Callable, TypeVar
 from urllib.parse import urljoin, urlparse, urlunparse
 
 import pandas as pd
@@ -48,6 +53,9 @@ from playwright.sync_api import Page, sync_playwright
 
 BASE_URL = "https://www.auchan.pt"
 OUTPUT_FILE = "Scraping_Auchan.xlsx"
+PROGRESS_FILE = "scraping_auchan_progress.json"
+CHECKPOINT_EVERY = 100
+RETRY_TIMEOUT_SECONDS = 180
 PAGE_SIZE = 48
 PRODUCT_ID_PATTERN = re.compile(r"/(\d+)\.html")
 QUANTITY_PATTERN = re.compile(
@@ -154,6 +162,118 @@ def log_product_progress(
 def human_delay(min_seconds: float = 1.0, max_seconds: float = 2.5) -> None:
     """Pausa aleatória para simular comportamento humano."""
     time.sleep(random.uniform(min_seconds, max_seconds))
+
+
+T = TypeVar("T")
+
+
+def retry_for_duration(
+    operation_name: str,
+    operation: Callable[[], T],
+    *,
+    max_duration_seconds: float = RETRY_TIMEOUT_SECONDS,
+    initial_delay_seconds: float = 5.0,
+    max_delay_seconds: float = 30.0,
+) -> T:
+    """Repete uma operação durante até max_duration_seconds quando falha."""
+    started_at = time.monotonic()
+    attempt = 0
+    delay_seconds = initial_delay_seconds
+    last_error: Exception | None = None
+
+    while time.monotonic() - started_at < max_duration_seconds:
+        attempt += 1
+        try:
+            return operation()
+        except Exception as error:
+            last_error = error if isinstance(error, Exception) else Exception(str(error))
+            elapsed_seconds = time.monotonic() - started_at
+            remaining_seconds = max_duration_seconds - elapsed_seconds
+            if remaining_seconds <= 0:
+                break
+            wait_seconds = min(delay_seconds, remaining_seconds)
+            log(
+                f"[Retry] {operation_name} falhou (tentativa {attempt}): {last_error}. "
+                f"Nova tentativa em {wait_seconds:.0f}s..."
+            )
+            time.sleep(wait_seconds)
+            delay_seconds = min(delay_seconds * 1.5, max_delay_seconds)
+
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError(f"{operation_name} falhou após {max_duration_seconds:.0f}s.")
+
+
+def goto_with_retry(
+    page: Page,
+    url: str,
+    *,
+    operation_name: str = "",
+    wait_until: str = "domcontentloaded",
+    timeout: int = 90_000,
+    settle_ms: int = 900,
+) -> None:
+    """Navega para um URL com retry automático durante 3 minutos."""
+    label = operation_name or url
+
+    def _navigate() -> None:
+        page.goto(url, wait_until=wait_until, timeout=timeout)
+        if settle_ms > 0:
+            page.wait_for_timeout(settle_ms)
+
+    retry_for_duration(label, _navigate)
+
+
+def empty_progress(output_file: str = OUTPUT_FILE) -> dict:
+    """Estado inicial do ficheiro de progresso."""
+    return {
+        "output_file": output_file,
+        "completed_categories": [],
+        "records": [],
+        "processed_urls": [],
+        "in_progress": None,
+    }
+
+
+def load_progress(output_file: str = OUTPUT_FILE) -> dict:
+    """Carrega o progresso guardado, se existir."""
+    progress_path = Path(PROGRESS_FILE)
+    if not progress_path.exists():
+        return empty_progress(output_file)
+
+    with progress_path.open("r", encoding="utf-8") as progress_file:
+        progress = json.load(progress_file)
+
+    defaults = empty_progress(output_file)
+    for key, default_value in defaults.items():
+        if key not in progress:
+            progress[key] = default_value
+
+    if progress.get("output_file") != output_file:
+        log(
+            f"Aviso: ficheiro de progresso refere '{progress.get('output_file')}', "
+            f"mas o output atual é '{output_file}'."
+        )
+    return progress
+
+
+def save_progress(progress: dict) -> None:
+    """Guarda o progresso atual em JSON."""
+    with Path(PROGRESS_FILE).open("w", encoding="utf-8") as progress_file:
+        json.dump(progress, progress_file, ensure_ascii=False, indent=2)
+
+
+def maybe_checkpoint(records: list[dict[str, str]], output_file: str, progress: dict) -> None:
+    """Guarda Excel parcial e progresso a cada CHECKPOINT_EVERY produtos."""
+    if not records or len(records) % CHECKPOINT_EVERY != 0:
+        return
+
+    export_to_excel(records, output_file)
+    save_progress(progress)
+    log(
+        f"[Checkpoint] {len(records)} produtos guardados em '{output_file}' "
+        f"e progresso atualizado em '{PROGRESS_FILE}'."
+    )
 
 
 def na(value: str | None) -> str:
@@ -275,8 +395,7 @@ def click_menu_link_by_text(page: Page, label: str) -> bool:
 def navigate_via_menu(page: Page, category: CategoryTarget) -> str:
     """Navega até à listagem da categoria através do menu principal."""
     log(f"A aceder a {BASE_URL}")
-    page.goto(BASE_URL, wait_until="domcontentloaded", timeout=90_000)
-    page.wait_for_timeout(1500)
+    goto_with_retry(page, BASE_URL, operation_name="página inicial Auchan", settle_ms=1500)
     accept_cookies_if_visible(page)
     dismiss_blocking_modals(page)
 
@@ -302,8 +421,12 @@ def navigate_via_menu(page: Page, category: CategoryTarget) -> str:
     expected_fragment = category.listing_url.split("?")[0]
     if expected_fragment not in current_url:
         log(f"[Menu] A abrir listagem por URL: {category.listing_url}")
-        page.goto(absolute_url(category.listing_url), wait_until="domcontentloaded", timeout=90_000)
-        page.wait_for_timeout(1200)
+        goto_with_retry(
+            page,
+            absolute_url(category.listing_url),
+            operation_name=f"listagem {category.display_name}",
+            settle_ms=1200,
+        )
 
     accept_cookies_if_visible(page)
     dismiss_blocking_modals(page)
@@ -385,18 +508,56 @@ def collect_all_category_products(
     max_products: int | None = None,
     max_pages: int | None = None,
     random_sample: bool = False,
+    progress: dict | None = None,
 ) -> list[dict[str, str]]:
     """Percorre todas as páginas de uma categoria e devolve produtos únicos."""
     pages_label = f" (máx. {max_pages} páginas)" if max_pages else ""
     log(f"\n[Categoria: {category.display_name}] Fase 1 — Recolha de produtos{pages_label}.")
 
-    if navigate_via_menu_flag:
-        navigate_via_menu(page, category)
-    else:
-        page.goto(absolute_url(category.listing_url), wait_until="domcontentloaded", timeout=90_000)
-        page.wait_for_timeout(1500)
-        accept_cookies_if_visible(page)
-        dismiss_blocking_modals(page)
+    in_progress = (progress or {}).get("in_progress") or {}
+    if (
+        progress is not None
+        and in_progress.get("category") == category.display_name
+        and in_progress.get("phase") == "extracting"
+        and in_progress.get("products")
+    ):
+        products = list(in_progress["products"])
+        log(
+            f"[Categoria: {category.display_name}] Retomando listagem já recolhida "
+            f"({len(products)} produtos)."
+        )
+        if max_products:
+            products = products[:max_products]
+        return products
+
+    collected: dict[str, dict[str, str]] = {}
+    start_offset = 0
+    if (
+        progress is not None
+        and in_progress.get("category") == category.display_name
+        and in_progress.get("phase") == "collecting"
+    ):
+        start_offset = int(in_progress.get("collection_offset", 0))
+        for product in in_progress.get("partial_products", []):
+            if product.get("pid"):
+                collected[str(product["pid"])] = product
+        log(
+            f"[Categoria: {category.display_name}] Retomando recolha a partir do offset "
+            f"{start_offset} ({len(collected)} produtos parciais)."
+        )
+
+    if start_offset == 0:
+        if navigate_via_menu_flag:
+            navigate_via_menu(page, category)
+        else:
+            goto_with_retry(
+                page,
+                absolute_url(category.listing_url),
+                operation_name=f"listagem {category.display_name}",
+                settle_ms=1500,
+            )
+            accept_cookies_if_visible(page)
+            dismiss_blocking_modals(page)
 
     total_results, _ = get_listing_metadata(page)
     if total_results:
@@ -404,19 +565,18 @@ def collect_all_category_products(
     else:
         log(f"[Categoria: {category.display_name}] Total estimado indisponível; a paginar até esgotar resultados.")
 
-    collected: dict[str, dict[str, str]] = {}
-    start_offset = 0
     stagnant_rounds = 0
     pages_processed = 0
 
     while True:
         if start_offset > 0 or "start=" in page.url:
-            page.goto(
-                listing_url_for_offset(category.listing_url, start_offset),
-                wait_until="domcontentloaded",
-                timeout=90_000,
+            listing_url = listing_url_for_offset(category.listing_url, start_offset)
+            goto_with_retry(
+                page,
+                listing_url,
+                operation_name=f"paginação {category.display_name} offset {start_offset}",
+                settle_ms=1500,
             )
-            page.wait_for_timeout(1500)
             accept_cookies_if_visible(page)
             dismiss_blocking_modals(page)
 
@@ -456,6 +616,15 @@ def collect_all_category_products(
             f"{len(collected)} produtos únicos recolhidos."
         )
 
+        if progress is not None:
+            progress["in_progress"] = {
+                "category": category.display_name,
+                "phase": "collecting",
+                "collection_offset": start_offset,
+                "partial_products": list(collected.values()),
+            }
+            save_progress(progress)
+
         if max_products and len(collected) >= max_products:
             break
         if max_pages and pages_processed >= max_pages:
@@ -486,6 +655,14 @@ def collect_all_category_products(
         products = products[:max_products]
         if random_sample:
             log(f"[Categoria: {category.display_name}] Selecionados {len(products)} produtos aleatórios.")
+
+    if progress is not None:
+        progress["in_progress"] = {
+            "category": category.display_name,
+            "phase": "extracting",
+            "products": products,
+        }
+        save_progress(progress)
 
     log(
         f"[Categoria: {category.display_name}] Fase 1 concluída — "
@@ -631,10 +808,18 @@ def extract_product_details(
 ) -> dict[str, str]:
     """Visita a página individual do produto e extrai os campos solicitados."""
     product_url = product["url"]
-    page.goto(product_url, wait_until="domcontentloaded", timeout=90_000)
-    page.wait_for_timeout(900)
-    accept_cookies_if_visible(page)
-    dismiss_blocking_modals(page)
+
+    def _load_product_page() -> None:
+        goto_with_retry(
+            page,
+            product_url,
+            operation_name=f"produto {product.get('pid', product_url)}",
+            settle_ms=900,
+        )
+        accept_cookies_if_visible(page)
+        dismiss_blocking_modals(page)
+
+    retry_for_duration(f"extração {product_url}", _load_product_page)
 
     product_ld, breadcrumb_ld = extract_json_ld(page)
 
@@ -776,13 +961,21 @@ def export_to_excel(records: list[dict[str, str]], output_file: str) -> None:
 def process_category(
     page: Page,
     category: CategoryTarget,
-    records: list[dict[str, str]],
+    progress: dict,
+    output_file: str,
     *,
     max_products: int | None = None,
     max_pages: int | None = None,
     random_sample: bool = False,
+    use_progress: bool = True,
 ) -> None:
     """Processa uma categoria completa: listagem + detalhe de cada produto."""
+    category_name = category.display_name
+    if use_progress and category_name in progress.get("completed_categories", []):
+        log(f"[Categoria: {category_name}] Já concluída anteriormente — a saltar.")
+        return
+
+    progress_state = progress if use_progress else None
     products = collect_all_category_products(
         page,
         category,
@@ -790,31 +983,58 @@ def process_category(
         max_products=max_products,
         max_pages=max_pages,
         random_sample=random_sample,
+        progress=progress_state,
     )
     if not products:
-        log(f"[Categoria: {category.display_name}] Nenhum produto encontrado.")
+        log(f"[Categoria: {category_name}] Nenhum produto encontrado.")
+        if use_progress:
+            completed = list(progress.get("completed_categories", []))
+            if category_name not in completed:
+                completed.append(category_name)
+            progress["completed_categories"] = completed
+            progress["in_progress"] = None
+            save_progress(progress)
         return
 
-    log(f"\n[Categoria: {category.display_name}] Fase 2 — Extração detalhada de produtos.")
-    total = len(products)
+    records: list[dict[str, str]] = progress.setdefault("records", [])
+    processed_urls = set(progress.get("processed_urls", [])) if use_progress else set()
 
-    for index, product in enumerate(products, start=1):
+    pending_products = [product for product in products if product.get("url") not in processed_urls]
+    if use_progress and len(pending_products) < len(products):
+        log(
+            f"[Categoria: {category_name}] Retomando extração — "
+            f"{len(pending_products)} produtos pendentes de {len(products)}."
+        )
+
+    log(f"\n[Categoria: {category_name}] Fase 2 — Extração detalhada de produtos.")
+    total = len(pending_products)
+
+    for index, product in enumerate(pending_products, start=1):
         product_name = str(product.get("name", "")).strip()
+        product_url = product.get("url", "")
+
         log_product_progress(
-            category.display_name,
+            category_name,
             index,
             total,
             status="processing",
             product_name=product_name,
         )
         try:
-            product_data = extract_product_details(page, product, category.display_name)
+            product_data = extract_product_details(page, product, category_name)
             records.append(product_data)
+            if use_progress and product_url:
+                processed_urls.add(product_url)
+                progress["records"] = records
+                progress["processed_urls"] = sorted(processed_urls)
+                save_progress(progress)
+                maybe_checkpoint(records, output_file, progress)
+
             price_info = product_data["Preço Regular"]
             if product_data.get("Preço Promocional") not in ("N/A", ""):
                 price_info = f"{product_data['Preço Regular']} (promo: {product_data['Preço Promocional']})"
             log_product_progress(
-                category.display_name,
+                category_name,
                 index,
                 total,
                 status="done",
@@ -827,18 +1047,35 @@ def process_category(
             )
         except Exception as error:
             log_product_progress(
-                category.display_name,
+                category_name,
                 index,
                 total,
                 status="error",
                 details=str(error),
             )
-            records.append(empty_product_record(product, category.display_name))
+            records.append(empty_product_record(product, category_name))
+            if use_progress and product_url:
+                processed_urls.add(product_url)
+                progress["records"] = records
+                progress["processed_urls"] = sorted(processed_urls)
+                save_progress(progress)
+                maybe_checkpoint(records, output_file, progress)
 
         if index < total:
             human_delay(0.8, 1.8)
 
-    log(f"[Categoria: {category.display_name}] Concluída — {total} produtos processados.")
+    if use_progress:
+        completed = list(progress.get("completed_categories", []))
+        if category_name not in completed:
+            completed.append(category_name)
+        progress["completed_categories"] = completed
+        progress["records"] = records
+        progress["processed_urls"] = sorted(processed_urls)
+        progress["in_progress"] = None
+        save_progress(progress)
+        export_to_excel(records, output_file)
+
+    log(f"[Categoria: {category_name}] Concluída — {total} produtos processados nesta execução.")
 
 
 FRESCOS_CATEGORIES = frozenset({"Charcutaria", "Queijaria"})
@@ -895,7 +1132,19 @@ def parse_args() -> argparse.Namespace:
         default=OUTPUT_FILE,
         help=f"Ficheiro Excel de saída (predefinido: {OUTPUT_FILE}).",
     )
+    parser.add_argument(
+        "--reset-progress",
+        action="store_true",
+        help="Apaga o ficheiro de progresso e reinicia a extração do zero.",
+    )
     return parser.parse_args()
+
+
+def should_use_progress(args: argparse.Namespace) -> bool:
+    """Determina se a retoma automática deve estar ativa."""
+    if args.reset_progress:
+        return False
+    return not args.test and not args.max_pages and not args.max_products and not args.random
 
 
 def main() -> None:
@@ -904,7 +1153,25 @@ def main() -> None:
     max_pages = args.max_pages
     random_sample = args.random
     categories = resolve_categories(args.only)
-    records: list[dict[str, str]] = []
+    use_progress = should_use_progress(args)
+
+    if args.reset_progress and Path(PROGRESS_FILE).exists():
+        Path(PROGRESS_FILE).unlink()
+        log(f"Progresso anterior removido: {PROGRESS_FILE}")
+
+    progress = load_progress(args.output) if use_progress else empty_progress(args.output)
+    progress["output_file"] = args.output
+
+    if use_progress and progress.get("records"):
+        log(
+            f"Retoma automática ativa — {len(progress['records'])} produtos já guardados, "
+            f"{len(progress.get('completed_categories', []))} categorias concluídas."
+        )
+        if progress.get("completed_categories"):
+            log(
+                "Categorias concluídas: "
+                + ", ".join(progress["completed_categories"])
+            )
 
     if args.test and not args.max_products:
         log("Modo teste ativo — apenas 2 produtos por categoria serão processados.")
@@ -914,6 +1181,11 @@ def main() -> None:
         log("Amostragem aleatória ativa.")
     if max_pages:
         log(f"Limite de paginação: {max_pages} página(s) por categoria.")
+    if use_progress:
+        log(
+            f"Checkpoints: Excel parcial a cada {CHECKPOINT_EVERY} produtos "
+            f"e retry automático durante {RETRY_TIMEOUT_SECONDS // 60} minutos."
+        )
     if args.only:
         log(
             "Categorias selecionadas: "
@@ -939,20 +1211,25 @@ def main() -> None:
                 process_category(
                     page,
                     category,
-                    records,
+                    progress,
+                    args.output,
                     max_products=max_products,
                     max_pages=max_pages,
                     random_sample=random_sample,
+                    use_progress=use_progress,
                 )
 
                 if not args.test and not max_pages:
                     human_delay(1.5, 3.0)
 
+            records = progress.get("records", [])
             if not records:
                 log("Nenhum produto recolhido. O ficheiro Excel não será gerado.")
                 return
 
             export_to_excel(records, args.output)
+            if use_progress:
+                save_progress(progress)
             log(f"\nConcluído. {len(records)} produtos exportados para '{args.output}'.")
         finally:
             context.close()
