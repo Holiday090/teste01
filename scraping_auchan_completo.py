@@ -17,6 +17,7 @@ NOTAS:
     - Percorre cada categoria com paginação completa e visita cada produto.
     - Deduplica produtos globalmente (o mesmo artigo só é extraído uma vez).
     - Grava checkpoint Excel a cada 100 produtos e retoma após interrupção.
+    - Commit e push automáticos no GitHub a cada 100 produtos (progresso + Excel).
     - Exporta o resultado final para Scraping_Auchan_Completo.xlsx
 """
 
@@ -25,6 +26,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
+import time
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -33,6 +36,9 @@ from playwright.sync_api import Page, sync_playwright
 
 OUTPUT_FILE = "Scraping_Auchan_Completo.xlsx"
 PROGRESS_FILE = "scraping_auchan_completo_progress.json"
+REPO_ROOT = Path(__file__).resolve().parent
+GIT_PUSH_BACKOFF_SECONDS = (4, 8, 16, 32)
+_git_checkpoint_enabled = True
 
 EXCLUDE_MENU_IDS = frozenset(
     {
@@ -88,7 +94,113 @@ def save_progress(progress: dict) -> None:
         json.dump(progress, progress_file, ensure_ascii=False, indent=2)
 
 
-def maybe_checkpoint(records: list[dict[str, str]], output_file: str, progress: dict) -> None:
+def commit_checkpoint_to_repo(product_count: int) -> bool:
+    """Commita e envia progresso + Excel para o repositório Git."""
+    if not _git_checkpoint_enabled:
+        return False
+
+    files_to_add: list[str] = []
+    if (REPO_ROOT / PROGRESS_FILE).exists():
+        files_to_add.append(PROGRESS_FILE)
+    if (REPO_ROOT / OUTPUT_FILE).exists():
+        files_to_add.append(OUTPUT_FILE)
+
+    if not files_to_add:
+        log("[Git] Nenhum ficheiro de checkpoint encontrado para commit.")
+        return False
+
+    try:
+        add_result = subprocess.run(
+            ["git", "add", "--", *files_to_add],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if add_result.returncode != 0:
+            log(f"[Git] git add falhou: {add_result.stderr.strip()}")
+            return False
+
+        commit_message = f"Checkpoint Auchan completo: {product_count} produtos"
+        commit_result = subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if commit_result.returncode != 0:
+            combined_output = f"{commit_result.stdout}\n{commit_result.stderr}".lower()
+            if "nothing to commit" in combined_output or "no changes added to commit" in combined_output:
+                return False
+            log(f"[Git] git commit falhou: {commit_result.stderr.strip()}")
+            return False
+
+        branch_result = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        branch_name = branch_result.stdout.strip()
+
+        for attempt, wait_seconds in enumerate(GIT_PUSH_BACKOFF_SECONDS, start=1):
+            push_result = subprocess.run(
+                ["git", "push", "-u", "origin", branch_name],
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if push_result.returncode == 0:
+                log(
+                    f"[Git] Checkpoint enviado para origin/{branch_name} "
+                    f"({product_count} produtos, ficheiros: {', '.join(files_to_add)})."
+                )
+                return True
+
+            if attempt == len(GIT_PUSH_BACKOFF_SECONDS):
+                log(
+                    f"[Git] git push falhou após {attempt} tentativas: "
+                    f"{push_result.stderr.strip()}"
+                )
+                return False
+
+            log(f"[Git] push falhou, nova tentativa em {wait_seconds}s...")
+            time.sleep(wait_seconds)
+    except Exception as error:
+        log(f"[Git] Erro ao commitar checkpoint: {error}")
+        return False
+
+    return False
+
+
+def save_progress_with_git_if_needed(progress: dict) -> None:
+    """Guarda progresso localmente e commita durante recolha de URLs (Fase 1)."""
+    save_progress(progress)
+    if not _git_checkpoint_enabled:
+        return
+
+    in_progress = progress.get("in_progress") or {}
+    if in_progress.get("phase") != "collecting":
+        return
+
+    partial_count = len(in_progress.get("partial_products", []))
+    if partial_count > 0 and partial_count % auchan.CHECKPOINT_EVERY == 0:
+        commit_checkpoint_to_repo(len(progress.get("records", [])))
+
+
+auchan.save_progress = save_progress_with_git_if_needed
+
+
+def maybe_checkpoint(
+    records: list[dict[str, str]],
+    output_file: str,
+    progress: dict,
+    *,
+    use_git: bool = True,
+) -> None:
     if not records or len(records) % auchan.CHECKPOINT_EVERY != 0:
         return
 
@@ -98,6 +210,8 @@ def maybe_checkpoint(records: list[dict[str, str]], output_file: str, progress: 
         f"[Checkpoint] {len(records)} produtos guardados em '{output_file}' "
         f"e progresso atualizado em '{PROGRESS_FILE}'."
     )
+    if use_git:
+        commit_checkpoint_to_repo(len(records))
 
 
 def normalize_listing_path(url: str) -> str:
@@ -348,7 +462,7 @@ def discover_all_categories(page: Page) -> list[dict[str, str]]:
     return categories
 
 
-def ensure_categories(page: Page, progress: dict) -> list[dict[str, str]]:
+def ensure_categories(page: Page, progress: dict, *, use_git: bool = True) -> list[dict[str, str]]:
     if progress.get("categories"):
         categories = list(progress["categories"])
         log(f"Categorias carregadas do progresso ({len(categories)}).")
@@ -357,6 +471,8 @@ def ensure_categories(page: Page, progress: dict) -> list[dict[str, str]]:
     categories = discover_all_categories(page)
     progress["categories"] = categories
     save_progress(progress)
+    if use_git:
+        commit_checkpoint_to_repo(len(progress.get("records", [])))
 
     log("Primeiras categorias:")
     for index, category in enumerate(categories[:10], start=1):
@@ -376,6 +492,7 @@ def process_category(
     max_pages: int | None = None,
     random_sample: bool = False,
     use_progress: bool = True,
+    use_git: bool = True,
 ) -> None:
     """Processa uma categoria completa com deduplicação global de produtos."""
     target = category_dict_to_target(category)
@@ -415,6 +532,8 @@ def process_category(
             progress["completed_categories"] = completed
             progress["in_progress"] = None
             save_progress(progress)
+            if use_git:
+                commit_checkpoint_to_repo(len(progress.get("records", [])))
         return
 
     records: list[dict[str, str]] = progress.setdefault("records", [])
@@ -455,7 +574,7 @@ def process_category(
                 progress["records"] = records
                 progress["processed_urls"] = sorted(processed_urls)
                 save_progress(progress)
-                maybe_checkpoint(records, output_file, progress)
+                maybe_checkpoint(records, output_file, progress, use_git=use_git)
 
             price_info = product_data["Preço Regular"]
             if product_data.get("Preço Promocional") not in ("N/A", ""):
@@ -489,7 +608,7 @@ def process_category(
                 progress["records"] = records
                 progress["processed_urls"] = sorted(processed_urls)
                 save_progress(progress)
-                maybe_checkpoint(records, output_file, progress)
+                maybe_checkpoint(records, output_file, progress, use_git=use_git)
 
         if index < total:
             auchan.human_delay(0.8, 1.8)
@@ -504,6 +623,8 @@ def process_category(
         progress["in_progress"] = None
         save_progress(progress)
         auchan.export_to_excel(records, output_file)
+        if use_git:
+            commit_checkpoint_to_repo(len(records))
 
     log(
         f"[Categoria: {category_name}] Concluída — "
@@ -555,6 +676,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Apaga o ficheiro de progresso e reinicia a extração do zero.",
     )
+    parser.add_argument(
+        "--no-git",
+        action="store_true",
+        help="Desativa commit/push automático no repositório a cada checkpoint.",
+    )
     return parser.parse_args()
 
 
@@ -572,12 +698,16 @@ def should_use_progress(args: argparse.Namespace) -> bool:
 
 
 def main() -> None:
+    global _git_checkpoint_enabled
+
     args = parse_args()
     max_products = args.max_products if args.max_products else (2 if args.test else None)
     max_pages = args.max_pages
     max_categories = args.max_categories if args.max_categories else (3 if args.test else None)
     random_sample = args.random
     use_progress = should_use_progress(args)
+    use_git = use_progress and not args.no_git
+    _git_checkpoint_enabled = use_git
 
     if args.reset_progress and Path(PROGRESS_FILE).exists():
         Path(PROGRESS_FILE).unlink()
@@ -605,6 +735,11 @@ def main() -> None:
             f"Checkpoints: Excel parcial a cada {auchan.CHECKPOINT_EVERY} produtos "
             f"e retry automático durante {auchan.RETRY_TIMEOUT_SECONDS // 60} minutos."
         )
+    if use_git:
+        log(
+            f"Git: commit e push automáticos a cada {auchan.CHECKPOINT_EVERY} produtos "
+            f"({PROGRESS_FILE} + {OUTPUT_FILE})."
+        )
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
@@ -620,7 +755,7 @@ def main() -> None:
         page = context.new_page()
 
         try:
-            categories = ensure_categories(page, progress)
+            categories = ensure_categories(page, progress, use_git=use_git)
 
             if args.discover_only:
                 log(f"\nDescoberta concluída — {len(categories)} categorias:")
@@ -630,6 +765,8 @@ def main() -> None:
                         f"({category['listing_url']}) [{category.get('source', 'menu')}]"
                     )
                 save_progress(progress)
+                if use_git:
+                    commit_checkpoint_to_repo(len(progress.get("records", [])))
                 return
 
             completed = set(progress.get("completed_categories", []))
@@ -671,6 +808,7 @@ def main() -> None:
                     max_pages=max_pages,
                     random_sample=random_sample,
                     use_progress=use_progress,
+                    use_git=use_git,
                 )
 
                 if not args.test and not max_pages:
@@ -684,6 +822,8 @@ def main() -> None:
             auchan.export_to_excel(records, args.output)
             if use_progress:
                 save_progress(progress)
+            if use_git:
+                commit_checkpoint_to_repo(len(records))
 
             log(
                 f"\n{'=' * 70}\n"
