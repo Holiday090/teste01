@@ -3,7 +3,7 @@
 ## Ficheiro base e saída
 
 - **Template:** `ficheiro template 2.xlsx`
-- **Saída:** `SXX_analise_precos_SUIVI.xlsx`, em que `XX` é o número da semana da simulação
+- **Saída:** `SXX - Análise preços SUIVI.xlsx`, em que `XX` é o número da semana da simulação
   mais recente.
 
 ## Deteção automática de ficheiros
@@ -91,10 +91,15 @@ Se não houver valor, a célula fica vazia.
 
 O ficheiro Total Meas (indicativo de folheto) é primeiro processado em duas folhas auxiliares:
 
-1. **TD Meas** — tabela dinâmica em formato tabular com `GRUPO_INTERNO`, `UVC`,
-   `EAN`, `DESCRIÇÃO`, `IN_MEA`, `PVP`, ordenada por Grupo / UVC / EAN /
-   Descrição / data mais recente.
-2. **Meas Processado** — uma linha por `EAN` com a `IN_MEA` mais recente.
+1. **TD Meas** — tabela em formato tabular com `GRUPO_INTERNO`, `UVC`, `ITM8`,
+   `MARCA`, `DESCRIÇÃO`, `IN_MEA`, `PVP`, ordenada por Grupo Interno / UVC /
+   ITM8 / Marca / Descrição / `IN_MEA` (A→Z, da campanha mais próxima para a
+   mais longínqua).
+2. **Meas Processado** — uma linha por `EAN` com a `IN_MEA` da **próxima campanha**:
+   ordenam-se as datas por ordem crescente e escolhe-se a **menor data igual ou
+   posterior ao dia em que o script é executado**. Ex.: com execução a 24-06 e
+   campanhas 25-06, 09-07 e 30-07, escolhe-se **25-06**. Se só existirem datas
+   passadas, usa-se a mais recente.
 
 O ficheiro processado é guardado como `TOTAL - meas a DD-MM-YYYY - processado.xlsx`.
 

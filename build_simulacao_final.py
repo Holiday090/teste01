@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from copy import copy
 from datetime import datetime
 from pathlib import Path
@@ -162,7 +162,7 @@ def find_latest_total_meas(path: Path) -> Path:
 
 
 def output_filename_for_week(week: int) -> str:
-    return f"S{week}_analise_precos_SUIVI.xlsx"
+    return f"S{week} - Análise preços SUIVI.xlsx"
 
 
 def find_historico_suivi_column(headers: tuple[Any, ...]) -> int | None:
@@ -292,11 +292,16 @@ def load_comparavel(comparavel_path: Path) -> dict[str, dict[str, Any]]:
         ean = as_text(row[0])
         if not ean:
             continue
-        promos[ean] = {
-            "CONTINENTE": row[17] if row[17] is not None else "",
-            "LIDL": row[25] if row[25] is not None else "",
-            "PINGO-DOCE": row[21] if row[21] is not None else "",
-        }
+        if ean not in promos:
+            promos[ean] = {"CONTINENTE": "", "LIDL": "", "PINGO-DOCE": ""}
+        for retailer, index in (
+            ("CONTINENTE", 17),
+            ("PINGO-DOCE", 21),
+            ("LIDL", 25),
+        ):
+            value = row[index] if index < len(row) else None
+            if isinstance(value, (int, float)):
+                promos[ean][retailer] = value
         normalized = ean_key(ean)
         if normalized and normalized not in promos:
             promos[normalized] = promos[ean]
@@ -329,9 +334,11 @@ def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
     headers = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
     cols = {
         "grupo": header_index(headers, "GRUPO_INTERNO"),
+        "itm8": header_index(headers, "ITM8"),
         "uvc": header_index(headers, "UVC"),
         "ean": header_index(headers, "EAN"),
         "descricao": header_index(headers, "DESCRIÇÃO"),
+        "marca": header_index(headers, "MARCA"),
         "in_mea": header_index(headers, "IN_MEA"),
         "pvp": header_index(headers, "PVP"),
     }
@@ -344,9 +351,11 @@ def read_total_meas_rows(total_meas_path: Path) -> list[dict[str, Any]]:
         rows.append(
             {
                 "grupo": row[cols["grupo"]],
+                "itm8": as_text(row[cols["itm8"]]),
                 "uvc": as_text(row[cols["uvc"]]),
                 "ean": as_text(row[cols["ean"]]),
                 "descricao": row[cols["descricao"]],
+                "marca": row[cols["marca"]],
                 "in_mea": date,
                 "pvp": row[cols["pvp"]] if row[cols["pvp"]] is not None else "",
             }
@@ -361,25 +370,48 @@ def sort_meas_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         key=lambda row: (
             as_text(row["grupo"]),
             as_text(row["uvc"]).zfill(10),
-            ean_key(row["ean"]),
+            as_text(row["itm8"]).zfill(8),
+            as_text(row["marca"]),
             as_text(row["descricao"]),
-            -row["in_mea"].timestamp(),
+            row["in_mea"].timestamp(),
         ),
     )
 
 
-def build_meas_processed_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    sorted_rows = sort_meas_rows(rows)
-    best_by_ean: dict[str, dict[str, Any]] = {}
-    for row in sorted_rows:
-        key = ean_key(row["ean"]) or as_text(row["ean"])
-        if not key:
-            continue
-        current = best_by_ean.get(key)
-        if current is None or row["in_mea"] > current["in_mea"]:
-            best_by_ean[key] = row
+def normalize_meas_reference(value: datetime) -> datetime:
+    return value.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    return sort_meas_rows(list(best_by_ean.values()))
+
+def select_meas_row_for_ean(rows: list[dict[str, Any]], reference: datetime) -> dict[str, Any] | None:
+    if not rows:
+        return None
+
+    reference_day = normalize_meas_reference(reference)
+    sorted_rows = sorted(rows, key=lambda row: row["in_mea"])
+    for row in sorted_rows:
+        if normalize_meas_reference(row["in_mea"]) >= reference_day:
+            return row
+    return sorted_rows[-1]
+
+
+def build_meas_processed_rows(
+    rows: list[dict[str, Any]],
+    reference_date: datetime | None = None,
+) -> list[dict[str, Any]]:
+    reference = reference_date or datetime.now()
+    rows_by_ean: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        key = ean_key(row["ean"]) or as_text(row["ean"])
+        if key:
+            rows_by_ean[key].append(row)
+
+    processed_rows: list[dict[str, Any]] = []
+    for ean_rows in rows_by_ean.values():
+        selected = select_meas_row_for_ean(ean_rows, reference)
+        if selected is not None:
+            processed_rows.append(selected)
+
+    return sort_meas_rows(processed_rows)
 
 
 def build_meas_lookup(processed_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -415,7 +447,7 @@ def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str,
 
     pivot_ws = wb.create_sheet("TD Meas")
     processed_ws = wb.create_sheet("Meas Processado")
-    headers = ("GRUPO_INTERNO", "UVC", "EAN", "DESCRIÇÃO", "IN_MEA", "PVP")
+    headers = ("GRUPO_INTERNO", "UVC", "ITM8", "MARCA", "DESCRIÇÃO", "IN_MEA", "PVP")
 
     for ws in (pivot_ws, processed_ws):
         for col, header in enumerate(headers, start=1):
@@ -425,12 +457,13 @@ def write_total_meas_processed(total_meas_path: Path, pivot_rows: list[dict[str,
         for row_number, row in enumerate(source_rows, start=2):
             target_ws.cell(row_number, 1).value = row["grupo"]
             target_ws.cell(row_number, 2).value = row["uvc"]
-            target_ws.cell(row_number, 3).value = row["ean"]
-            target_ws.cell(row_number, 4).value = row["descricao"]
-            date_cell = target_ws.cell(row_number, 5)
+            target_ws.cell(row_number, 3).value = row["itm8"]
+            target_ws.cell(row_number, 4).value = row["marca"]
+            target_ws.cell(row_number, 5).value = row["descricao"]
+            date_cell = target_ws.cell(row_number, 6)
             date_cell.value = row["in_mea"]
             date_cell.number_format = "dd-mm-yyyy"
-            target_ws.cell(row_number, 6).value = row["pvp"]
+            target_ws.cell(row_number, 7).value = row["pvp"]
 
     wb.save(output_path)
     wb.close()
@@ -444,11 +477,12 @@ def count_meas_matches(records: list[dict[str, Any]], lookup: dict[str, dict[str
 def load_total_meas(
     total_meas_path: Path,
     *,
+    reference_date: datetime | None = None,
     save_processed: bool = True,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     raw_rows = read_total_meas_rows(total_meas_path)
     pivot_rows = sort_meas_rows(raw_rows)
-    processed_rows = build_meas_processed_rows(raw_rows)
+    processed_rows = build_meas_processed_rows(raw_rows, reference_date)
     lookup = build_meas_lookup(processed_rows)
 
     stats = {
