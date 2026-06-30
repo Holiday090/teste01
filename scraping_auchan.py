@@ -107,9 +107,9 @@ CATEGORY_TARGETS: tuple[CategoryTarget, ...] = (
     ),
     CategoryTarget(
         display_name="Lácteos",
-        menu_path=("Alimentação", "Congelados", "Lácteos"),
-        listing_url="/pt/alimentacao/congelados/?q=lacteos",
-        listing_fallback_names=("Lácteos", "Produtos Lácteos"),
+        menu_path=("Alimentação", "Produtos Lácteos"),
+        listing_url="/pt/alimentacao/produtos-lacteos/",
+        listing_fallback_names=("Produtos Lácteos", "Lácteos"),
     ),
     CategoryTarget(
         display_name="Congelados",
