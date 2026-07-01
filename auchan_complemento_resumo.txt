@@ -1,0 +1,16 @@
+Scraping Auchan — Complemento (concluído)
+==========================================
+Data: 2026-07-01
+Ficheiro: Scraping_Auchan.xlsx
+Total produtos: 10583
+Novos vs baseline (2224): 8359
+Categorias concluídas: 55
+
+Distribuição:
+  Alimentação: 9064
+  Produtos Frescos: 1063
+  Biológicos e Alternativas: 408
+  Outros: 48
+
+Download (branch main):
+https://github.com/Holiday090/teste01/blob/main/Scraping_Auchan.xlsx
