@@ -16774,7 +16774,7 @@
     {
       "Categoria Principal": "Casa",
       "Sub-categoria": "Decoração",
-      "Marca": "Studio Home",
+      "Marca": "",
       "Descrição / Nome do artigo": "Moldura de colagens Studio Home | 58 x 45 cm | Várias cores",
       "Preço Regular": "5,95",
       "Preço Promocional": "",
@@ -16795,7 +16795,7 @@
       "Marca": "Comfibeds",
       "Descrição / Nome do artigo": "Edredão Comfibeds | 240 x 220 cm",
       "Preço Regular": "19,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "15,95",
       "URL": "https://www.action.com/pt-pt/p/2548184/edredao-comfibeds/"
     },
     {
@@ -16804,7 +16804,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Edredão Comfibeds | 200 x 200 cm",
       "Preço Regular": "16,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "12,95",
       "URL": "https://www.action.com/pt-pt/p/2548183/edredao-comfibeds/"
     },
     {
@@ -16889,7 +16889,7 @@
       "URL": "https://www.action.com/pt-pt/p/2547070/tapete-de-entrada-xxl/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
       "Marca": "",
       "Descrição / Nome do artigo": "Rodízios fixos e giratórios | 4 unidades",
@@ -17407,7 +17407,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Talheres em estojo | 16 peças",
       "Preço Regular": "3,99",
-      "Preço Promocional": "2,99",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/2545907/talheres-em-estojo/"
     },
     {
@@ -25160,7 +25160,7 @@
       "URL": "https://www.action.com/pt-pt/p/2548427/sacos-do-lixo-dumil/"
     },
     {
-      "Categoria Principal": "Lar e limpeza",
+      "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
       "Marca": "",
       "Descrição / Nome do artigo": "Caixa de arrumação Tools | 5 compartimentos",
@@ -25180,7 +25180,7 @@
     {
       "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Produtos de limpeza",
-      "Marca": "Ajax",
+      "Marca": "",
       "Descrição / Nome do artigo": "Limpa vidros Ajax | 750 ml",
       "Preço Regular": "2,18",
       "Preço Promocional": "",
@@ -28006,7 +28006,7 @@
     {
       "Categoria Principal": "Papelaria",
       "Sub-categoria": "Material de escritório",
-      "Marca": "",
+      "Marca": "Pelikan",
       "Descrição / Nome do artigo": "Cola baton Pelifix Pelikan | 3 unidades | 20g",
       "Preço Regular": "2,29",
       "Preço Promocional": "",
@@ -28022,7 +28022,7 @@
       "URL": "https://www.action.com/pt-pt/p/2548086/quadro-branco-magnetico/"
     },
     {
-      "Categoria Principal": "Papelaria",
+      "Categoria Principal": "Moda",
       "Sub-categoria": "Acessórios",
       "Marca": "",
       "Descrição / Nome do artigo": "Mochila | Diversas variantes",
@@ -32041,7 +32041,7 @@
       "Marca": "C&amp;C",
       "Descrição / Nome do artigo": "Pano de limpeza de microfibras C&C | 40 x 40 cm | diversas variantes",
       "Preço Regular": "0,89",
-      "Preço Promocional": "0,79",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/2546895/pano-de-limpeza-de-microfibras-c-c/"
     },
     {
@@ -39634,7 +39634,7 @@
     {
       "Categoria Principal": "Brinquedos",
       "Sub-categoria": "Trabalhos manuais para crianças",
-      "Marca": "",
+      "Marca": "Kids Creative",
       "Descrição / Nome do artigo": "Bloco de desenho | Diversas variantes",
       "Preço Regular": "0,99",
       "Preço Promocional": "",
@@ -43457,7 +43457,7 @@
       "URL": "https://www.action.com/pt-pt/p/2550709/acumulador-de-gelo/"
     },
     {
-      "Categoria Principal": "Viajar",
+      "Categoria Principal": "Moda",
       "Sub-categoria": "Acessórios",
       "Marca": "",
       "Descrição / Nome do artigo": "Cadeado numérico Spilbergen | Diversas cores",
@@ -49136,7 +49136,7 @@
       "URL": "https://www.action.com/pt-pt/p/2549970/toalhitas-para-bebe-huggies-pure-pure/"
     },
     {
-      "Categoria Principal": "Cuidados pessoais",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Saúde",
       "Marca": "",
       "Descrição / Nome do artigo": "Pensos térmicos Thermofect | 2 un.",
@@ -49145,7 +49145,7 @@
       "URL": "https://www.action.com/pt-pt/p/2548032/pensos-termicos-thermofect/"
     },
     {
-      "Categoria Principal": "Cuidados pessoais",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Saúde",
       "Marca": "",
       "Descrição / Nome do artigo": "Emplastros térmicos Thermofect | 2 un.",
@@ -52297,7 +52297,7 @@
     {
       "Categoria Principal": "Comida e bebidas",
       "Sub-categoria": "Chocolate",
-      "Marca": "Nestlé",
+      "Marca": "",
       "Descrição / Nome do artigo": "Chocolates Lion | 3 un.",
       "Preço Regular": "1,49",
       "Preço Promocional": "",
@@ -52309,7 +52309,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Óleo de coco | 460 g",
       "Preço Regular": "2,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "2,69",
       "URL": "https://www.action.com/pt-pt/p/2549147/oleo-de-coco/"
     },
     {
@@ -52327,7 +52327,7 @@
       "Marca": "Sau&apos;cee",
       "Descrição / Nome do artigo": "Molho Yammie Sau'cee Cebola | 500 ml",
       "Preço Regular": "2,39",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,99",
       "URL": "https://www.action.com/pt-pt/p/2547928/molho-yammie-sau-cee-cebola/"
     },
     {
@@ -52336,7 +52336,7 @@
       "Marca": "Sau&apos;cee",
       "Descrição / Nome do artigo": "Molho picante Sau'cee | 500 ml",
       "Preço Regular": "2,39",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,99",
       "URL": "https://www.action.com/pt-pt/p/2547927/molho-picante-sau-cee/"
     },
     {
@@ -61633,7 +61633,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Comedouro | Ø 14 cm | Várias cores",
       "Preço Regular": "0,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "0,79",
       "URL": "https://www.action.com/pt-pt/p/2546956/comedouro/"
     },
     {
@@ -67364,8 +67364,108 @@
     "https://www.action.com/pt-pt/p/2544197/livro-de-colorir/",
     "https://www.action.com/pt-pt/p/2544375/escovas-limpa-para-brisas-magnum-f65/",
     "https://www.action.com/pt-pt/p/2544376/escovas-limpa-para-brisas-magnum-f60/",
-    "https://www.action.com/pt-pt/p/2544377/escovas-limpa-para-brisas-magnum-f55/"
+    "https://www.action.com/pt-pt/p/2544377/escovas-limpa-para-brisas-magnum-f55/",
+    "https://www.action.com/pt-pt/p/2544378/limpa-para-brisas-magnum/",
+    "https://www.action.com/pt-pt/p/2544407/escovas-limpa-para-brisas-magnum-f50/",
+    "https://www.action.com/pt-pt/p/2544409/escovas-limpa-para-brisas-magnum-f48/",
+    "https://www.action.com/pt-pt/p/2544410/escovas-limpa-para-brisas-magnum-f45/",
+    "https://www.action.com/pt-pt/p/2544411/escovas-limpa-para-brisas-magnum-f40/",
+    "https://www.action.com/pt-pt/p/2544448/ventilador-vertical-kinzo/",
+    "https://www.action.com/pt-pt/p/2544449/ventilador-de-mesa-kinzo/",
+    "https://www.action.com/pt-pt/p/2544454/gel-de-baba-de-caracol/",
+    "https://www.action.com/pt-pt/p/2544462/gel-de-banho-nivea-care-diamond/",
+    "https://www.action.com/pt-pt/p/2544721/gel-de-banho-nivea-care-relax/",
+    "https://www.action.com/pt-pt/p/2545214/banco-de-madeira/",
+    "https://www.action.com/pt-pt/p/2545336/comida-humida-para-gatos-perle-gourmet/",
+    "https://www.action.com/pt-pt/p/2545337/comida-humida-para-gatos-perle-gourmet/",
+    "https://www.action.com/pt-pt/p/2545482/tapete-de-entrada/",
+    "https://www.action.com/pt-pt/p/2545566/pasta-de-documentos-a4/",
+    "https://www.action.com/pt-pt/p/2545881/tapete/",
+    "https://www.action.com/pt-pt/p/2545893/livro-colorir-com-autocolantes/",
+    "https://www.action.com/pt-pt/p/2545907/talheres-em-estojo/",
+    "https://www.action.com/pt-pt/p/2545912/tela-de-pintura-van-bleiswijck/",
+    "https://www.action.com/pt-pt/p/2546059/tinta-mate-para-paredes-home-vision-branco/",
+    "https://www.action.com/pt-pt/p/2546378/kit-de-pintura-para-paredes/",
+    "https://www.action.com/pt-pt/p/2546379/caixa-de-arrumacao/",
+    "https://www.action.com/pt-pt/p/2546380/caixa-de-arrumacao/",
+    "https://www.action.com/pt-pt/p/2546408/mistura-de-especiarias/",
+    "https://www.action.com/pt-pt/p/2546440/cabide-de-porta/",
+    "https://www.action.com/pt-pt/p/2546443/esfregoes-com-esponja-multy/",
+    "https://www.action.com/pt-pt/p/2546447/gel-de-banho-adidas-team-force/",
+    "https://www.action.com/pt-pt/p/2546471/cola-de-contacto-bison-kit/",
+    "https://www.action.com/pt-pt/p/2546523/mini-stroopwafels-patisserie/",
+    "https://www.action.com/pt-pt/p/2546556/individual-entrancado/",
+    "https://www.action.com/pt-pt/p/2546578/diamantes-autocolantes-craft-universe/",
+    "https://www.action.com/pt-pt/p/2546586/argila-para-modelar-home-deco/",
+    "https://www.action.com/pt-pt/p/2546675/pano-de-cozinha-spargo/",
+    "https://www.action.com/pt-pt/p/2546793/limpa-vidros-ajax/",
+    "https://www.action.com/pt-pt/p/2546802/trolli-number-1/",
+    "https://www.action.com/pt-pt/p/2546837/champo-palmolive-silky-shine-effect/",
+    "https://www.action.com/pt-pt/p/2546842/champo-2-em-1-palmolive-naturals-hydra-balance/",
+    "https://www.action.com/pt-pt/p/2546855/tapete-escorredor/",
+    "https://www.action.com/pt-pt/p/2546857/liquido-para-sanita-quimica/",
+    "https://www.action.com/pt-pt/p/2546871/farol-automovel-philips/",
+    "https://www.action.com/pt-pt/p/2546873/mochila/",
+    "https://www.action.com/pt-pt/p/2546895/pano-de-limpeza-de-microfibras-c-c/",
+    "https://www.action.com/pt-pt/p/2546944/rodizios-fixos-e-giratorios/",
+    "https://www.action.com/pt-pt/p/2546956/comedouro/",
+    "https://www.action.com/pt-pt/p/2547070/tapete-de-entrada-xxl/",
+    "https://www.action.com/pt-pt/p/2547088/vela-aromatica-air-wick-essential-oils-antitabaco/",
+    "https://www.action.com/pt-pt/p/2547089/vela-aromatica-air-wick-essential-oils-baunilha-deliciosa/",
+    "https://www.action.com/pt-pt/p/2547167/pensos-rapidos-hansaplast-sensitive/",
+    "https://www.action.com/pt-pt/p/2547168/pensos-rapidos-hansaplast-essentials-universal/",
+    "https://www.action.com/pt-pt/p/2547321/gel-de-banho-nivea-rose-almond-oil/",
+    "https://www.action.com/pt-pt/p/2547406/bola-de-pilates-kaytan/",
+    "https://www.action.com/pt-pt/p/2547515/lencol-ajustavel-comfibeds/",
+    "https://www.action.com/pt-pt/p/2547516/lencol-ajustavel-comfibeds/",
+    "https://www.action.com/pt-pt/p/2547518/lencol-ajustavel-de-algodao-comfibeds/",
+    "https://www.action.com/pt-pt/p/2547519/lencol-ajustavel-comfibeds/",
+    "https://www.action.com/pt-pt/p/2547554/sacos-do-lixo-fecho-facil-dumil-lavanda/",
+    "https://www.action.com/pt-pt/p/2547620/bloco-de-desenho/",
+    "https://www.action.com/pt-pt/p/2547743/folhas-de-autocolantes-decotime/",
+    "https://www.action.com/pt-pt/p/2547793/caixa-de-buchas-e-parafusos-fischer/",
+    "https://www.action.com/pt-pt/p/2547795/caixa-de-arrumacao-tools/",
+    "https://www.action.com/pt-pt/p/2547927/molho-picante-sau-cee/",
+    "https://www.action.com/pt-pt/p/2547928/molho-yammie-sau-cee-cebola/",
+    "https://www.action.com/pt-pt/p/2547993/fio-de-croche-alison-mae/",
+    "https://www.action.com/pt-pt/p/2548031/emplastros-termicos-thermofect/",
+    "https://www.action.com/pt-pt/p/2548032/pensos-termicos-thermofect/",
+    "https://www.action.com/pt-pt/p/2548056/collants-kate-legwear-60-denier/",
+    "https://www.action.com/pt-pt/p/2548082/canecas/",
+    "https://www.action.com/pt-pt/p/2548086/quadro-branco-magnetico/",
+    "https://www.action.com/pt-pt/p/2548181/edredao-4-estacoes-comfibeds/",
+    "https://www.action.com/pt-pt/p/2548182/edredao-4-estacoes-comfibeds/",
+    "https://www.action.com/pt-pt/p/2548183/edredao-comfibeds/",
+    "https://www.action.com/pt-pt/p/2548184/edredao-comfibeds/",
+    "https://www.action.com/pt-pt/p/2548427/sacos-do-lixo-dumil/",
+    "https://www.action.com/pt-pt/p/2548526/cola-baton-pelifix-pelikan/",
+    "https://www.action.com/pt-pt/p/2548889/fio-de-trico-alison-mae-rosa-claro/",
+    "https://www.action.com/pt-pt/p/2548894/fio-de-trico-alison-mae-cinzento-claro/",
+    "https://www.action.com/pt-pt/p/2548895/fio-de-trico-alison-mae-essentials/",
+    "https://www.action.com/pt-pt/p/2548899/fio-de-trico-alison-mae-branco/",
+    "https://www.action.com/pt-pt/p/2549000/moldura-de-colagens-studio-home/",
+    "https://www.action.com/pt-pt/p/2549133/fudge-marandi-baunilha/",
+    "https://www.action.com/pt-pt/p/2549147/oleo-de-coco/",
+    "https://www.action.com/pt-pt/p/2549164/snacks-para-caes-mr-goodlad/",
+    "https://www.action.com/pt-pt/p/2549168/bloco-sanitario-bref-power-activ-limao/",
+    "https://www.action.com/pt-pt/p/2549212/fita-adesiva/",
+    "https://www.action.com/pt-pt/p/2549294/livro-de-colorir-disney/",
+    "https://www.action.com/pt-pt/p/2549314/chocolates-lion/",
+    "https://www.action.com/pt-pt/p/2549372/cadeado-numerico-spilbergen/",
+    "https://www.action.com/pt-pt/p/2549435/cartuchos-de-tinta-ink-print-hp-304/",
+    "https://www.action.com/pt-pt/p/2549464/bouncing-putty/",
+    "https://www.action.com/pt-pt/p/2549515/mopa-com-pulverizador-spargo/",
+    "https://www.action.com/pt-pt/p/2549520/conjunto-de-panos-de-cozinha/",
+    "https://www.action.com/pt-pt/p/2549584/faca-bisturi-com-laminas-de-precisao-craft-design/",
+    "https://www.action.com/pt-pt/p/2549732/mala-de-viagem-rigida-spilbergen-brussel/",
+    "https://www.action.com/pt-pt/p/2549734/fita-multiusos-tcx/",
+    "https://www.action.com/pt-pt/p/2549767/creme-de-dia-nivea-anti-age/",
+    "https://www.action.com/pt-pt/p/2549768/creme-de-noite-nivea-anti-wrinkle/",
+    "https://www.action.com/pt-pt/p/2549801/fita-adesiva-para-pintura-tcx/",
+    "https://www.action.com/pt-pt/p/2549970/toalhitas-para-bebe-huggies-pure-pure/",
+    "https://www.action.com/pt-pt/p/2550020/parafusos-para-aglomerado-de-madeira-fischer/",
+    "https://www.action.com/pt-pt/p/2550074/refrigerante-orangina-original/"
   ],
   "added_new_urls": [],
-  "articles_processed": 400
+  "articles_processed": 500
 }
