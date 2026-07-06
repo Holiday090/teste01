@@ -15665,7 +15665,7 @@
       "URL": "https://www.action.com/pt-pt/p/3004660/lencois-de-percal-la-maison-reve/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Vasos e potes",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso | Ø 50 cm",
@@ -15679,7 +15679,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Almofada | 40 x 60 cm",
       "Preço Regular": "8,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "6,95",
       "URL": "https://www.action.com/pt-pt/p/3004235/almofada/"
     },
     {
@@ -15755,7 +15755,7 @@
       "URL": "https://www.action.com/pt-pt/p/3002649/pufe-felpudo-xl-com-arrumacao/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Mobiliário",
       "Marca": "",
       "Descrição / Nome do artigo": "Módulo de gavetas Tontarelli | 20 x 28,5 x 32 cm | Várias cores",
@@ -15764,7 +15764,7 @@
       "URL": "https://www.action.com/pt-pt/p/3002328/modulo-de-gavetas-tontarelli/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Difusor com varetas | 30 ml | diversas variantes",
@@ -20696,7 +20696,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005202/tabuleiro-para-forno-cook-n-share/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Artigos de festa",
       "Marca": "",
       "Descrição / Nome do artigo": "Tigelas feitas de bagaço | 8 unidades | 350ml",
@@ -20708,7 +20708,7 @@
       "Categoria Principal": "Cozinha",
       "Sub-categoria": "Têxteis de cozinha",
       "Marca": "",
-      "Descrição / Nome do artigo": "Individual | Ø 30 x 45 cm | Várias cores",
+      "Descrição / Nome do artigo": "Individual | 30 x 45 cm | Várias cores",
       "Preço Regular": "1,49",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3004187/individual/"
@@ -20741,7 +20741,7 @@
       "URL": "https://www.action.com/pt-pt/p/3002382/caixa-para-alimentos-curver/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Papelaria",
       "Sub-categoria": "Recipientes para alimentos",
       "Marca": "",
       "Descrição / Nome do artigo": "Lancheira | 4 peças | Diversas variantes",
@@ -24323,7 +24323,7 @@
       "URL": "https://www.action.com/pt-pt/p/3004781/manta-de-cobertura/"
     },
     {
-      "Categoria Principal": "Lar e limpeza",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Ferramentas de jardinagem",
       "Marca": "Dumil",
       "Descrição / Nome do artigo": "Sacos do lixo de jardim Dumil | 130 l | 10 un.",
@@ -35179,7 +35179,7 @@
     {
       "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
-      "Marca": "",
+      "Marca": "Werckmann",
       "Descrição / Nome do artigo": "Cunha de ar Werckmann | 15 x 16 cm",
       "Preço Regular": "1,99",
       "Preço Promocional": "",
@@ -35251,7 +35251,7 @@
     {
       "Categoria Principal": "Bricolage",
       "Sub-categoria": "Iluminação",
-      "Marca": "",
+      "Marca": "LSC",
       "Descrição / Nome do artigo": "Pinos LED LSC | 2 watts | 200 lúmenes | 2 un.",
       "Preço Regular": "2,99",
       "Preço Promocional": "",
@@ -36554,12 +36554,12 @@
       "URL": "https://www.action.com/pt-pt/p/3202717/pinta-o-teu-proprio-porta-chaves/"
     },
     {
-      "Categoria Principal": "Brinquedos",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Brinquedos para exterior",
       "Marca": "",
       "Descrição / Nome do artigo": "Cama aquática | 128 x 80 cm | Várias cores",
       "Preço Regular": "3,22",
-      "Preço Promocional": "1,97",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3004772/cama-aquatica/"
     },
     {
@@ -39808,7 +39808,7 @@
       "Marca": "Intex",
       "Descrição / Nome do artigo": "Bomba com filtro Krystal Clear Intex | 2,3 m3/hora | 12V",
       "Preço Regular": "39,95",
-      "Preço Promocional": "29,95",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3004507/bomba-com-filtro-krystal-clear-intex/"
     },
     {
@@ -48085,10 +48085,10 @@
     {
       "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Depilar e barbear",
-      "Marca": "Wilkinson Sword",
+      "Marca": "",
       "Descrição / Nome do artigo": "Lâminas depilatórias Wilkinson Sword Intuition | 2 peças",
       "Preço Regular": "5,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "5,35",
       "URL": "https://www.action.com/pt-pt/p/3004893/laminas-depilatorias-wilkinson-sword-intuition/"
     },
     {
@@ -48164,7 +48164,7 @@
       "URL": "https://www.action.com/pt-pt/p/3003546/bola-de-banho-efervescente/"
     },
     {
-      "Categoria Principal": "Cuidados pessoais",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Saúde",
       "Marca": "",
       "Descrição / Nome do artigo": "Suporte de tornozelo Sport Support | Tamanhos S - XL",
@@ -54302,7 +54302,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005758/pilhas-varta-aa-recarregavel/"
     },
     {
-      "Categoria Principal": "Multimédia",
+      "Categoria Principal": "Moda",
       "Sub-categoria": "Acessórios",
       "Marca": "",
       "Descrição / Nome do artigo": "Mochila de gaming Battletron | 28 l | diversas variantes",
@@ -58015,7 +58015,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Calções modeladores | Tamanhos S - XL",
       "Preço Regular": "3,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "2,97",
       "URL": "https://www.action.com/pt-pt/p/3004504/calcoes-modeladores/"
     },
     {
@@ -61399,7 +61399,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Jumbone Maxi Pedigree | 180 gramas | Carne de vaca e aves",
       "Preço Regular": "2,29",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,79",
       "URL": "https://www.action.com/pt-pt/p/3002950/jumbone-maxi-pedigree/"
     },
     {
@@ -61408,7 +61408,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Snacks para cães Pedigree Jumbone Frango e borrego | 2 un. | 180 g",
       "Preço Regular": "1,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,79",
       "URL": "https://www.action.com/pt-pt/p/3002949/snacks-para-caes-pedigree-jumbone-frango-e-borrego/"
     },
     {
@@ -68264,8 +68264,108 @@
     "https://www.action.com/pt-pt/p/3001724/branqueador-para-sapatilhas/",
     "https://www.action.com/pt-pt/p/3001742/bolachas-oreo-golden/",
     "https://www.action.com/pt-pt/p/3001752/recarga-para-pistola-de-cola-ferm/",
-    "https://www.action.com/pt-pt/p/3001875/moldura-milano/"
+    "https://www.action.com/pt-pt/p/3001875/moldura-milano/",
+    "https://www.action.com/pt-pt/p/3001917/difusor-com-varetas/",
+    "https://www.action.com/pt-pt/p/3001949/neutralizador-de-odores-para-caixa-de-areia-freija/",
+    "https://www.action.com/pt-pt/p/3001994/bloco-de-desenho-a4/",
+    "https://www.action.com/pt-pt/p/3002095/pensos-rapidos-hansaplast-essentials-elastico/",
+    "https://www.action.com/pt-pt/p/3002098/oleo-protetor-solar-em-spray-caribbean-bronze/",
+    "https://www.action.com/pt-pt/p/3002102/agua-micelar-alvira-clean-beauty/",
+    "https://www.action.com/pt-pt/p/3002164/locao-bronzeadora-caribbean-bronze/",
+    "https://www.action.com/pt-pt/p/3002239/cuecas-de-bambu-dolce-bella/",
+    "https://www.action.com/pt-pt/p/3002241/cuecas-de-cintura-alta-em-bambu-dolce-bella/",
+    "https://www.action.com/pt-pt/p/3002242/cuecas-hipster-dolce-bella/",
+    "https://www.action.com/pt-pt/p/3002260/sais-de-banho-disney/",
+    "https://www.action.com/pt-pt/p/3002261/discos-desmaquilhantes-reutilizaveis/",
+    "https://www.action.com/pt-pt/p/3002287/hula-hoop/",
+    "https://www.action.com/pt-pt/p/3002315/lancheira/",
+    "https://www.action.com/pt-pt/p/3002328/modulo-de-gavetas-tontarelli/",
+    "https://www.action.com/pt-pt/p/3002382/caixa-para-alimentos-curver/",
+    "https://www.action.com/pt-pt/p/3002388/caixa-de-conservacao-de-alimentos-curver/",
+    "https://www.action.com/pt-pt/p/3002444/cuecas-hipster/",
+    "https://www.action.com/pt-pt/p/3002487/animal-de-peluche-xxl-mini-matters/",
+    "https://www.action.com/pt-pt/p/3002516/rimel-de-volume-max-more/",
+    "https://www.action.com/pt-pt/p/3002596/pinos-led-lsc/",
+    "https://www.action.com/pt-pt/p/3002598/mix-de-amendoins-e-cajus-com-mel-e-sal-snacks-of-the-world/",
+    "https://www.action.com/pt-pt/p/3002649/pufe-felpudo-xl-com-arrumacao/",
+    "https://www.action.com/pt-pt/p/3002656/mascara-facial-disney-princess/",
+    "https://www.action.com/pt-pt/p/3002740/vela-aromatica-treewick/",
+    "https://www.action.com/pt-pt/p/3002767/nougat/",
+    "https://www.action.com/pt-pt/p/3002771/marcadores-para-quadro-branco-edding/",
+    "https://www.action.com/pt-pt/p/3002777/espuma-de-limpeza-facial-alvira-clean-beauty-clean-beauty/",
+    "https://www.action.com/pt-pt/p/3002818/noodles-instantaneos-frango/",
+    "https://www.action.com/pt-pt/p/3002819/noodles-instantaneos-noodlicious-vaca/",
+    "https://www.action.com/pt-pt/p/3002820/noodles-instantaneos-vegetais/",
+    "https://www.action.com/pt-pt/p/3002840/multiferramenta-ferm/",
+    "https://www.action.com/pt-pt/p/3002854/boxers-de-bambu-ziki/",
+    "https://www.action.com/pt-pt/p/3002856/meias-lotto/",
+    "https://www.action.com/pt-pt/p/3002907/sabao-de-bilis-mariette/",
+    "https://www.action.com/pt-pt/p/3002917/cajus-com-sal-snacks-of-the-world/",
+    "https://www.action.com/pt-pt/p/3002949/snacks-para-caes-pedigree-jumbone-frango-e-borrego/",
+    "https://www.action.com/pt-pt/p/3002950/jumbone-maxi-pedigree/",
+    "https://www.action.com/pt-pt/p/3002969/xarope-de-agave/",
+    "https://www.action.com/pt-pt/p/3003008/spray-de-limpeza-de-travoes-gs27/",
+    "https://www.action.com/pt-pt/p/3003079/detergente-para-chao-ajax-flores-do-mediterraneo/",
+    "https://www.action.com/pt-pt/p/3003083/spray-para-jantes-gs27/",
+    "https://www.action.com/pt-pt/p/3003084/produto-de-limpeza-para-texteis-gs27/",
+    "https://www.action.com/pt-pt/p/3003174/lampada-led-lsc/",
+    "https://www.action.com/pt-pt/p/3003195/vela-votiva/",
+    "https://www.action.com/pt-pt/p/3003197/vela-votiva/",
+    "https://www.action.com/pt-pt/p/3003279/pano-de-cozinha-la-sonata/",
+    "https://www.action.com/pt-pt/p/3003299/brightpad-led-xl-crafts-co/",
+    "https://www.action.com/pt-pt/p/3003314/suporte-de-tornozelo-sport-support/",
+    "https://www.action.com/pt-pt/p/3003353/pastilha-elastica-mentos-peppermint/",
+    "https://www.action.com/pt-pt/p/3003364/mochila-de-gaming-battletron/",
+    "https://www.action.com/pt-pt/p/3003407/minis-daim-pacote-xxl/",
+    "https://www.action.com/pt-pt/p/3003412/chocolate-celebrations/",
+    "https://www.action.com/pt-pt/p/3003427/tinta-mate-para-paredes-home-vision-ral-9010/",
+    "https://www.action.com/pt-pt/p/3003442/fita-adesiva-para-pintar-tcx/",
+    "https://www.action.com/pt-pt/p/3003531/sacos-do-lixo-dumil/",
+    "https://www.action.com/pt-pt/p/3003551/relogio/",
+    "https://www.action.com/pt-pt/p/3003581/caixa-de-arrumacao/",
+    "https://www.action.com/pt-pt/p/3003625/cajus-natural-happiness-sem-sal/",
+    "https://www.action.com/pt-pt/p/3003712/sacos-do-lixo-dumil/",
+    "https://www.action.com/pt-pt/p/3003730/capa-de-almofada/",
+    "https://www.action.com/pt-pt/p/3003780/sacos-de-doces-com-autocolantes-cool2party/",
+    "https://www.action.com/pt-pt/p/3003862/laca-de-volume-fashion-professional-ultra-forte/",
+    "https://www.action.com/pt-pt/p/3003913/desodorizante-m/",
+    "https://www.action.com/pt-pt/p/3003940/cabide-de-porta/",
+    "https://www.action.com/pt-pt/p/3003959/calcas-com-cinta/",
+    "https://www.action.com/pt-pt/p/3003996/tenis-de-lona/",
+    "https://www.action.com/pt-pt/p/3004006/acendalhas-samba/",
+    "https://www.action.com/pt-pt/p/3004187/individual/",
+    "https://www.action.com/pt-pt/p/3004235/almofada/",
+    "https://www.action.com/pt-pt/p/3004243/toalhitas-para-bebe-huggies-natural-care/",
+    "https://www.action.com/pt-pt/p/3004279/magic-hot-air-styler-elle/",
+    "https://www.action.com/pt-pt/p/3004291/oleo-de-massagem/",
+    "https://www.action.com/pt-pt/p/3004315/palmilhas-antiodores-shoe-like/",
+    "https://www.action.com/pt-pt/p/3004321/tapete-para-brincar-hoodadoo/",
+    "https://www.action.com/pt-pt/p/3004355/tinteiros-ink-print-epson-603/",
+    "https://www.action.com/pt-pt/p/3004367/tigelas-feitas-de-bagaco/",
+    "https://www.action.com/pt-pt/p/3004391/sacos-do-lixo-de-jardim-dumil/",
+    "https://www.action.com/pt-pt/p/3004494/meias-curtas-lotto/",
+    "https://www.action.com/pt-pt/p/3004504/calcoes-modeladores/",
+    "https://www.action.com/pt-pt/p/3004507/bomba-com-filtro-krystal-clear-intex/",
+    "https://www.action.com/pt-pt/p/3004516/papagaio/",
+    "https://www.action.com/pt-pt/p/3004532/tesoura-de-poda/",
+    "https://www.action.com/pt-pt/p/3004550/cunha-de-ar-werckmann/",
+    "https://www.action.com/pt-pt/p/3004590/champo-fashion-professional/",
+    "https://www.action.com/pt-pt/p/3004609/vaso/",
+    "https://www.action.com/pt-pt/p/3004636/grelhador/",
+    "https://www.action.com/pt-pt/p/3004660/lencois-de-percal-la-maison-reve/",
+    "https://www.action.com/pt-pt/p/3004690/calcoes/",
+    "https://www.action.com/pt-pt/p/3004718/deposito-de-agua-dobravel-com-torneira-froyak/",
+    "https://www.action.com/pt-pt/p/3004723/meias-de-bambu-pairz/",
+    "https://www.action.com/pt-pt/p/3004727/meias-de-bambu-pairz/",
+    "https://www.action.com/pt-pt/p/3004765/conjunto-de-pinceis/",
+    "https://www.action.com/pt-pt/p/3004772/cama-aquatica/",
+    "https://www.action.com/pt-pt/p/3004773/espada-de-bolas-de-sabao/",
+    "https://www.action.com/pt-pt/p/3004778/fato-impermeavel/",
+    "https://www.action.com/pt-pt/p/3004781/manta-de-cobertura/",
+    "https://www.action.com/pt-pt/p/3004839/grelha-para-churrasco-big-jeff/",
+    "https://www.action.com/pt-pt/p/3004842/marcadores-de-agua-decotime/",
+    "https://www.action.com/pt-pt/p/3004893/laminas-depilatorias-wilkinson-sword-intuition/"
   ],
   "added_new_urls": [],
-  "articles_processed": 1300
+  "articles_processed": 1400
 }
