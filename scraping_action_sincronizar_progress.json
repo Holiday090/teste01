@@ -15588,7 +15588,7 @@
       "Sub-categoria": "Acessórios de casa de banho",
       "Marca": "",
       "Descrição / Nome do artigo": "Cortina de duche | 180 x 200 cm | Diversas variantes",
-      "Preço Regular": "2,99",
+      "Preço Regular": "2,32",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3006874/cortina-de-duche/"
     },
@@ -15647,7 +15647,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005581/pelicula-espelhada-para-janela/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Mobiliário",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto de arrumação dobrável Home Accents | 30 x 30 x 30 cm | Várias cores",
@@ -24224,7 +24224,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005783/bloco-sanitario-bref-power-activ-flower-sensation/"
     },
     {
-      "Categoria Principal": "Lar e limpeza",
+      "Categoria Principal": "Moda",
       "Sub-categoria": "Calçado",
       "Marca": "",
       "Descrição / Nome do artigo": "Graxa para sapatos | 50 ml | Várias cores",
@@ -24278,7 +24278,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005298/aspirador-vertical-2-em-1-sauber/"
     },
     {
-      "Categoria Principal": "Lar e limpeza",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Churrasco e acessórios",
       "Marca": "",
       "Descrição / Nome do artigo": "Produto de limpeza para grelhadores Big Jeff | 750 ml",
@@ -27752,7 +27752,7 @@
       "URL": "https://www.action.com/pt-pt/p/3006089/imanes/"
     },
     {
-      "Categoria Principal": "Papelaria",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Escrever e desenhar",
       "Marca": "",
       "Descrição / Nome do artigo": "Marcadores duplos DécoTime | 12 unidades | Diversas variantes",
@@ -27770,7 +27770,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005417/marcadores-duplos-decotime/"
     },
     {
-      "Categoria Principal": "Papelaria",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Escrever e desenhar",
       "Marca": "",
       "Descrição / Nome do artigo": "Marcadores duplos metálicos DécoTime | 6 unidades | Diversas variantes",
@@ -35017,7 +35017,7 @@
     {
       "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
-      "Marca": "",
+      "Marca": "Smartwares",
       "Descrição / Nome do artigo": "Detetor de monóxido de carbono Smartwares | FGA-1311",
       "Preço Regular": "14,95",
       "Preço Promocional": "",
@@ -35087,7 +35087,7 @@
       "URL": "https://www.action.com/pt-pt/p/3006055/tinta-para-fachada-home-vision-branco/"
     },
     {
-      "Categoria Principal": "Bricolage",
+      "Categoria Principal": "Multimédia",
       "Sub-categoria": "Automóvel",
       "Marca": "",
       "Descrição / Nome do artigo": "Suporte de telemóvel para automóvel Lab31 | Universal",
@@ -35100,7 +35100,7 @@
       "Sub-categoria": "Bicicletas",
       "Marca": "",
       "Descrição / Nome do artigo": "Farol de bicicleta Walfort | Incl. pilhas",
-      "Preço Regular": "3,79",
+      "Preço Regular": "2,46",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3006032/farol-de-bicicleta-walfort/"
     },
@@ -35134,8 +35134,8 @@
     {
       "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
-      "Marca": "",
-      "Descrição / Nome do artigo": "Detetor de fumo Smartwares | 85 dB",
+      "Marca": "Smartwares",
+      "Descrição / Nome do artigo": "Detetor de fumo Smartwares | FSM-117",
       "Preço Regular": "4,49",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3005625/detetor-de-fumo-smartwares/"
@@ -39083,7 +39083,7 @@
       "URL": "https://www.action.com/pt-pt/p/3006149/animal-extensivel-creepsterz/"
     },
     {
-      "Categoria Principal": "Brinquedos",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Brinquedos para exterior",
       "Marca": "",
       "Descrição / Nome do artigo": "Conjunto de proteções para skate | Várias cores",
@@ -39092,7 +39092,7 @@
       "URL": "https://www.action.com/pt-pt/p/3005573/conjunto-de-protecoes-para-skate/"
     },
     {
-      "Categoria Principal": "Brinquedos",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Brinquedos para exterior",
       "Marca": "",
       "Descrição / Nome do artigo": "Máscara de mergulho | Tamanhos S-XL | Diversas variantes",
@@ -39781,16 +39781,16 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Protetores de chão para piscina | 9 unidades | 38.5 x 38.5cm",
       "Preço Regular": "6,95",
-      "Preço Promocional": "5,95",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3004967/protetores-de-chao-para-piscina/"
     },
     {
-      "Categoria Principal": "Jardim",
+      "Categoria Principal": "Animais de estimação",
       "Sub-categoria": "Artigos para animais de estimação",
       "Marca": "",
       "Descrição / Nome do artigo": "Piscina para cães | 120 x 30 cm",
       "Preço Regular": "14,95",
-      "Preço Promocional": "11,95",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3004942/piscina-para-caes/"
     },
     {
@@ -43792,10 +43792,10 @@
     {
       "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Cuidados corporais",
-      "Marca": "",
+      "Marca": "Always",
       "Descrição / Nome do artigo": "Penso higiénico Always Sensitive | 24 unidades | Tamanho 1 | Normal",
       "Preço Regular": "2,69",
-      "Preço Promocional": "2,39",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3006059/penso-higienico-always-sensitive/"
     },
     {
@@ -43804,7 +43804,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Bálsamo labial com proteção solar Zenova | SPF 30",
       "Preço Regular": "0,99",
-      "Preço Promocional": "0,89",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3005156/balsamo-labial-com-protecao-solar-zenova/"
     },
     {
@@ -44105,7 +44105,7 @@
       "URL": "https://www.action.com/pt-pt/p/3009175/alisador-de-cabelo-elle/"
     },
     {
-      "Categoria Principal": "Cuidados pessoais",
+      "Categoria Principal": "Desporto",
       "Sub-categoria": "Cuidados corporais",
       "Marca": "",
       "Descrição / Nome do artigo": "Pistola de massagem Silvergear | Com acessórios",
@@ -48022,7 +48022,7 @@
     {
       "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Cuidados faciais",
-      "Marca": "",
+      "Marca": "Kaily Beauty Studio",
       "Descrição / Nome do artigo": "Conjunto de limpeza facial Kaily Beauty Studio | 3 peças",
       "Preço Regular": "6,99",
       "Preço Promocional": "",
@@ -48076,7 +48076,7 @@
     {
       "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Maquilhagem",
-      "Marca": "Max &amp; More",
+      "Marca": "",
       "Descrição / Nome do artigo": "Pó fixador Max & More | 22 g | Diversas variantes",
       "Preço Regular": "2,29",
       "Preço Promocional": "",
@@ -49618,7 +49618,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Haribo Balla Stixx Morango | 240 gramas",
       "Preço Regular": "1,99",
-      "Preço Promocional": "1,79",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3006659/haribo-balla-stixx-morango/"
     },
     {
@@ -51481,7 +51481,7 @@
       "Marca": "Marandi",
       "Descrição / Nome do artigo": "Nougat Marandi Amendoins e fruta | 170 gramas",
       "Preço Regular": "1,49",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,29",
       "URL": "https://www.action.com/pt-pt/p/3006113/nougat-marandi-amendoins-e-fruta/"
     },
     {
@@ -54271,7 +54271,7 @@
       "Marca": "Panasonic",
       "Descrição / Nome do artigo": "Pilhas AAA Panasonic | 10 unidades",
       "Preço Regular": "2,29",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,95",
       "URL": "https://www.action.com/pt-pt/p/3006075/pilhas-aaa-panasonic/"
     },
     {
@@ -54280,7 +54280,7 @@
       "Marca": "Panasonic",
       "Descrição / Nome do artigo": "Pilhas AA Panasonic | 10 unidades",
       "Preço Regular": "2,29",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,95",
       "URL": "https://www.action.com/pt-pt/p/3006074/pilhas-aa-panasonic/"
     },
     {
@@ -57950,7 +57950,7 @@
       "Categoria Principal": "Moda",
       "Sub-categoria": "Meias",
       "Marca": "",
-      "Descrição / Nome do artigo": "Meias de bambu | Tamanhos 35-42 | 3 pares | Diversas variantes",
+      "Descrição / Nome do artigo": "Meias de bambu | Tamanhos 35 - 42 | 3 pares | Diversas variantes",
       "Preço Regular": "3,09",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3006418/meias-de-bambu/"
@@ -60535,7 +60535,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Tapete para animais com aspersor de água | Ø 100 cm | Diversas variantes",
       "Preço Regular": "3,99",
-      "Preço Promocional": "2,99",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3005499/tapete-para-animais-com-aspersor-de-agua/"
     },
     {
@@ -68364,8 +68364,108 @@
     "https://www.action.com/pt-pt/p/3004781/manta-de-cobertura/",
     "https://www.action.com/pt-pt/p/3004839/grelha-para-churrasco-big-jeff/",
     "https://www.action.com/pt-pt/p/3004842/marcadores-de-agua-decotime/",
-    "https://www.action.com/pt-pt/p/3004893/laminas-depilatorias-wilkinson-sword-intuition/"
+    "https://www.action.com/pt-pt/p/3004893/laminas-depilatorias-wilkinson-sword-intuition/",
+    "https://www.action.com/pt-pt/p/3004934/kit-de-fast-badminton/",
+    "https://www.action.com/pt-pt/p/3004942/piscina-para-caes/",
+    "https://www.action.com/pt-pt/p/3004967/protetores-de-chao-para-piscina/",
+    "https://www.action.com/pt-pt/p/3004975/sacos-do-lixo-formidi/",
+    "https://www.action.com/pt-pt/p/3004976/sacos-do-lixo-formidi/",
+    "https://www.action.com/pt-pt/p/3005020/produto-de-limpeza-para-grelhadores-big-jeff/",
+    "https://www.action.com/pt-pt/p/3005064/autocolantes/",
+    "https://www.action.com/pt-pt/p/3005074/conjunto-de-brocas-werckmann/",
+    "https://www.action.com/pt-pt/p/3005098/po-fixador-max-more/",
+    "https://www.action.com/pt-pt/p/3005109/marcadores-duplos-metalicos-decotime/",
+    "https://www.action.com/pt-pt/p/3005156/balsamo-labial-com-protecao-solar-zenova/",
+    "https://www.action.com/pt-pt/p/3005184/briquetes-de-carvao-vegetal/",
+    "https://www.action.com/pt-pt/p/3005191/cuecas-second-skin/",
+    "https://www.action.com/pt-pt/p/3005202/tabuleiro-para-forno-cook-n-share/",
+    "https://www.action.com/pt-pt/p/3005207/oleo-de-jojoba-alaise/",
+    "https://www.action.com/pt-pt/p/3005213/ovo-surpresa/",
+    "https://www.action.com/pt-pt/p/3005246/squeezy-pop-dr-candy/",
+    "https://www.action.com/pt-pt/p/3005273/bola-arco-iris/",
+    "https://www.action.com/pt-pt/p/3005274/milka-cookie-sensations-creme-de-oreo/",
+    "https://www.action.com/pt-pt/p/3005298/aspirador-vertical-2-em-1-sauber/",
+    "https://www.action.com/pt-pt/p/3005323/helicoptero-telecomandado/",
+    "https://www.action.com/pt-pt/p/3005338/balanca-inteligente/",
+    "https://www.action.com/pt-pt/p/3005358/conjunto-de-pestanas-posticas-magneticas-bonjolie/",
+    "https://www.action.com/pt-pt/p/3005382/almofada-de-assento-para-palete/",
+    "https://www.action.com/pt-pt/p/3005397/cesto-de-arrumacao-dobravel-home-accents/",
+    "https://www.action.com/pt-pt/p/3005407/sacos-do-lixo-dumil/",
+    "https://www.action.com/pt-pt/p/3005439/marcadores-duplos-decotime/",
+    "https://www.action.com/pt-pt/p/3005451/bomba-de-ar-eletrica/",
+    "https://www.action.com/pt-pt/p/3005458/brinquedos-de-praia-smoby/",
+    "https://www.action.com/pt-pt/p/3005464/pinhata-com-mascara/",
+    "https://www.action.com/pt-pt/p/3005469/kit-de-escavacao-de-brincar/",
+    "https://www.action.com/pt-pt/p/3005499/tapete-para-animais-com-aspersor-de-agua/",
+    "https://www.action.com/pt-pt/p/3005500/mascara-de-mergulho/",
+    "https://www.action.com/pt-pt/p/3005573/conjunto-de-protecoes-para-skate/",
+    "https://www.action.com/pt-pt/p/3005581/pelicula-espelhada-para-janela/",
+    "https://www.action.com/pt-pt/p/3005582/conjunto-de-conectores-ou-suportes-de-canto/",
+    "https://www.action.com/pt-pt/p/3005597/spray-de-limpeza-superfinn-anticalcario/",
+    "https://www.action.com/pt-pt/p/3005625/detetor-de-fumo-smartwares/",
+    "https://www.action.com/pt-pt/p/3005642/bloco-sanitario-active-power-7-em-1/",
+    "https://www.action.com/pt-pt/p/3005644/papel-higienico-pure-soft-soft-strong/",
+    "https://www.action.com/pt-pt/p/3005679/graxa-para-sapatos/",
+    "https://www.action.com/pt-pt/p/3005758/pilhas-varta-aa-recarregavel/",
+    "https://www.action.com/pt-pt/p/3005770/pattex-pattex/",
+    "https://www.action.com/pt-pt/p/3005777/passas-com-sabor-a-chocolate-choco-moment/",
+    "https://www.action.com/pt-pt/p/3005783/bloco-sanitario-bref-power-activ-flower-sensation/",
+    "https://www.action.com/pt-pt/p/3005823/almofada-interior/",
+    "https://www.action.com/pt-pt/p/3005845/tinta-para-radiadores-spectrum-preto/",
+    "https://www.action.com/pt-pt/p/3005846/tinta-em-spray-para-radiadores-spectrum-branco/",
+    "https://www.action.com/pt-pt/p/3005850/pistola-de-massagem-silvergear/",
+    "https://www.action.com/pt-pt/p/3005999/planta-artificial-suspensa/",
+    "https://www.action.com/pt-pt/p/3006032/farol-de-bicicleta-walfort/",
+    "https://www.action.com/pt-pt/p/3006035/suporte-de-telemovel-para-automovel-lab31/",
+    "https://www.action.com/pt-pt/p/3006055/tinta-para-fachada-home-vision-branco/",
+    "https://www.action.com/pt-pt/p/3006059/penso-higienico-always-sensitive/",
+    "https://www.action.com/pt-pt/p/3006074/pilhas-aa-panasonic/",
+    "https://www.action.com/pt-pt/p/3006075/pilhas-aaa-panasonic/",
+    "https://www.action.com/pt-pt/p/3006089/imanes/",
+    "https://www.action.com/pt-pt/p/3006113/nougat-marandi-amendoins-e-fruta/",
+    "https://www.action.com/pt-pt/p/3006149/animal-extensivel-creepsterz/",
+    "https://www.action.com/pt-pt/p/3006174/almofada-para-animais/",
+    "https://www.action.com/pt-pt/p/3006189/animal-de-peluche-que-anda/",
+    "https://www.action.com/pt-pt/p/3006202/vela-perfumada-xl-treewick/",
+    "https://www.action.com/pt-pt/p/3006233/detetor-de-fumo-smartwares-fsm-022/",
+    "https://www.action.com/pt-pt/p/3006294/fita-para-maquina-de-etiquetas-crafts-co/",
+    "https://www.action.com/pt-pt/p/3006312/pano-de-polir/",
+    "https://www.action.com/pt-pt/p/3006318/amendoins-com-chocolate-choco-moment/",
+    "https://www.action.com/pt-pt/p/3006342/palmeira-artificial-em-vaso/",
+    "https://www.action.com/pt-pt/p/3006382/kit-de-manicure-beauty-star/",
+    "https://www.action.com/pt-pt/p/3006388/conjunto-de-limpeza-facial-kaily-beauty-studio/",
+    "https://www.action.com/pt-pt/p/3006405/smarties-smarties/",
+    "https://www.action.com/pt-pt/p/3006417/meias/",
+    "https://www.action.com/pt-pt/p/3006418/meias-de-bambu/",
+    "https://www.action.com/pt-pt/p/3006419/meias-de-bambu/",
+    "https://www.action.com/pt-pt/p/3006559/mola-metalica-para-o-cabelo/",
+    "https://www.action.com/pt-pt/p/3006625/carrinho-telecomandado-extreme-monster/",
+    "https://www.action.com/pt-pt/p/3006659/haribo-balla-stixx-morango/",
+    "https://www.action.com/pt-pt/p/3006723/collants-modeladores-kate-legwear-tummy-control-den-20/",
+    "https://www.action.com/pt-pt/p/3006764/moldura-sofia/",
+    "https://www.action.com/pt-pt/p/3006788/estojo-recheado-selfie-girls/",
+    "https://www.action.com/pt-pt/p/3006822/liquido-concentrado-para-para-brisas-c-c-verao/",
+    "https://www.action.com/pt-pt/p/3006826/meias-de-bambu-pairz/",
+    "https://www.action.com/pt-pt/p/3006874/cortina-de-duche/",
+    "https://www.action.com/pt-pt/p/3006894/carimbo/",
+    "https://www.action.com/pt-pt/p/3006896/gomas-haribo-crazy-mix/",
+    "https://www.action.com/pt-pt/p/3006933/caderno-com-elastico/",
+    "https://www.action.com/pt-pt/p/3006980/elixir-capilar-the-beauty-dept-argan-oil/",
+    "https://www.action.com/pt-pt/p/3007039/coffret-de-oferta-figenzi-elan-fleur/",
+    "https://www.action.com/pt-pt/p/3007103/gomas-para-cabelo-e-unhas-innovit-mirtilo/",
+    "https://www.action.com/pt-pt/p/3007108/lampada-led-multicolor/",
+    "https://www.action.com/pt-pt/p/3007172/percarbonato-de-sodio-mariette/",
+    "https://www.action.com/pt-pt/p/3007224/extensao-eletrica-para-exterior-pro-max/",
+    "https://www.action.com/pt-pt/p/3007227/detetor-de-monoxido-de-carbono-smartwares/",
+    "https://www.action.com/pt-pt/p/3007230/panos-de-cozinha/",
+    "https://www.action.com/pt-pt/p/3007231/gomas-roulette-mix-haribo-roulette-mix/",
+    "https://www.action.com/pt-pt/p/3007232/gomas-fun-mix-haribo-fun-mix/",
+    "https://www.action.com/pt-pt/p/3007233/haribo-sweet-or-sour/",
+    "https://www.action.com/pt-pt/p/3007234/saco-de-doces-maoam-festival/",
+    "https://www.action.com/pt-pt/p/3007241/mascara-de-argila-em-stick-skin-bliss/",
+    "https://www.action.com/pt-pt/p/3007321/casa-em-miniatura-diy-crafts-co/",
+    "https://www.action.com/pt-pt/p/3007380/moldura-de-madeira/"
   ],
   "added_new_urls": [],
-  "articles_processed": 1400
+  "articles_processed": 1500
 }
