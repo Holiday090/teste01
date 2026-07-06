@@ -14027,7 +14027,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208777/tapete-de-banho-em-chenile/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Queimador de óleos | Ø 8,5 x 9,5 cm | Diversas variantes",
@@ -14036,7 +14036,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208669/queimador-de-oleos/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Blocos de fragrância de cera | 60 g | Diversas variantes",
@@ -19517,7 +19517,7 @@
       "URL": "https://www.action.com/pt-pt/p/3209333/copo-para-ovo/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Papelaria",
       "Sub-categoria": "Recipientes para alimentos",
       "Marca": "",
       "Descrição / Nome do artigo": "Copo com palhinha inoxidável | 500 ml",
@@ -19607,7 +19607,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208722/tampas-de-silicone-5five/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Bebé",
       "Marca": "",
       "Descrição / Nome do artigo": "Serviço de louça Alvär | 3 peças | Diversas variantes",
@@ -19616,7 +19616,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208679/servico-de-louca-alvar/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Artigos de festa",
       "Marca": "",
       "Descrição / Nome do artigo": "Copos de festa | 12 un. | 200 ml | Diversas variantes",
@@ -19625,7 +19625,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208614/copos-de-festa/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Artigos de festa",
       "Marca": "",
       "Descrição / Nome do artigo": "Pratos de papel | 12 un. | Ø 19,5 cm | Diversas variantes",
@@ -27347,7 +27347,7 @@
       "URL": "https://www.action.com/pt-pt/p/3210419/suporte-de-monitor-com-portas-de-carregamento-lab31/"
     },
     {
-      "Categoria Principal": "Papelaria",
+      "Categoria Principal": "Hobbies",
       "Sub-categoria": "Colorir e desenhar",
       "Marca": "",
       "Descrição / Nome do artigo": "Lápis de cor quadrados Craft Sensations | 24 un.",
@@ -28274,12 +28274,12 @@
       "URL": "https://www.action.com/pt-pt/p/3217778/pintar-por-numeros/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Brinquedos",
       "Sub-categoria": "Trabalhos manuais",
       "Marca": "",
       "Descrição / Nome do artigo": "Diamond Painting com caixa de arrumação Avec | 40 peças",
       "Preço Regular": "5,49",
-      "Preço Promocional": "3,99",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3208527/diamond-painting-com-caixa-de-arrumacao-avec/"
     },
     {
@@ -30148,7 +30148,7 @@
     {
       "Categoria Principal": "Hobbies",
       "Sub-categoria": "Artigos de festa",
-      "Marca": "",
+      "Marca": "Disney",
       "Descrição / Nome do artigo": "Saco para presentes | 38 x 37,5 cm | Diversas variantes",
       "Preço Regular": "0,99",
       "Preço Promocional": "",
@@ -30164,7 +30164,7 @@
       "URL": "https://www.action.com/pt-pt/p/3209235/lembrancas-de-festa-disney/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Brinquedos",
       "Sub-categoria": "Colorir e desenhar",
       "Marca": "",
       "Descrição / Nome do artigo": "Livro de autocolantes | 6 folhas | Diversas variantes",
@@ -30245,7 +30245,7 @@
       "URL": "https://www.action.com/pt-pt/p/3208558/bloco-criativo/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Brinquedos",
       "Sub-categoria": "Colorir e desenhar",
       "Marca": "",
       "Descrição / Nome do artigo": "Livro de autocolantes | Diversas variantes",
@@ -38142,7 +38142,7 @@
       "Sub-categoria": "Trabalhos manuais para crianças",
       "Marca": "",
       "Descrição / Nome do artigo": "Conjunto de colorir e autocolantes | 20 peças | Diversas variantes",
-      "Preço Regular": "3,33",
+      "Preço Regular": "2,48",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3209245/conjunto-de-colorir-e-autocolantes/"
     },
@@ -38156,7 +38156,7 @@
       "URL": "https://www.action.com/pt-pt/p/3209234/livro-de-autocolantes/"
     },
     {
-      "Categoria Principal": "Brinquedos",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Brinquedos para bebés",
       "Marca": "",
       "Descrição / Nome do artigo": "Anel de dentição Alvär | Diversas variantes",
@@ -43052,7 +43052,7 @@
       "URL": "https://www.action.com/pt-pt/p/3209466/jogo-de-viagem-jumbo/"
     },
     {
-      "Categoria Principal": "Viajar",
+      "Categoria Principal": "Multimédia",
       "Sub-categoria": "Acessórios de viagem",
       "Marca": "",
       "Descrição / Nome do artigo": "Adaptador de viagem Spilbergen | 2 polos",
@@ -44056,7 +44056,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Almofadas de hidrogel para os olhos | 60 un.",
       "Preço Regular": "2,69",
-      "Preço Promocional": "",
+      "Preço Promocional": "2,39",
       "URL": "https://www.action.com/pt-pt/p/3208825/almofadas-de-hidrogel-para-os-olhos/"
     },
     {
@@ -53639,7 +53639,7 @@
       "Categoria Principal": "Multimédia",
       "Sub-categoria": "Gaming",
       "Marca": "",
-      "Descrição / Nome do artigo": "Rato Prologic | 1600 DPI",
+      "Descrição / Nome do artigo": "Rato Prologic | 1600 DPI | 1,25 m",
       "Preço Regular": "2,49",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3208974/rato-prologic/"
@@ -60517,7 +60517,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Ossos de queijo Pinky Himalayan Chews | 2 un.",
       "Preço Regular": "4,99",
-      "Preço Promocional": "3,95",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3208426/ossos-de-queijo-pinky-himalayan-chews/"
     },
     {
@@ -69564,8 +69564,100 @@
     "https://www.action.com/pt-pt/p/3208232/mini-snacks-para-gatos-purrfections/",
     "https://www.action.com/pt-pt/p/3208235/mistura-de-arandos-e-amendoins-choco-moment/",
     "https://www.action.com/pt-pt/p/3208253/limpador-de-pinceis-de-maquilhagem-eletrico-beauty-star/",
-    "https://www.action.com/pt-pt/p/3208274/bolachas-com-pepitas-de-chocolate-ted-s-favorites/"
+    "https://www.action.com/pt-pt/p/3208274/bolachas-com-pepitas-de-chocolate-ted-s-favorites/",
+    "https://www.action.com/pt-pt/p/3208303/balde-de-pedal-com-tampa-de-bambu/",
+    "https://www.action.com/pt-pt/p/3208357/trem-de-cozinha-redstone/",
+    "https://www.action.com/pt-pt/p/3208372/laco-para-o-cabelo/",
+    "https://www.action.com/pt-pt/p/3208378/tabua-de-corte-antibacteriana/",
+    "https://www.action.com/pt-pt/p/3208379/tabua-de-corte-antibacteriana/",
+    "https://www.action.com/pt-pt/p/3208380/wok-ceramic-marble/",
+    "https://www.action.com/pt-pt/p/3208381/conjunto-de-frigideiras/",
+    "https://www.action.com/pt-pt/p/3208382/frigideira/",
+    "https://www.action.com/pt-pt/p/3208394/hub-usb-c-sitecom/",
+    "https://www.action.com/pt-pt/p/3208397/serum-facial-skin-bliss/",
+    "https://www.action.com/pt-pt/p/3208415/stick-de-contorno-e-iluminador-max-more/",
+    "https://www.action.com/pt-pt/p/3208419/copos-longdrink/",
+    "https://www.action.com/pt-pt/p/3208426/ossos-de-queijo-pinky-himalayan-chews/",
+    "https://www.action.com/pt-pt/p/3208429/orquidea-artificial-em-vaso/",
+    "https://www.action.com/pt-pt/p/3208444/pano-de-cozinha-la-sonata/",
+    "https://www.action.com/pt-pt/p/3208449/estojo-felpudo/",
+    "https://www.action.com/pt-pt/p/3208464/balsamo-labial-carmex-pessego-e-manga/",
+    "https://www.action.com/pt-pt/p/3208465/candeeiro-de-mesa/",
+    "https://www.action.com/pt-pt/p/3208477/sprays-de-tinta-acrilica-artico/",
+    "https://www.action.com/pt-pt/p/3208481/papel-vegetal-para-aifryer-dumil/",
+    "https://www.action.com/pt-pt/p/3208482/washi-tape/",
+    "https://www.action.com/pt-pt/p/3208489/conjunto-de-cartoes-piamond-painting/",
+    "https://www.action.com/pt-pt/p/3208527/diamond-painting-com-caixa-de-arrumacao-avec/",
+    "https://www.action.com/pt-pt/p/3208530/sanduicheira-home-essentials/",
+    "https://www.action.com/pt-pt/p/3208553/livro-de-autocolantes/",
+    "https://www.action.com/pt-pt/p/3208558/bloco-criativo/",
+    "https://www.action.com/pt-pt/p/3208562/contas-para-trabalhos-manuais/",
+    "https://www.action.com/pt-pt/p/3208613/pratos-de-papel/",
+    "https://www.action.com/pt-pt/p/3208614/copos-de-festa/",
+    "https://www.action.com/pt-pt/p/3208649/jouy-co-cravingz-bears/",
+    "https://www.action.com/pt-pt/p/3208652/bruma-facial/",
+    "https://www.action.com/pt-pt/p/3208668/blocos-de-fragrancia-de-cera/",
+    "https://www.action.com/pt-pt/p/3208669/queimador-de-oleos/",
+    "https://www.action.com/pt-pt/p/3208678/anel-de-denticao-alvar/",
+    "https://www.action.com/pt-pt/p/3208679/servico-de-louca-alvar/",
+    "https://www.action.com/pt-pt/p/3208710/detergente-universal-fabulosa/",
+    "https://www.action.com/pt-pt/p/3208722/tampas-de-silicone-5five/",
+    "https://www.action.com/pt-pt/p/3208738/caixas-para-alimentos-tefal/",
+    "https://www.action.com/pt-pt/p/3208739/mistura-de-frutos-secos-natural-happiness-tropical/",
+    "https://www.action.com/pt-pt/p/3208740/pasta-de-dentes-rident/",
+    "https://www.action.com/pt-pt/p/3208743/fita-led-philips/",
+    "https://www.action.com/pt-pt/p/3208777/tapete-de-banho-em-chenile/",
+    "https://www.action.com/pt-pt/p/3208778/gel-de-cabelo-para-definir-caracois-hairmasters/",
+    "https://www.action.com/pt-pt/p/3208781/envelopes-de-expedicao-office-essentials/",
+    "https://www.action.com/pt-pt/p/3208809/acessorios-para-o-cabelo/",
+    "https://www.action.com/pt-pt/p/3208813/kit-com-relogio/",
+    "https://www.action.com/pt-pt/p/3208825/almofadas-de-hidrogel-para-os-olhos/",
+    "https://www.action.com/pt-pt/p/3208864/molho-sau-cee-yammie-caril-e-cebola/",
+    "https://www.action.com/pt-pt/p/3208890/individual-para-animais-de-estimacao/",
+    "https://www.action.com/pt-pt/p/3208894/prato-de-pizza/",
+    "https://www.action.com/pt-pt/p/3208907/tabuleiro-de-assar-greenchef/",
+    "https://www.action.com/pt-pt/p/3208908/prato-de-sobremesa/",
+    "https://www.action.com/pt-pt/p/3208909/taca/",
+    "https://www.action.com/pt-pt/p/3208910/chavenas/",
+    "https://www.action.com/pt-pt/p/3208913/chavena-em-vidro/",
+    "https://www.action.com/pt-pt/p/3208923/brinquedo-para-gatos/",
+    "https://www.action.com/pt-pt/p/3208931/pasta-para-documentos/",
+    "https://www.action.com/pt-pt/p/3208949/individual/",
+    "https://www.action.com/pt-pt/p/3208965/copo-com-palhinha-inoxidavel/",
+    "https://www.action.com/pt-pt/p/3208974/rato-prologic/",
+    "https://www.action.com/pt-pt/p/3209009/serum-para-o-cabelo-the-beauty-dept-high-gloss/",
+    "https://www.action.com/pt-pt/p/3209012/sticks-de-mastigar-para-caes-furry-friends/",
+    "https://www.action.com/pt-pt/p/3209022/difusor-de-varetas/",
+    "https://www.action.com/pt-pt/p/3209023/vela-aromatica/",
+    "https://www.action.com/pt-pt/p/3209037/organizador-de-secretaria/",
+    "https://www.action.com/pt-pt/p/3209038/adaptador-de-viagem-spilbergen/",
+    "https://www.action.com/pt-pt/p/3209055/ganchos-de-cabelo/",
+    "https://www.action.com/pt-pt/p/3209095/cortinado-opaco-hannah/",
+    "https://www.action.com/pt-pt/p/3209102/bloco-de-notas-felpudo/",
+    "https://www.action.com/pt-pt/p/3209104/blocos-de-notas/",
+    "https://www.action.com/pt-pt/p/3209108/estojo/",
+    "https://www.action.com/pt-pt/p/3209136/marcadores-permanentes/",
+    "https://www.action.com/pt-pt/p/3209143/canetas-com-suporte/",
+    "https://www.action.com/pt-pt/p/3209213/lapis-de-cor-quadrados-craft-sensations/",
+    "https://www.action.com/pt-pt/p/3209228/conjunto-de-contas-craft-universe/",
+    "https://www.action.com/pt-pt/p/3209234/livro-de-autocolantes/",
+    "https://www.action.com/pt-pt/p/3209235/lembrancas-de-festa-disney/",
+    "https://www.action.com/pt-pt/p/3209242/saco-para-presentes/",
+    "https://www.action.com/pt-pt/p/3209245/conjunto-de-colorir-e-autocolantes/",
+    "https://www.action.com/pt-pt/p/3209246/mistura-de-pimentao-e-chili-snacks-of-the-world-intensidade-media/",
+    "https://www.action.com/pt-pt/p/3209247/saquinhos-de-lembrancas-party-universe/",
+    "https://www.action.com/pt-pt/p/3209258/serum-facial-com-petalas-de-rosa-betty-s/",
+    "https://www.action.com/pt-pt/p/3209267/conjunto-de-marcadores-craft-universe/",
+    "https://www.action.com/pt-pt/p/3209276/fita-decorativa/",
+    "https://www.action.com/pt-pt/p/3209280/cama-para-animais/",
+    "https://www.action.com/pt-pt/p/3209281/cama-para-animais-de-estimacao/",
+    "https://www.action.com/pt-pt/p/3209282/tapete-para-animais-de-estimacao/",
+    "https://www.action.com/pt-pt/p/3209284/cesto-para-gatos/",
+    "https://www.action.com/pt-pt/p/3209321/produto-de-limpeza-para-ceramica/",
+    "https://www.action.com/pt-pt/p/3209344/trotinete-com-rodas-luminosas/",
+    "https://www.action.com/pt-pt/p/3209349/balsamo-para-labios-e-blush-em-stick-fab-factory/",
+    "https://www.action.com/pt-pt/p/3209371/velas-perfumadas-chupa-chups/"
   ],
   "added_new_urls": [],
-  "articles_processed": 2600
+  "articles_processed": 2692
 }
