@@ -15089,7 +15089,7 @@
       "URL": "https://www.action.com/pt-pt/p/3015580/luzes-de-discoteca/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto felpudo | 31 x 29 x 15 cm | Várias cores",
@@ -15125,7 +15125,7 @@
       "URL": "https://www.action.com/pt-pt/p/3015157/vela-aromatica-em-copo/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Vasos e potes",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso Sevilla | Ø 14 cm | Várias cores",
@@ -15134,7 +15134,7 @@
       "URL": "https://www.action.com/pt-pt/p/3014535/vaso-sevilla/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Controlo de pragas",
       "Marca": "",
       "Descrição / Nome do artigo": "Vela de citronela | Ø 13 x 5 cm | Diversas variantes",
@@ -20437,7 +20437,7 @@
     {
       "Categoria Principal": "Cozinha",
       "Sub-categoria": "Copos",
-      "Marca": "",
+      "Marca": "Disney",
       "Descrição / Nome do artigo": "Copo Disney | 250 ml | Diversas variantes",
       "Preço Regular": "1,88",
       "Preço Promocional": "",
@@ -20453,7 +20453,7 @@
       "URL": "https://www.action.com/pt-pt/p/3014718/copo-com-palhinha/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Papelaria",
       "Sub-categoria": "Recipientes para alimentos",
       "Marca": "",
       "Descrição / Nome do artigo": "Lancheira | Diversas variantes",
@@ -21799,7 +21799,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Detergente da louça | 1 l | Diversas variantes",
       "Preço Regular": "0,78",
-      "Preço Promocional": "0,69",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3014738/detergente-da-louca/"
     },
     {
@@ -30857,7 +30857,7 @@
       "URL": "https://www.action.com/pt-pt/p/3200233/fio-de-tricotar-alison-mae-specials/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Bricolage",
       "Sub-categoria": "Ferramentas",
       "Marca": "",
       "Descrição / Nome do artigo": "Corda de juta em rolo Home Accents | 30 metros | Várias cores",
@@ -34552,7 +34552,7 @@
       "Marca": "C&amp;C",
       "Descrição / Nome do artigo": "Para-sol para automóvel C&C | 135 x 60cm",
       "Preço Regular": "2,99",
-      "Preço Promocional": "1,72",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3013968/para-sol-para-automovel-c-c/"
     },
     {
@@ -34561,11 +34561,11 @@
       "Marca": "C&amp;C",
       "Descrição / Nome do artigo": "Capas de proteção solar para vidros de automóveis C&C | 2 unidades | Diversas variantes",
       "Preço Regular": "1,99",
-      "Preço Promocional": "1,72",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3013966/capas-de-protecao-solar-para-vidros-de-automoveis-c-c/"
     },
     {
-      "Categoria Principal": "Bricolage",
+      "Categoria Principal": "Multimédia",
       "Sub-categoria": "Automóvel",
       "Marca": "Grundig",
       "Descrição / Nome do artigo": "Suporte para telemóvel com carregador sem fios Grundig | 15 watts",
@@ -38860,7 +38860,7 @@
     {
       "Categoria Principal": "Brinquedos",
       "Sub-categoria": "Bonecos e peluches",
-      "Marca": "",
+      "Marca": "Marvel",
       "Descrição / Nome do artigo": "Figura de ação do Homem-Aranha Marvel | 25.4 cm",
       "Preço Regular": "12,95",
       "Preço Promocional": "",
@@ -43732,7 +43732,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Spray aftersun Zenova | 200 ml",
       "Preço Regular": "2,49",
-      "Preço Promocional": "2,19",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015150/spray-aftersun-zenova/"
     },
     {
@@ -43741,7 +43741,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar roll-on Zenova Criança | FPS 50+ | 100 ml",
       "Preço Regular": "4,79",
-      "Preço Promocional": "3,99",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015149/protetor-solar-roll-on-zenova-crianca/"
     },
     {
@@ -43749,8 +43749,8 @@
       "Sub-categoria": "Protetores solares e after sun",
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar Zenova Kids Sensitive | FPS 50+ | 200 ml",
-      "Preço Regular": "6,99",
-      "Preço Promocional": "5,99",
+      "Preço Regular": "6,70",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015144/protetor-solar-zenova-kids-sensitive/"
     },
     {
@@ -43759,7 +43759,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar Zenova Sensitive | SPF 30 | 200 ml",
       "Preço Regular": "5,49",
-      "Preço Promocional": "4,49",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015143/protetor-solar-zenova-sensitive/"
     },
     {
@@ -43768,7 +43768,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar em spray Zenova | SPF 30 | 200 ml",
       "Preço Regular": "5,45",
-      "Preço Promocional": "4,89",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015142/protetor-solar-em-spray-zenova/"
     },
     {
@@ -43777,7 +43777,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar Zenova Sensitive | FPS 50 | 200 ml",
       "Preço Regular": "6,49",
-      "Preço Promocional": "5,49",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015141/protetor-solar-zenova-sensitive/"
     },
     {
@@ -43786,7 +43786,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar em spray Zenova | FPS 50 | 200 ml",
       "Preço Regular": "7,49",
-      "Preço Promocional": "6,49",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015140/protetor-solar-em-spray-zenova/"
     },
     {
@@ -44089,7 +44089,7 @@
     {
       "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Banho e duche",
-      "Marca": "",
+      "Marca": "Nivea",
       "Descrição / Nome do artigo": "Gel de banho Nivea Care & Cashmere | 750 ml",
       "Preço Regular": "3,49",
       "Preço Promocional": "",
@@ -47431,7 +47431,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar facial Zenova | FPS 50 | 100 ml",
       "Preço Regular": "4,49",
-      "Preço Promocional": "3,99",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015146/protetor-solar-facial-zenova/"
     },
     {
@@ -47440,7 +47440,7 @@
       "Marca": "Zenova",
       "Descrição / Nome do artigo": "Protetor solar Zenova Sensitive | FPS 50 | 50 ml",
       "Preço Regular": "2,99",
-      "Preço Promocional": "2,49",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3015145/protetor-solar-zenova-sensitive/"
     },
     {
@@ -47458,7 +47458,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Secador de cabelo Remington Ionic Dry | 2200W",
       "Preço Regular": "17,79",
-      "Preço Promocional": "",
+      "Preço Promocional": "15,95",
       "URL": "https://www.action.com/pt-pt/p/3014843/secador-de-cabelo-remington-ionic-dry/"
     },
     {
@@ -47476,7 +47476,7 @@
       "Marca": "Remington",
       "Descrição / Nome do artigo": "Máquina de cortar cabelo Remington Apprentice | 10 peças",
       "Preço Regular": "12,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "9,95",
       "URL": "https://www.action.com/pt-pt/p/3014800/maquina-de-cortar-cabelo-remington-apprentice/"
     },
     {
@@ -68764,8 +68764,108 @@
     "https://www.action.com/pt-pt/p/3013879/kit-de-laminas-depilatorias/",
     "https://www.action.com/pt-pt/p/3013902/mini-liquidificadora-portatil-tristar/",
     "https://www.action.com/pt-pt/p/3013904/pastilhas-maquina-da-loica-superfinn-classic/",
-    "https://www.action.com/pt-pt/p/3013907/limpa-maquinas-de-roupa-superfinn/"
+    "https://www.action.com/pt-pt/p/3013907/limpa-maquinas-de-roupa-superfinn/",
+    "https://www.action.com/pt-pt/p/3013911/suporte-para-telemovel-com-carregador-sem-fios-grundig/",
+    "https://www.action.com/pt-pt/p/3013942/creme-de-banho-com-proteina-de-leite-hegron-silky-milk/",
+    "https://www.action.com/pt-pt/p/3013943/creme-de-banho-com-proteina-de-leite-hegron-dermoprotector/",
+    "https://www.action.com/pt-pt/p/3013966/capas-de-protecao-solar-para-vidros-de-automoveis-c-c/",
+    "https://www.action.com/pt-pt/p/3013968/para-sol-para-automovel-c-c/",
+    "https://www.action.com/pt-pt/p/3013981/protetores-de-chao-para-moveis/",
+    "https://www.action.com/pt-pt/p/3014045/chinelos-de-dedo/",
+    "https://www.action.com/pt-pt/p/3014127/nenufar-solar/",
+    "https://www.action.com/pt-pt/p/3014136/aparador-de-relva-ferm-powerline/",
+    "https://www.action.com/pt-pt/p/3014256/balde/",
+    "https://www.action.com/pt-pt/p/3014271/escorredor/",
+    "https://www.action.com/pt-pt/p/3014272/alguidar/",
+    "https://www.action.com/pt-pt/p/3014283/kit-de-laminas-de-depilacao-silea/",
+    "https://www.action.com/pt-pt/p/3014291/gel-aftersun-caribbean-bronze/",
+    "https://www.action.com/pt-pt/p/3014298/caule-de-erva-artificial-com-flores-home-accents/",
+    "https://www.action.com/pt-pt/p/3014366/laminas-de-barbear-wilkinson-sword-extreme-3/",
+    "https://www.action.com/pt-pt/p/3014374/vela-de-citronela/",
+    "https://www.action.com/pt-pt/p/3014382/grelhador-portatil/",
+    "https://www.action.com/pt-pt/p/3014384/grinalda-de-luzes-solar/",
+    "https://www.action.com/pt-pt/p/3014389/saco-de-lixo-com-atilho-dumil-limao/",
+    "https://www.action.com/pt-pt/p/3014398/colchao-de-ar-froyak/",
+    "https://www.action.com/pt-pt/p/3014464/gel-de-banho-disney-stitch/",
+    "https://www.action.com/pt-pt/p/3014467/bandas-depilatorias-de-cera-fria-soft-touch/",
+    "https://www.action.com/pt-pt/p/3014486/waffles-undefined-triplex-avela/",
+    "https://www.action.com/pt-pt/p/3014499/pigmento-para-sobrancelhas-delia/",
+    "https://www.action.com/pt-pt/p/3014530/capsulas-de-colagenio-innovit/",
+    "https://www.action.com/pt-pt/p/3014535/vaso-sevilla/",
+    "https://www.action.com/pt-pt/p/3014559/kit-de-teste-para-analise-do-ph-e-do-cloro-pool-champion/",
+    "https://www.action.com/pt-pt/p/3014577/corda-de-juta-em-rolo-home-accents/",
+    "https://www.action.com/pt-pt/p/3014580/fita-isoladora/",
+    "https://www.action.com/pt-pt/p/3014627/kit-de-rolos-de-pintura-com-grelha-spectrum/",
+    "https://www.action.com/pt-pt/p/3014637/jogo-de-chave-de-fendas-de-roquete-e-pontas-werckmann/",
+    "https://www.action.com/pt-pt/p/3014655/tabuleiro-antiaderente-big-jeff/",
+    "https://www.action.com/pt-pt/p/3014661/waffles/",
+    "https://www.action.com/pt-pt/p/3014691/caixa-de-arrumacao/",
+    "https://www.action.com/pt-pt/p/3014697/lancheira/",
+    "https://www.action.com/pt-pt/p/3014718/copo-com-palhinha/",
+    "https://www.action.com/pt-pt/p/3014721/copo-disney/",
+    "https://www.action.com/pt-pt/p/3014726/disco-de-laminas-werckmann/",
+    "https://www.action.com/pt-pt/p/3014731/ganchos-magneticos-werckmann/",
+    "https://www.action.com/pt-pt/p/3014738/detergente-da-louca/",
+    "https://www.action.com/pt-pt/p/3014741/papel-de-copia-e-impressao-a4/",
+    "https://www.action.com/pt-pt/p/3014797/isqueiros-bic/",
+    "https://www.action.com/pt-pt/p/3014800/maquina-de-cortar-cabelo-remington-apprentice/",
+    "https://www.action.com/pt-pt/p/3014834/champo-prateado-inecto/",
+    "https://www.action.com/pt-pt/p/3014843/secador-de-cabelo-remington-ionic-dry/",
+    "https://www.action.com/pt-pt/p/3014858/zuru-coco-surprise-squishy/",
+    "https://www.action.com/pt-pt/p/3014860/escorredor/",
+    "https://www.action.com/pt-pt/p/3014883/tigela-com-tampa/",
+    "https://www.action.com/pt-pt/p/3014884/vassoura-de-borracha-spargo/",
+    "https://www.action.com/pt-pt/p/3015098/saquetas-whiskas-salmao-e-atum/",
+    "https://www.action.com/pt-pt/p/3015099/saquetas-whiskas-aves/",
+    "https://www.action.com/pt-pt/p/3015139/protetor-solar-em-spray-zenova-kids/",
+    "https://www.action.com/pt-pt/p/3015140/protetor-solar-em-spray-zenova/",
+    "https://www.action.com/pt-pt/p/3015141/protetor-solar-zenova-sensitive/",
+    "https://www.action.com/pt-pt/p/3015142/protetor-solar-em-spray-zenova/",
+    "https://www.action.com/pt-pt/p/3015143/protetor-solar-zenova-sensitive/",
+    "https://www.action.com/pt-pt/p/3015144/protetor-solar-zenova-kids-sensitive/",
+    "https://www.action.com/pt-pt/p/3015145/protetor-solar-zenova-sensitive/",
+    "https://www.action.com/pt-pt/p/3015146/protetor-solar-facial-zenova/",
+    "https://www.action.com/pt-pt/p/3015149/protetor-solar-roll-on-zenova-crianca/",
+    "https://www.action.com/pt-pt/p/3015150/spray-aftersun-zenova/",
+    "https://www.action.com/pt-pt/p/3015157/vela-aromatica-em-copo/",
+    "https://www.action.com/pt-pt/p/3015192/casticais-de-metal/",
+    "https://www.action.com/pt-pt/p/3015200/bodies-hoodadoo/",
+    "https://www.action.com/pt-pt/p/3015210/figura-de-acao-do-homem-aranha-marvel/",
+    "https://www.action.com/pt-pt/p/3015225/desodorizante-tropical-desire/",
+    "https://www.action.com/pt-pt/p/3015230/bolas-de-natal-maud/",
+    "https://www.action.com/pt-pt/p/3015256/gel-de-banho-nivea-care-cashmere/",
+    "https://www.action.com/pt-pt/p/3015258/coelho-de-peluche-mini-matters/",
+    "https://www.action.com/pt-pt/p/3015270/desodorizante-dake-for-men/",
+    "https://www.action.com/pt-pt/p/3015275/jogo-de-tiro-com-bolas/",
+    "https://www.action.com/pt-pt/p/3015286/ketchup-heinz/",
+    "https://www.action.com/pt-pt/p/3015296/maoam-kracher-rainbow-edition/",
+    "https://www.action.com/pt-pt/p/3015298/cola-para-papel-de-parede-uhu/",
+    "https://www.action.com/pt-pt/p/3015309/maquina-fotografica-de-brincar-playgo/",
+    "https://www.action.com/pt-pt/p/3015314/enrolador-de-cabos-eletrico-pro-max/",
+    "https://www.action.com/pt-pt/p/3015401/gel-de-barbear-gillette-mach3-xxl/",
+    "https://www.action.com/pt-pt/p/3015410/boneca-de-moda-rainbow-high/",
+    "https://www.action.com/pt-pt/p/3015429/luzes-de-bicicleta-recarregaveis-walfort/",
+    "https://www.action.com/pt-pt/p/3015431/tinta-brilhante-2-em-1-spectrum-branco/",
+    "https://www.action.com/pt-pt/p/3015433/tinta-acetinada-2-em-1-spectrum-branco/",
+    "https://www.action.com/pt-pt/p/3015436/tinta-acetinada-2-em-1-spectrum-preto/",
+    "https://www.action.com/pt-pt/p/3015437/tinta-acetinada-2-em-1-spectrum-ral-7036/",
+    "https://www.action.com/pt-pt/p/3015438/tinta-acetinada-2-em-1-spectrum-ral-7043/",
+    "https://www.action.com/pt-pt/p/3015439/tinta-acetinada-2-em-1-spectrum-ral-9010/",
+    "https://www.action.com/pt-pt/p/3015440/tinta-mate-2-em-1-spectrum-preto/",
+    "https://www.action.com/pt-pt/p/3015441/tinta-mate-2-em-1-spectrum-branco/",
+    "https://www.action.com/pt-pt/p/3015466/flying-saucers/",
+    "https://www.action.com/pt-pt/p/3015481/recargas-para-rolo-tira-pelos/",
+    "https://www.action.com/pt-pt/p/3015502/gel-de-depilacao-satin-care-sensitive/",
+    "https://www.action.com/pt-pt/p/3015517/stick-dentario-para-caes/",
+    "https://www.action.com/pt-pt/p/3015549/abracadeiras-werckmann/",
+    "https://www.action.com/pt-pt/p/3015559/cesto-felpudo/",
+    "https://www.action.com/pt-pt/p/3015560/conjunto-de-ferramentas-de-brincar/",
+    "https://www.action.com/pt-pt/p/3015580/luzes-de-discoteca/",
+    "https://www.action.com/pt-pt/p/3015581/candeeiro-led-recarregavel/",
+    "https://www.action.com/pt-pt/p/3015599/lampada-recarregavel-com-sensor/",
+    "https://www.action.com/pt-pt/p/3015610/spray-cockpit-c-c/",
+    "https://www.action.com/pt-pt/p/3015626/capsulas-para-louca-fairy-fresh-platinum/"
   ],
   "added_new_urls": [],
-  "articles_processed": 1800
+  "articles_processed": 1900
 }
