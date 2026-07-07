@@ -9,6 +9,7 @@ EXECUÇÃO:
     PYTHONUNBUFFERED=1 python3 scraping_action_sincronizar.py
     PYTHONUNBUFFERED=1 python3 scraping_action_sincronizar.py --test
     PYTHONUNBUFFERED=1 python3 scraping_action_sincronizar.py --no-git
+    PYTHONUNBUFFERED=1 python3 scraping_action_sincronizar.py --output Scraping_Action_Atualizado_20260706.xlsx
 
 FUNCIONALIDADES:
     - Copia o Excel base com a data de execução no nome do ficheiro.
@@ -421,6 +422,11 @@ def add_new_product(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sincroniza Scraping_Action_Completo.xlsx com o site Action.")
     parser.add_argument("--source", default=SOURCE_FILE, help="Excel base de referência.")
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Ficheiro Excel de saída (retoma se existir progresso associado).",
+    )
     parser.add_argument("--test", action="store_true", help="Modo teste: 1 categoria + 5 artigos.")
     parser.add_argument("--no-git", action="store_true", help="Desactiva commit/push automático.")
     args = parser.parse_args()
@@ -428,7 +434,7 @@ def main() -> None:
     global _git_checkpoint_enabled
     _git_checkpoint_enabled = not args.no_git
 
-    output_file = output_filename_for_today()
+    output_file = args.output or output_filename_for_today()
     progress = load_progress(output_file)
 
     log(f"=== Sincronização Action — {progress['execution_date']} ===")
