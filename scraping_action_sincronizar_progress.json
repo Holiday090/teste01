@@ -10733,7 +10733,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000083/vaso/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto de feltro | 25 x 16,5 x 11 cm | Várias cores",
@@ -10742,7 +10742,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000065/cesto-de-feltro/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto de feltro | 28 x 21 x 12 cm | Várias cores",
@@ -10751,7 +10751,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000064/cesto-de-feltro/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Decorações de jardim",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso dourado | Ø 15 x 13 cm | Tamanho S",
@@ -10760,7 +10760,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000027/vaso-dourado/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Decorações de jardim",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso dourado | Ø 20,5 x 18 cm | Tamanho M",
@@ -10769,7 +10769,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000026/vaso-dourado/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Decorações de jardim",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso dourado | Ø 26 x 22 cm | Tamanho L",
@@ -10778,7 +10778,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000025/vaso-dourado/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto em bambu | 36 x 26 x 15,5 cm | Várias cores",
@@ -10787,7 +10787,7 @@
       "URL": "https://www.action.com/pt-pt/p/4000016/cesto-em-bambu/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Decoração",
       "Marca": "",
       "Descrição / Nome do artigo": "Cesto de arrumação em bambu | 23 x 14 x 11,5 cm | Várias cores",
@@ -17703,7 +17703,7 @@
       "Sub-categoria": "Louça",
       "Marca": "",
       "Descrição / Nome do artigo": "Tabuleiro redondo | Ø 24,5 x 5 cm | Várias cores",
-      "Preço Regular": "4,99",
+      "Preço Regular": "3,78",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/4000125/tabuleiro-redondo/"
     },
@@ -22048,7 +22048,7 @@
     {
       "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Produtos de limpeza",
-      "Marca": "",
+      "Marca": "Fabulosa",
       "Descrição / Nome do artigo": "Detergente para casa de banho com espuma Fabulosa Blue Raspberry | 3 un.",
       "Preço Regular": "1,77",
       "Preço Promocional": "",
@@ -22057,7 +22057,7 @@
     {
       "Categoria Principal": "Lar e limpeza",
       "Sub-categoria": "Produtos de limpeza",
-      "Marca": "",
+      "Marca": "Fabulosa",
       "Descrição / Nome do artigo": "Detergente de cozinha Fabulosa Black Rose | 750 ml",
       "Preço Regular": "1,62",
       "Preço Promocional": "",
@@ -43588,7 +43588,7 @@
       "Marca": "Gillette",
       "Descrição / Nome do artigo": "Lâminas de barbear Gillette Sensor3 Sensitive | 8 un.",
       "Preço Regular": "5,55",
-      "Preço Promocional": "4,89",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3226732/laminas-de-barbear-gillette-sensor3-sensitive/"
     },
     {
@@ -49750,7 +49750,7 @@
     {
       "Categoria Principal": "Comida e bebidas",
       "Sub-categoria": "Bolos e biscoitos",
-      "Marca": "",
+      "Marca": "Tokimeki",
       "Descrição / Nome do artigo": "Cheesecake Tokimeki Chocolate | 180 g",
       "Preço Regular": "2,19",
       "Preço Promocional": "",
@@ -49831,7 +49831,7 @@
     {
       "Categoria Principal": "Comida e bebidas",
       "Sub-categoria": "Bolos e biscoitos",
-      "Marca": "",
+      "Marca": "Chiquilin",
       "Descrição / Nome do artigo": "Wafers Chiquilin | 5 un.",
       "Preço Regular": "1,69",
       "Preço Promocional": "",
@@ -60660,7 +60660,7 @@
       "Sub-categoria": "Cão",
       "Marca": "",
       "Descrição / Nome do artigo": "Gelados para cães | 5 un.",
-      "Preço Regular": "2,49",
+      "Preço Regular": "1,99",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3224481/gelados-para-caes/"
     },
@@ -61761,6 +61761,348 @@
       "Preço Regular": "0,99",
       "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/2523820/sacos-para-dejetos-caninos-dumil/"
+    },
+    {
+      "Categoria Principal": "Casa",
+      "Sub-categoria": "Têxteis de casa de banho",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Toalha Capetown | 30 x 50 cm",
+      "Preço Regular": "0,69",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/137000/toalha-capetown/"
+    },
+    {
+      "Categoria Principal": "Lar e limpeza",
+      "Sub-categoria": "Artigos de limpeza",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Escova de limpeza | Com pega",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2503720/escova-de-limpeza/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Escrever e desenhar",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Marcadores Stanger | 4 un.",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2507907/marcadores-stanger/"
+    },
+    {
+      "Categoria Principal": "Cozinha",
+      "Sub-categoria": "Têxteis de cozinha",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Bases | Ø 19 cm | 3 unidades",
+      "Preço Regular": "1,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2523277/bases/"
+    },
+    {
+      "Categoria Principal": "Cozinha",
+      "Sub-categoria": "Têxteis de cozinha",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Tapete antiderrapante multifunções | 65 x 180 cm | Diversas variantes",
+      "Preço Regular": "5,98",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2530421/tapete-antiderrapante-multifuncoes/"
+    },
+    {
+      "Categoria Principal": "Lar e limpeza",
+      "Sub-categoria": "Artigos de limpeza",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Balde com pedal | 30 l",
+      "Preço Regular": "19,95",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2531440/balde-com-pedal/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Material de escritório",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Porta-canetas | Ø 9 x 10 cm | diversas variantes",
+      "Preço Regular": "0,68",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2533351/porta-canetas/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Artigos de papel",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Caderno A4 | Diversas variantes",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2534770/caderno-a4/"
+    },
+    {
+      "Categoria Principal": "Comida e bebidas",
+      "Sub-categoria": "Bebidas",
+      "Marca": "Coca-Cola",
+      "Descrição / Nome do artigo": "Coca-Cola | 500 ml",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2535774/coca-cola/"
+    },
+    {
+      "Categoria Principal": "Casa",
+      "Sub-categoria": "Acessórios de casa de banho",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Cortina de duche | 180 x 200 cm | Diversas variantes",
+      "Preço Regular": "4,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2537769/cortina-de-duche/"
+    },
+    {
+      "Categoria Principal": "Brinquedos",
+      "Sub-categoria": "Colorir e desenhar",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Lápis de cor BIC | 12 unidades",
+      "Preço Regular": "1,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2538430/lapis-de-cor-bic/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Escrever e desenhar",
+      "Marca": "BIC",
+      "Descrição / Nome do artigo": "Esferográficas BIC | 8 unidades",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2538431/esferograficas-bic/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Material de escritório",
+      "Marca": "Esselte",
+      "Descrição / Nome do artigo": "Agrafador Esselte | Tamanho 24/6",
+      "Preço Regular": "2,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2538740/agrafador-esselte/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Material de escritório",
+      "Marca": "Esselte",
+      "Descrição / Nome do artigo": "Agrafos Esselte | 3 x 1000 unidades | Tamanho 24/6",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2538741/agrafos-esselte/"
+    },
+    {
+      "Categoria Principal": "Hobbies",
+      "Sub-categoria": "Artigos de festa",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Tigelas descartáveis para festas | 5 unidades| diversas variantes",
+      "Preço Regular": "0,84",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2542003/tigelas-descartaveis-para-festas/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Meias",
+      "Marca": "Kate Legwear",
+      "Descrição / Nome do artigo": "Collants Kate Legwear 60 denier | Tamanhos 44-46",
+      "Preço Regular": "1,89",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2543176/collants-kate-legwear-60-denier/"
+    },
+    {
+      "Categoria Principal": "Hobbies",
+      "Sub-categoria": "Trabalhos manuais",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Rosas decorativas | 12 unidades | diversas variantes",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2545326/rosas-decorativas/"
+    },
+    {
+      "Categoria Principal": "Viajar",
+      "Sub-categoria": "Malas de viagem",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Cinta de bagagem | 5 x 180 cm | Diversas variantes",
+      "Preço Regular": "0,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2545575/cinta-de-bagagem/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Calçado",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Atacadores Shoe like | Tamanhos 120 - 150 cm | 2 pares | Várias cores",
+      "Preço Regular": "0,79",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2545900/atacadores-shoe-like/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Material de escritório",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Calculadora científica | 249 funções",
+      "Preço Regular": "2,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2546343/calculadora-cientifica/"
+    },
+    {
+      "Categoria Principal": "Brinquedos",
+      "Sub-categoria": "Bonecos e peluches",
+      "Marca": "Dolly Star",
+      "Descrição / Nome do artigo": "Biberão mágico para bonecos Dolly Star | +2 anos",
+      "Preço Regular": "0,89",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2547238/biberao-magico-para-bonecos-dolly-star/"
+    },
+    {
+      "Categoria Principal": "Casa",
+      "Sub-categoria": "Decoração",
+      "Marca": "Studio Home",
+      "Descrição / Nome do artigo": "Relógio | Ø 29,5 cm | Diversas variantes",
+      "Preço Regular": "5,95",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2548980/relogio/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Vestuário",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Pijama com calções | Tamanhos 98 - 122 | Diversas variantes",
+      "Preço Regular": "5,49",
+      "Preço Promocional": "3,99",
+      "URL": "https://www.action.com/pt-pt/p/2550800/pijama-caom-calcoes/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Vestuário",
+      "Marca": "Paw Patrol",
+      "Descrição / Nome do artigo": "Pijama com calções | Tamanhos 92-122 | Diversas variantes",
+      "Preço Regular": "5,49",
+      "Preço Promocional": "3,99",
+      "URL": "https://www.action.com/pt-pt/p/2550803/pijama-com-calcoes/"
+    },
+    {
+      "Categoria Principal": "Cozinha",
+      "Sub-categoria": "Têxteis de cozinha",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Pano de cozinha La Sonata Antracite | 50 x 50 cm",
+      "Preço Regular": "1,59",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2553956/pano-de-cozinha-la-sonata-antracite/"
+    },
+    {
+      "Categoria Principal": "Cozinha",
+      "Sub-categoria": "Recipientes para alimentos",
+      "Marca": "Dumil",
+      "Descrição / Nome do artigo": "Sacos com fecho Dumil | 3 l | 15 un.",
+      "Preço Regular": "0,94",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2557109/sacos-com-fecho-dumil/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Material de escritório",
+      "Marca": "Esselte",
+      "Descrição / Nome do artigo": "Agrafador Esselte | Tamanho 24/6",
+      "Preço Regular": "4,44",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2557321/agrafador-esselte/"
+    },
+    {
+      "Categoria Principal": "Comida e bebidas",
+      "Sub-categoria": "Bolos e biscoitos",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Bolachas Milka Sensations | 6 x 26 g",
+      "Preço Regular": "2,19",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2557773/bolachas-milka-sensations/"
+    },
+    {
+      "Categoria Principal": "Desporto",
+      "Sub-categoria": "Vestuário",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Calças térmicas | Tamanhos 110 - 176",
+      "Preço Regular": "2,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2557848/calcas-termicas/"
+    },
+    {
+      "Categoria Principal": "Hobbies",
+      "Sub-categoria": "Artigos de festa",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Saco para oferta | Diversas variantes",
+      "Preço Regular": "0,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2558698/saco-para-oferta/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Vestuário",
+      "Marca": "Hoodadoo",
+      "Descrição / Nome do artigo": "Babygrow em algodão elástico Hoodadoo | Tamanhos 50 - 80 | Diversas variantes",
+      "Preço Regular": "4,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2561419/babygrow-em-algodao-elastico-hoodadoo/"
+    },
+    {
+      "Categoria Principal": "Moda",
+      "Sub-categoria": "Roupa interior",
+      "Marca": "Jack Parker",
+      "Descrição / Nome do artigo": "Boxers Jack Parker Azul marinho | Tamanhos M - XXL | 2 un.",
+      "Preço Regular": "4,39",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2566006/boxers-jack-parker-azul-marinho/"
+    },
+    {
+      "Categoria Principal": "Lar e limpeza",
+      "Sub-categoria": "Produtos de limpeza",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Detergente para casa de banho A Good Clean Bergamota e jasmim | 750 ml",
+      "Preço Regular": "1,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2566077/detergente-para-casa-de-banho-a-good-clean-bergamota-e-jasmim/"
+    },
+    {
+      "Categoria Principal": "Hobbies",
+      "Sub-categoria": "Artigos de festa",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Jogo de Beerpong | 48 peças",
+      "Preço Regular": "3,49",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2566501/jogo-de-beerpong/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Escrever e desenhar",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Canetas de gel Avec | 48 un.",
+      "Preço Regular": "4,84",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2567993/canetas-de-gel-avec/"
+    },
+    {
+      "Categoria Principal": "Cozinha",
+      "Sub-categoria": "Recipientes para alimentos",
+      "Marca": "Dumil",
+      "Descrição / Nome do artigo": "Sacos de conservação de alimentos Dumil | 50 un. | 1 + 3 l",
+      "Preço Regular": "1,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2568191/sacos-de-conservacao-de-alimentos-dumil/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Artigos de papel",
+      "Marca": "",
+      "Descrição / Nome do artigo": "Bloco de papel em branco | 60 folhas | diversas variantes",
+      "Preço Regular": "1,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2569373/bloco-de-papel-em-branco/"
+    },
+    {
+      "Categoria Principal": "Papelaria",
+      "Sub-categoria": "Artigos de papel",
+      "Marca": "Oxford",
+      "Descrição / Nome do artigo": "Caderno de projetos Oxford | 80 folhas | diversas variantes",
+      "Preço Regular": "3,99",
+      "Preço Promocional": "",
+      "URL": "https://www.action.com/pt-pt/p/2572010/caderno-de-projetos-oxford/"
     }
   ],
   "row_states": {
@@ -66962,7 +67304,45 @@
     "https://www.action.com/pt-pt/p/2534480/sticks-para-roer-chappi-dental/": "activo",
     "https://www.action.com/pt-pt/p/2532531/comedouro-para-cao/": "activo",
     "https://www.action.com/pt-pt/p/2530300/arranhador-com-brinquedo/": "activo",
-    "https://www.action.com/pt-pt/p/2523820/sacos-para-dejetos-caninos-dumil/": "activo"
+    "https://www.action.com/pt-pt/p/2523820/sacos-para-dejetos-caninos-dumil/": "activo",
+    "https://www.action.com/pt-pt/p/137000/toalha-capetown/": "novo",
+    "https://www.action.com/pt-pt/p/2503720/escova-de-limpeza/": "novo",
+    "https://www.action.com/pt-pt/p/2507907/marcadores-stanger/": "novo",
+    "https://www.action.com/pt-pt/p/2523277/bases/": "novo",
+    "https://www.action.com/pt-pt/p/2530421/tapete-antiderrapante-multifuncoes/": "novo",
+    "https://www.action.com/pt-pt/p/2531440/balde-com-pedal/": "novo",
+    "https://www.action.com/pt-pt/p/2533351/porta-canetas/": "novo",
+    "https://www.action.com/pt-pt/p/2534770/caderno-a4/": "novo",
+    "https://www.action.com/pt-pt/p/2535774/coca-cola/": "novo",
+    "https://www.action.com/pt-pt/p/2537769/cortina-de-duche/": "novo",
+    "https://www.action.com/pt-pt/p/2538430/lapis-de-cor-bic/": "novo",
+    "https://www.action.com/pt-pt/p/2538431/esferograficas-bic/": "novo",
+    "https://www.action.com/pt-pt/p/2538740/agrafador-esselte/": "novo",
+    "https://www.action.com/pt-pt/p/2538741/agrafos-esselte/": "novo",
+    "https://www.action.com/pt-pt/p/2542003/tigelas-descartaveis-para-festas/": "novo",
+    "https://www.action.com/pt-pt/p/2543176/collants-kate-legwear-60-denier/": "novo",
+    "https://www.action.com/pt-pt/p/2545326/rosas-decorativas/": "novo",
+    "https://www.action.com/pt-pt/p/2545575/cinta-de-bagagem/": "novo",
+    "https://www.action.com/pt-pt/p/2545900/atacadores-shoe-like/": "novo",
+    "https://www.action.com/pt-pt/p/2546343/calculadora-cientifica/": "novo",
+    "https://www.action.com/pt-pt/p/2547238/biberao-magico-para-bonecos-dolly-star/": "novo",
+    "https://www.action.com/pt-pt/p/2548980/relogio/": "novo",
+    "https://www.action.com/pt-pt/p/2550800/pijama-caom-calcoes/": "novo",
+    "https://www.action.com/pt-pt/p/2550803/pijama-com-calcoes/": "novo",
+    "https://www.action.com/pt-pt/p/2553956/pano-de-cozinha-la-sonata-antracite/": "novo",
+    "https://www.action.com/pt-pt/p/2557109/sacos-com-fecho-dumil/": "novo",
+    "https://www.action.com/pt-pt/p/2557321/agrafador-esselte/": "novo",
+    "https://www.action.com/pt-pt/p/2557773/bolachas-milka-sensations/": "novo",
+    "https://www.action.com/pt-pt/p/2557848/calcas-termicas/": "novo",
+    "https://www.action.com/pt-pt/p/2558698/saco-para-oferta/": "novo",
+    "https://www.action.com/pt-pt/p/2561419/babygrow-em-algodao-elastico-hoodadoo/": "novo",
+    "https://www.action.com/pt-pt/p/2566006/boxers-jack-parker-azul-marinho/": "novo",
+    "https://www.action.com/pt-pt/p/2566077/detergente-para-casa-de-banho-a-good-clean-bergamota-e-jasmim/": "novo",
+    "https://www.action.com/pt-pt/p/2566501/jogo-de-beerpong/": "novo",
+    "https://www.action.com/pt-pt/p/2567993/canetas-de-gel-avec/": "novo",
+    "https://www.action.com/pt-pt/p/2568191/sacos-de-conservacao-de-alimentos-dumil/": "novo",
+    "https://www.action.com/pt-pt/p/2569373/bloco-de-papel-em-branco/": "novo",
+    "https://www.action.com/pt-pt/p/2572010/caderno-de-projetos-oxford/": "novo"
   },
   "checked_update_urls": [
     "https://www.action.com/pt-pt/p/100241/pano-de-microfibras-spargo/",
@@ -71764,8 +72144,109 @@
     "https://www.action.com/pt-pt/p/3224246/rodo-de-chao-com-escova/",
     "https://www.action.com/pt-pt/p/3224247/brinquedo-para-gatos-by-beeztees/",
     "https://www.action.com/pt-pt/p/3224260/lampada-led-inteligente-lsc-smart-connect/",
-    "https://www.action.com/pt-pt/p/3224307/almofada-ortopedica-para-animais/"
+    "https://www.action.com/pt-pt/p/3224307/almofada-ortopedica-para-animais/",
+    "https://www.action.com/pt-pt/p/3224319/almofada-de-joelhos-com-memoria-de-forma/",
+    "https://www.action.com/pt-pt/p/3224321/sticks-de-matcha-cozy/",
+    "https://www.action.com/pt-pt/p/3224339/gel-de-banho-body-benefits-oleo-de-macadamia/",
+    "https://www.action.com/pt-pt/p/3224357/palmilhas-respiraveis/",
+    "https://www.action.com/pt-pt/p/3224369/powerbank-xtorm/",
+    "https://www.action.com/pt-pt/p/3224394/lampada-led-philips/",
+    "https://www.action.com/pt-pt/p/3224395/lampada-led-de-intensidade-regulavel-philips/",
+    "https://www.action.com/pt-pt/p/3224396/iluminacao-de-exterior-lsc-smart-connect/",
+    "https://www.action.com/pt-pt/p/3224408/bruma-pos-maquilhagem-the-beauty-dept/",
+    "https://www.action.com/pt-pt/p/3224427/fita-de-montagem-de-dupla-face-bison/",
+    "https://www.action.com/pt-pt/p/3224444/snacks-surf-turf-flamingo/",
+    "https://www.action.com/pt-pt/p/3224445/snacks-para-caes-flamingo/",
+    "https://www.action.com/pt-pt/p/3224481/gelados-para-caes/",
+    "https://www.action.com/pt-pt/p/3224490/oleo-de-labios-revolution-i-heart-butterfly-dream/",
+    "https://www.action.com/pt-pt/p/3224491/rimel-revolution-i-heart/",
+    "https://www.action.com/pt-pt/p/3224501/creme-de-rosto-revolution-pro/",
+    "https://www.action.com/pt-pt/p/3224552/nippon-minis/",
+    "https://www.action.com/pt-pt/p/3224556/toblerone/",
+    "https://www.action.com/pt-pt/p/3224558/spray-antivincos-a-good-clean-ylang-ylang-e-almiscar/",
+    "https://www.action.com/pt-pt/p/3224567/vermes-assustadores/",
+    "https://www.action.com/pt-pt/p/3224617/mala-de-viagem-dobravel-packd-by-bolan/",
+    "https://www.action.com/pt-pt/p/3224631/wafers-chiquilin/",
+    "https://www.action.com/pt-pt/p/3224665/barra-de-chocolate-hershey-s-cookies-n-creme/",
+    "https://www.action.com/pt-pt/p/3224771/aamaciador-de-roupa-silan-fragrance-therapy-temptation/",
+    "https://www.action.com/pt-pt/p/3224774/copos-de-cocktail-royal-leerdam-fiora/",
+    "https://www.action.com/pt-pt/p/3224845/produto-de-limpeza-de-placas-astonish/",
+    "https://www.action.com/pt-pt/p/3224846/spray-de-limpeza-multiusos-astonish-botanical-fresh/",
+    "https://www.action.com/pt-pt/p/3225028/envelopes-de-expedicao/",
+    "https://www.action.com/pt-pt/p/3225046/conchas-para-tacos/",
+    "https://www.action.com/pt-pt/p/3225100/boneca-steffi-love/",
+    "https://www.action.com/pt-pt/p/3225157/bolas-de-futebol-de-chocolate/",
+    "https://www.action.com/pt-pt/p/3225222/detergente-da-roupa-asevi-sabao-de-marselha/",
+    "https://www.action.com/pt-pt/p/3225223/detergente-da-roupa-asevi-cor/",
+    "https://www.action.com/pt-pt/p/3225224/detergente-da-roupa-asevi-active-white/",
+    "https://www.action.com/pt-pt/p/3225342/detergente-de-cozinha-fabulosa-black-rose/",
+    "https://www.action.com/pt-pt/p/3225361/takis-buckin-ranch/",
+    "https://www.action.com/pt-pt/p/3225554/detergente-para-casa-de-banho-com-espuma-fabulosa-blue-raspberry/",
+    "https://www.action.com/pt-pt/p/3225644/sabonete-palmolive-milks-amendoa/",
+    "https://www.action.com/pt-pt/p/3225705/trolli-gummi-world-doces-e-acidas/",
+    "https://www.action.com/pt-pt/p/3225713/figura-surpresa-kimmon/",
+    "https://www.action.com/pt-pt/p/3225739/super-kick-trolli/",
+    "https://www.action.com/pt-pt/p/3225786/maoam-stripes-football-fun/",
+    "https://www.action.com/pt-pt/p/3225812/elixir-bucal-listerine-spearmint-burst/",
+    "https://www.action.com/pt-pt/p/3225914/croutons-tipiak/",
+    "https://www.action.com/pt-pt/p/3225927/caderno-oxford-b5/",
+    "https://www.action.com/pt-pt/p/3226270/cheesecake-tokimeki-chocolate/",
+    "https://www.action.com/pt-pt/p/3226354/kit-de-cultivo-de-erva-gateira/",
+    "https://www.action.com/pt-pt/p/3226476/canetas-de-feltro-stabilo-trio-a-z/",
+    "https://www.action.com/pt-pt/p/3226732/laminas-de-barbear-gillette-sensor3-sensitive/",
+    "https://www.action.com/pt-pt/p/4000015/cesto-de-arrumacao-em-bambu/",
+    "https://www.action.com/pt-pt/p/4000016/cesto-em-bambu/",
+    "https://www.action.com/pt-pt/p/4000025/vaso-dourado/",
+    "https://www.action.com/pt-pt/p/4000026/vaso-dourado/",
+    "https://www.action.com/pt-pt/p/4000027/vaso-dourado/",
+    "https://www.action.com/pt-pt/p/4000064/cesto-de-feltro/",
+    "https://www.action.com/pt-pt/p/4000065/cesto-de-feltro/",
+    "https://www.action.com/pt-pt/p/4000125/tabuleiro-redondo/",
+    "https://www.action.com/pt-pt/p/4000137/cesto-de-arrumacao-felpudo/",
+    "https://www.action.com/pt-pt/p/4000149/mala-de-viagem-spilbergen-ibiza/",
+    "https://www.action.com/pt-pt/p/4000150/mala-de-viagem-spilbergen-ibiza/",
+    "https://www.action.com/pt-pt/p/4000151/mala-de-viagem-spilbergen-ibiza/",
+    "https://www.action.com/pt-pt/p/40258/base-de-corte/"
   ],
-  "added_new_urls": [],
-  "articles_processed": 4800
+  "added_new_urls": [
+    "https://www.action.com/pt-pt/p/137000/toalha-capetown/",
+    "https://www.action.com/pt-pt/p/2503720/escova-de-limpeza/",
+    "https://www.action.com/pt-pt/p/2507907/marcadores-stanger/",
+    "https://www.action.com/pt-pt/p/2523277/bases/",
+    "https://www.action.com/pt-pt/p/2530421/tapete-antiderrapante-multifuncoes/",
+    "https://www.action.com/pt-pt/p/2531440/balde-com-pedal/",
+    "https://www.action.com/pt-pt/p/2533351/porta-canetas/",
+    "https://www.action.com/pt-pt/p/2534770/caderno-a4/",
+    "https://www.action.com/pt-pt/p/2535774/coca-cola/",
+    "https://www.action.com/pt-pt/p/2537769/cortina-de-duche/",
+    "https://www.action.com/pt-pt/p/2538430/lapis-de-cor-bic/",
+    "https://www.action.com/pt-pt/p/2538431/esferograficas-bic/",
+    "https://www.action.com/pt-pt/p/2538740/agrafador-esselte/",
+    "https://www.action.com/pt-pt/p/2538741/agrafos-esselte/",
+    "https://www.action.com/pt-pt/p/2542003/tigelas-descartaveis-para-festas/",
+    "https://www.action.com/pt-pt/p/2543176/collants-kate-legwear-60-denier/",
+    "https://www.action.com/pt-pt/p/2545326/rosas-decorativas/",
+    "https://www.action.com/pt-pt/p/2545575/cinta-de-bagagem/",
+    "https://www.action.com/pt-pt/p/2545900/atacadores-shoe-like/",
+    "https://www.action.com/pt-pt/p/2546343/calculadora-cientifica/",
+    "https://www.action.com/pt-pt/p/2547238/biberao-magico-para-bonecos-dolly-star/",
+    "https://www.action.com/pt-pt/p/2548980/relogio/",
+    "https://www.action.com/pt-pt/p/2550800/pijama-caom-calcoes/",
+    "https://www.action.com/pt-pt/p/2550803/pijama-com-calcoes/",
+    "https://www.action.com/pt-pt/p/2553956/pano-de-cozinha-la-sonata-antracite/",
+    "https://www.action.com/pt-pt/p/2557109/sacos-com-fecho-dumil/",
+    "https://www.action.com/pt-pt/p/2557321/agrafador-esselte/",
+    "https://www.action.com/pt-pt/p/2557773/bolachas-milka-sensations/",
+    "https://www.action.com/pt-pt/p/2557848/calcas-termicas/",
+    "https://www.action.com/pt-pt/p/2558698/saco-para-oferta/",
+    "https://www.action.com/pt-pt/p/2561419/babygrow-em-algodao-elastico-hoodadoo/",
+    "https://www.action.com/pt-pt/p/2566006/boxers-jack-parker-azul-marinho/",
+    "https://www.action.com/pt-pt/p/2566077/detergente-para-casa-de-banho-a-good-clean-bergamota-e-jasmim/",
+    "https://www.action.com/pt-pt/p/2566501/jogo-de-beerpong/",
+    "https://www.action.com/pt-pt/p/2567993/canetas-de-gel-avec/",
+    "https://www.action.com/pt-pt/p/2568191/sacos-de-conservacao-de-alimentos-dumil/",
+    "https://www.action.com/pt-pt/p/2569373/bloco-de-papel-em-branco/",
+    "https://www.action.com/pt-pt/p/2572010/caderno-de-projetos-oxford/"
+  ],
+  "articles_processed": 4900
 }
