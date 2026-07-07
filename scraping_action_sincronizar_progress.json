@@ -10661,7 +10661,7 @@
       "URL": "https://www.action.com/pt-pt/p/3212755/cestos-suspensos/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Viajar",
       "Sub-categoria": "Acessórios de viagem",
       "Marca": "",
       "Descrição / Nome do artigo": "Sacos de vácuo com bomba elétrica | 3 peças",
@@ -13631,7 +13631,7 @@
       "URL": "https://www.action.com/pt-pt/p/3213447/toalha-de-praia-em-microfibra/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Decorações de jardim",
       "Marca": "",
       "Descrição / Nome do artigo": "Vaso Cozy Creations | Ø 16 x 12 cm | Várias cores",
@@ -13649,7 +13649,7 @@
       "URL": "https://www.action.com/pt-pt/p/3212203/almofada-iris/"
     },
     {
-      "Categoria Principal": "Casa",
+      "Categoria Principal": "Jardim",
       "Sub-categoria": "Controlo de pragas",
       "Marca": "",
       "Descrição / Nome do artigo": "Vela de citronela num frasco de vidro | 11 x 12 cm | Várias cores",
@@ -17335,7 +17335,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Jarro de água com torneira | 3 l | Várias cores",
       "Preço Regular": "5,95",
-      "Preço Promocional": "4,95",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211683/jarro-de-agua-com-torneira/"
     },
     {
@@ -19427,7 +19427,7 @@
       "URL": "https://www.action.com/pt-pt/p/3211361/forma-de-mola-guardini/"
     },
     {
-      "Categoria Principal": "Cozinha",
+      "Categoria Principal": "Papelaria",
       "Sub-categoria": "Recipientes para alimentos",
       "Marca": "",
       "Descrição / Nome do artigo": "Garrafa quadrada | 1 l",
@@ -30011,7 +30011,7 @@
       "URL": "https://www.action.com/pt-pt/p/3212759/dispensadores-de-bebidas-com-suporte-absolu-chic/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Maquilhagem",
       "Marca": "",
       "Descrição / Nome do artigo": "Purpurinas para cabelo, corpo e rosto | Diversas variantes",
@@ -30029,7 +30029,7 @@
       "URL": "https://www.action.com/pt-pt/p/3211743/cartao-de-felicitacoes-com-musica/"
     },
     {
-      "Categoria Principal": "Hobbies",
+      "Categoria Principal": "Bricolage",
       "Sub-categoria": "Trabalhos manuais",
       "Marca": "",
       "Descrição / Nome do artigo": "Super cola | 4 un.",
@@ -33550,10 +33550,10 @@
     {
       "Categoria Principal": "Bricolage",
       "Sub-categoria": "Bicicletas",
-      "Marca": "",
+      "Marca": "Walfort",
       "Descrição / Nome do artigo": "Computador de bicicleta Walfort | 10 peças",
       "Preço Regular": "6,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "4,99",
       "URL": "https://www.action.com/pt-pt/p/3211485/computador-de-bicicleta-walfort/"
     },
     {
@@ -33566,9 +33566,9 @@
       "URL": "https://www.action.com/pt-pt/p/3211381/super-cola/"
     },
     {
-      "Categoria Principal": "Bricolage",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Ferramentas",
-      "Marca": "",
+      "Marca": "Spectrum",
       "Descrição / Nome do artigo": "Máscaras antipó Spectrum | 3 un.",
       "Preço Regular": "1,99",
       "Preço Promocional": "",
@@ -38071,7 +38071,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Pistola de água 2 em 1 | Várias cores",
       "Preço Regular": "1,69",
-      "Preço Promocional": "1,19",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3212033/pistola-de-agua-2-em-1/"
     },
     {
@@ -40775,7 +40775,7 @@
       "URL": "https://www.action.com/pt-pt/p/3212521/sementes-de-relva-green-boots/"
     },
     {
-      "Categoria Principal": "Jardim",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Controlo de pragas",
       "Marca": "",
       "Descrição / Nome do artigo": "Vela de citronela com LED | Ø 8,5 x 10 cm",
@@ -40847,7 +40847,7 @@
       "URL": "https://www.action.com/pt-pt/p/3211599/lanterna-de-vidro-com-padrao-solar/"
     },
     {
-      "Categoria Principal": "Jardim",
+      "Categoria Principal": "Cuidados pessoais",
       "Sub-categoria": "Controlo de pragas",
       "Marca": "",
       "Descrição / Nome do artigo": "Repelente de animais solar | 38,5 cm",
@@ -43027,10 +43027,10 @@
     {
       "Categoria Principal": "Viajar",
       "Sub-categoria": "Malas de viagem",
-      "Marca": "Spilbergen",
+      "Marca": "",
       "Descrição / Nome do artigo": "Trólei softcase Spilbergen Krakow | 32 l | 36 x 20 x 50 cm | Várias cores",
       "Preço Regular": "24,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "14,95",
       "URL": "https://www.action.com/pt-pt/p/3212025/trolei-softcase-spilbergen-krakow/"
     },
     {
@@ -53560,7 +53560,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Auriculares sem fios Fresh ’n Rebel | Várias cores",
       "Preço Regular": "16,95",
-      "Preço Promocional": "",
+      "Preço Promocional": "14,95",
       "URL": "https://www.action.com/pt-pt/p/3211619/auriculares-sem-fios-fresh-n-rebel/"
     },
     {
@@ -54433,7 +54433,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XXL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211471/t-shirt-jack-parker/"
     },
     {
@@ -54442,7 +54442,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211469/t-shirt-jack-parker/"
     },
     {
@@ -54451,7 +54451,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho L",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211467/t-shirt-jack-parker/"
     },
     {
@@ -54460,7 +54460,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho M",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211465/t-shirt-jack-parker/"
     },
     {
@@ -54469,7 +54469,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XXL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211463/t-shirt-jack-parker/"
     },
     {
@@ -54478,7 +54478,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211461/t-shirt-jack-parker/"
     },
     {
@@ -54487,7 +54487,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho L",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211459/t-shirt-jack-parker/"
     },
     {
@@ -54496,7 +54496,7 @@
       "Marca": "Jack Parker",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho M",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211457/t-shirt-jack-parker/"
     },
     {
@@ -54505,7 +54505,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XXL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211455/t-shirt-jack-parker/"
     },
     {
@@ -54514,7 +54514,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211453/t-shirt-jack-parker/"
     },
     {
@@ -54523,7 +54523,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XXL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211449/t-shirt-jack-parker/"
     },
     {
@@ -54532,7 +54532,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "T-shirt Jack Parker | Tamanho XL",
       "Preço Regular": "3,69",
-      "Preço Promocional": "2,98",
+      "Preço Promocional": "",
       "URL": "https://www.action.com/pt-pt/p/3211445/t-shirt-jack-parker/"
     },
     {
@@ -69764,8 +69764,108 @@
     "https://www.action.com/pt-pt/p/3211003/capa-de-almofada-studio-hemliv-paxos/",
     "https://www.action.com/pt-pt/p/3211033/moldura-montreal/",
     "https://www.action.com/pt-pt/p/3211083/vaso-cadiz/",
-    "https://www.action.com/pt-pt/p/3211109/vaso-napoli/"
+    "https://www.action.com/pt-pt/p/3211109/vaso-napoli/",
+    "https://www.action.com/pt-pt/p/3211191/vela-led-para-exterior/",
+    "https://www.action.com/pt-pt/p/3211237/conjunto-de-cuidados-para-labios-bonjolie/",
+    "https://www.action.com/pt-pt/p/3211255/faz-as-tuas-proprias-bolas-de-banho-efervescentes-craft-universe/",
+    "https://www.action.com/pt-pt/p/3211273/decoracao-de-baloes-de-aluminio-cool2party-happy-birthday/",
+    "https://www.action.com/pt-pt/p/3211301/copo-com-palhinha/",
+    "https://www.action.com/pt-pt/p/3211307/cuvete-de-gelo/",
+    "https://www.action.com/pt-pt/p/3211337/elasticos-para-cabelo/",
+    "https://www.action.com/pt-pt/p/3211345/babygrow-hoodadoo/",
+    "https://www.action.com/pt-pt/p/3211349/cuvete-de-gelo-em-silicone/",
+    "https://www.action.com/pt-pt/p/3211357/garrafa-quadrada/",
+    "https://www.action.com/pt-pt/p/3211361/forma-de-mola-guardini/",
+    "https://www.action.com/pt-pt/p/3211363/forma-de-mola-guardini/",
+    "https://www.action.com/pt-pt/p/3211369/forma-para-tarte-guardini/",
+    "https://www.action.com/pt-pt/p/3211371/forma-para-pizza-guardini/",
+    "https://www.action.com/pt-pt/p/3211373/forma-de-bolo-guardini/",
+    "https://www.action.com/pt-pt/p/3211375/forma-de-muffins-guardini/",
+    "https://www.action.com/pt-pt/p/3211377/tabuleiro-extensivel-guardini/",
+    "https://www.action.com/pt-pt/p/3211379/mascaras-antipo-spectrum/",
+    "https://www.action.com/pt-pt/p/3211381/super-cola/",
+    "https://www.action.com/pt-pt/p/3211389/laminas-de-barbear-gillette-fusion5-classic/",
+    "https://www.action.com/pt-pt/p/3211391/pacote-com-lamina-de-barbear-e-recargas-gillette-fusion5-classic/",
+    "https://www.action.com/pt-pt/p/3211393/barra-proteica-accelerate-cookie-cream/",
+    "https://www.action.com/pt-pt/p/3211409/mocassins/",
+    "https://www.action.com/pt-pt/p/3211445/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211449/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211453/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211455/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211457/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211459/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211461/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211463/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211465/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211467/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211469/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211471/t-shirt-jack-parker/",
+    "https://www.action.com/pt-pt/p/3211481/cadeira-de-jardim/",
+    "https://www.action.com/pt-pt/p/3211485/computador-de-bicicleta-walfort/",
+    "https://www.action.com/pt-pt/p/3211521/tapete-de-juta-sevilla/",
+    "https://www.action.com/pt-pt/p/3211539/lavanda-artificial-excellent-flowers/",
+    "https://www.action.com/pt-pt/p/3211543/ladrilhos-de-relva/",
+    "https://www.action.com/pt-pt/p/3211547/candeeiro-de-mesa-solar/",
+    "https://www.action.com/pt-pt/p/3211551/repelente-de-animais-solar/",
+    "https://www.action.com/pt-pt/p/3211587/caixa-de-arrumacao-froyak/",
+    "https://www.action.com/pt-pt/p/3211599/lanterna-de-vidro-com-padrao-solar/",
+    "https://www.action.com/pt-pt/p/3211619/auriculares-sem-fios-fresh-n-rebel/",
+    "https://www.action.com/pt-pt/p/3211659/suporte-de-velas/",
+    "https://www.action.com/pt-pt/p/3211683/jarro-de-agua-com-torneira/",
+    "https://www.action.com/pt-pt/p/3211705/copo/",
+    "https://www.action.com/pt-pt/p/3211743/cartao-de-felicitacoes-com-musica/",
+    "https://www.action.com/pt-pt/p/3211753/fritadeira-de-ar-quente-tomado-superior/",
+    "https://www.action.com/pt-pt/p/3211793/garrafa-celebrations/",
+    "https://www.action.com/pt-pt/p/3211811/chinelos-de-dedo/",
+    "https://www.action.com/pt-pt/p/3211813/t-shirts/",
+    "https://www.action.com/pt-pt/p/3211815/galochas-para-crianca/",
+    "https://www.action.com/pt-pt/p/3211827/iluminador-arco-iris-max-more/",
+    "https://www.action.com/pt-pt/p/3211861/oliveira-artificial/",
+    "https://www.action.com/pt-pt/p/3211967/mota-de-estrada-ninja-do-lloyd-lego-ninjago/",
+    "https://www.action.com/pt-pt/p/3212001/balsamo-labial-com-peptidos-bonjolie/",
+    "https://www.action.com/pt-pt/p/3212011/pestanas-posticas-bonjolie/",
+    "https://www.action.com/pt-pt/p/3212013/conjunto-de-cuidados-para-sobrancelhas/",
+    "https://www.action.com/pt-pt/p/3212025/trolei-softcase-spilbergen-krakow/",
+    "https://www.action.com/pt-pt/p/3212027/maquina-de-gelados-para-o-banho/",
+    "https://www.action.com/pt-pt/p/3212033/pistola-de-agua-2-em-1/",
+    "https://www.action.com/pt-pt/p/3212039/pistola-de-agua/",
+    "https://www.action.com/pt-pt/p/3212059/saco-do-lixo-para-jardim-garden-touch/",
+    "https://www.action.com/pt-pt/p/3212063/figura-de-banho-de-bolhas/",
+    "https://www.action.com/pt-pt/p/3212069/conjunto-de-brincar-na-areia/",
+    "https://www.action.com/pt-pt/p/3212099/copo-com-palhinha-excellent-houseware/",
+    "https://www.action.com/pt-pt/p/3212157/mesa-de-apoio-com-iluminacao-solar/",
+    "https://www.action.com/pt-pt/p/3212161/vela-de-citronela-num-frasco-de-vidro/",
+    "https://www.action.com/pt-pt/p/3212179/almofada-de-assento/",
+    "https://www.action.com/pt-pt/p/3212193/conjunto-de-boias-de-pesca-max-ranger/",
+    "https://www.action.com/pt-pt/p/3212203/almofada-iris/",
+    "https://www.action.com/pt-pt/p/3212253/prato/",
+    "https://www.action.com/pt-pt/p/3212255/prato-fundo-oase/",
+    "https://www.action.com/pt-pt/p/3212257/taca-oase/",
+    "https://www.action.com/pt-pt/p/3212291/desinfetante-para-sanita-miss-bubble/",
+    "https://www.action.com/pt-pt/p/3212293/detergente-universal-miss-bubble/",
+    "https://www.action.com/pt-pt/p/3212321/jogo-com-bola/",
+    "https://www.action.com/pt-pt/p/3212337/intensificador-de-perfume-daili-summer-glow/",
+    "https://www.action.com/pt-pt/p/3212343/purpurinas-para-cabelo-corpo-e-rosto/",
+    "https://www.action.com/pt-pt/p/3212347/recarga-de-ambientador/",
+    "https://www.action.com/pt-pt/p/3212377/copo-lowenthal/",
+    "https://www.action.com/pt-pt/p/3212383/sacos-de-vacuo-com-bomba-eletrica/",
+    "https://www.action.com/pt-pt/p/3212389/aparador-de-cabelo-e-barba-code-homme/",
+    "https://www.action.com/pt-pt/p/3212391/aparador-facial-code-homme/",
+    "https://www.action.com/pt-pt/p/3212433/vaso-cozy-creations/",
+    "https://www.action.com/pt-pt/p/3212435/aparador-corporal-code-homme/",
+    "https://www.action.com/pt-pt/p/3212443/caixa-de-comprimidos-com-6-compartimentos/",
+    "https://www.action.com/pt-pt/p/3212447/sacos-para-entulho-dumil/",
+    "https://www.action.com/pt-pt/p/3212469/caixa-de-lencos-de-papel-e-organizador-eleganza/",
+    "https://www.action.com/pt-pt/p/3212471/luz-de-festa-com-coluna/",
+    "https://www.action.com/pt-pt/p/3212475/conjunto-de-pincas-anti-estaticas-werckmann/",
+    "https://www.action.com/pt-pt/p/3212481/vela-de-citronela-com-led/",
+    "https://www.action.com/pt-pt/p/3212499/spray-vedante-preto/",
+    "https://www.action.com/pt-pt/p/3212513/calcoes/",
+    "https://www.action.com/pt-pt/p/3212515/vestido-comprido/",
+    "https://www.action.com/pt-pt/p/3212521/sementes-de-relva-green-boots/",
+    "https://www.action.com/pt-pt/p/3212557/carrinho-de-acrobacias/",
+    "https://www.action.com/pt-pt/p/3212559/peluche-de-hamburguer/"
   ],
   "added_new_urls": [],
-  "articles_processed": 2800
+  "articles_processed": 2900
 }
