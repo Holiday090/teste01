@@ -30097,7 +30097,7 @@
       "Marca": "",
       "Descrição / Nome do artigo": "Kit de bordado | Ø 20 cm | Diversas variantes",
       "Preço Regular": "1,99",
-      "Preço Promocional": "",
+      "Preço Promocional": "1,62",
       "URL": "https://www.action.com/pt-pt/p/3209490/kit-de-bordado/"
     },
     {
@@ -38120,7 +38120,7 @@
       "URL": "https://www.action.com/pt-pt/p/3210601/figura-com-luz-para-fazer-bolhas-de-sabao/"
     },
     {
-      "Categoria Principal": "Brinquedos",
+      "Categoria Principal": "Viajar",
       "Sub-categoria": "Jogos",
       "Marca": "Jumbo",
       "Descrição / Nome do artigo": "Jogo de viagem Jumbo | Diversas variantes",
@@ -69656,8 +69656,16 @@
     "https://www.action.com/pt-pt/p/3209321/produto-de-limpeza-para-ceramica/",
     "https://www.action.com/pt-pt/p/3209344/trotinete-com-rodas-luminosas/",
     "https://www.action.com/pt-pt/p/3209349/balsamo-para-labios-e-blush-em-stick-fab-factory/",
-    "https://www.action.com/pt-pt/p/3209371/velas-perfumadas-chupa-chups/"
+    "https://www.action.com/pt-pt/p/3209371/velas-perfumadas-chupa-chups/",
+    "https://www.action.com/pt-pt/p/3209375/mix-de-snacks-snacks-of-the-world/",
+    "https://www.action.com/pt-pt/p/3209376/mistura-de-frutos-secos-snacks-of-the-world/",
+    "https://www.action.com/pt-pt/p/3209407/fio-felpudo-alison-mae/",
+    "https://www.action.com/pt-pt/p/3209466/jogo-de-viagem-jumbo/",
+    "https://www.action.com/pt-pt/p/3209485/comedouro-de-ingestao-lenta/",
+    "https://www.action.com/pt-pt/p/3209490/kit-de-bordado/",
+    "https://www.action.com/pt-pt/p/3209517/pendente-de-animal/",
+    "https://www.action.com/pt-pt/p/3209542/patches-hidrocoloides-para-borbulhas-the-skin-dr/"
   ],
   "added_new_urls": [],
-  "articles_processed": 2692
+  "articles_processed": 2700
 }
