@@ -19,6 +19,10 @@ from urllib.parse import urljoin
 import pandas as pd
 from playwright.sync_api import Page, sync_playwright
 
+
+class ProductUnavailableError(Exception):
+    """A página do produto não está disponível no site (sem preço/ficha)."""
+
 BASE_URL = "https://www.action.com/pt-pt/"
 CATEGORY_NAME = "Casa"
 OUTPUT_FILE = "Scraping_Action_Teste.xlsx"
@@ -373,10 +377,14 @@ def extract_brand(product_ld: dict, product_name: str) -> str:
 def extract_product_data(page: Page, product_url: str, category_name: str) -> dict[str, str]:
     """Extrai os campos solicitados na página individual do produto."""
     page.goto(product_url, wait_until="domcontentloaded", timeout=90_000)
-    page.wait_for_selector("main h1", timeout=30_000)
     page.wait_for_timeout(800)
 
     accept_cookies_if_visible(page)
+
+    if page.locator('main [data-testid="product-card-price"]').count() == 0:
+        raise ProductUnavailableError(product_url)
+
+    page.wait_for_selector("main h1", timeout=30_000)
 
     product_name = page.locator("main h1").first.inner_text().strip()
     subtitle = page.locator("main h1 + p").first

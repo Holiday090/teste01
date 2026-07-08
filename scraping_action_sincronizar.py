@@ -16,6 +16,7 @@ FUNCIONALIDADES:
     - Varre o site (15 categorias) e compara com o ficheiro existente.
     - Produtos novos: adicionados com letra AZUL.
     - Produtos removidos do site: letra VERMELHA (mantidos no ficheiro).
+    - Produtos indisponíveis na ficha individual: marcados VERMELHO e concluídos.
     - Preços (e restantes campos) atualizados quando diferentes.
     - Progresso artigo-a-artigo no terminal.
     - Grava, faz commit e push a cada 100 artigos processados.
@@ -41,6 +42,7 @@ from scraping_action_teste import (
     accept_cookies_if_visible,
     collect_all_category_product_urls,
     discover_main_categories,
+    ProductUnavailableError,
     extract_product_data,
     human_delay,
     log,
@@ -105,6 +107,7 @@ def empty_progress(output_file: str) -> dict:
         "row_states": {},
         "checked_update_urls": [],
         "added_new_urls": [],
+        "unavailable_urls": [],
         "articles_processed": 0,
     }
 
@@ -383,7 +386,11 @@ def update_existing_product(
     old_record = records[record_index]
     category_name = url_to_category.get(normalized) or old_record.get("Categoria Principal", "Casa")
 
-    new_record = extract_product_data(page, url, category_name)
+    try:
+        new_record = extract_product_data(page, url, category_name)
+    except ProductUnavailableError:
+        row_states[normalized] = "removido"
+        return True, "indisponivel_no_site"
     changed = records_differ(old_record, new_record)
 
     if changed:
@@ -413,7 +420,10 @@ def add_new_product(
     """Adiciona um produto novo com estado 'novo' (azul)."""
     normalized = normalize_url(url)
     category_name = url_to_category.get(normalized, "Casa")
-    new_record = extract_product_data(page, url, category_name)
+    try:
+        new_record = extract_product_data(page, url, category_name)
+    except ProductUnavailableError:
+        raise
     records.append(new_record)
     row_states[normalized] = "novo"
     return new_record
@@ -474,6 +484,7 @@ def main() -> None:
 
             checked_updates = set(progress.get("checked_update_urls", []))
             added_new = set(progress.get("added_new_urls", []))
+            unavailable_urls = set(progress.get("unavailable_urls", []))
 
             pending_updates = sorted(urls_still_on_site - checked_updates)
             pending_new = sorted(set(new_urls) - added_new)
@@ -511,12 +522,19 @@ def main() -> None:
                     record = next(
                         r for r in records if normalize_url(r["URL"]) == normalize_url(url)
                     )
+                    status = (
+                        "INDISPONÍVEL (vermelho)"
+                        if detail == "indisponivel_no_site"
+                        else ("Actualizado" if changed else "Sem alteração")
+                    )
                     log(
-                        f"[Artigo {task_index}/{total_tasks}] "
-                        f"{'Actualizado' if changed else 'Sem alteração'} "
+                        f"[Artigo {task_index}/{total_tasks}] {status} "
                         f"| {record['Descrição / Nome do artigo'][:55]} "
                         f"| {detail}"
                     )
+                    if detail == "indisponivel_no_site":
+                        unavailable_urls.add(normalize_url(url))
+                        progress["unavailable_urls"] = sorted(unavailable_urls)
                 except Exception as error:
                     log(f"[Artigo {task_index}/{total_tasks}] Erro: {error}")
 
@@ -544,6 +562,13 @@ def main() -> None:
                         f"| Regular: {new_record['Preço Regular']} "
                         f"| Promo: {new_record['Preço Promocional'] or '—'}"
                     )
+                except ProductUnavailableError:
+                    unavailable_urls.add(normalize_url(url))
+                    progress["unavailable_urls"] = sorted(unavailable_urls)
+                    progress["articles_processed"] += 1
+                    log(
+                        f"[Artigo {task_index}/{total_tasks}] NOVO indisponível — ignorado: {url}"
+                    )
                 except Exception as error:
                     log(f"[Artigo {task_index}/{total_tasks}] Erro: {error}")
 
@@ -559,6 +584,7 @@ def main() -> None:
 
             novos = sum(1 for state in row_states.values() if state == "novo")
             removidos = sum(1 for state in row_states.values() if state == "removido")
+            indisponiveis = len(progress.get("unavailable_urls", []))
 
             log(
                 f"\n{'=' * 70}\n"
@@ -567,6 +593,7 @@ def main() -> None:
                 f"Total de linhas: {len(records)}\n"
                 f"Novos (azul): {novos}\n"
                 f"Removidos (vermelho): {removidos}\n"
+                f"Indisponíveis na ficha: {indisponiveis}\n"
                 f"Artigos processados nesta execução: {progress['articles_processed']}\n"
                 f"{'=' * 70}"
             )
