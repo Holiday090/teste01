@@ -295,6 +295,10 @@ async def main() -> None:
 
     encontrados = sum(1 for d in progresso.values() if d["encontrado"] == "SIM")
     print(f"\nConcluído: {encontrados}/{len(eans)} encontrados. Ficheiro atualizado: {caminho}")
+    print(
+        "Nota: o Excel foi gravado no disco local. Para ver a alteração no GitHub, "
+        "é preciso fazer commit e push (git add, git commit, git push)."
+    )
 
 
 if __name__ == "__main__":
